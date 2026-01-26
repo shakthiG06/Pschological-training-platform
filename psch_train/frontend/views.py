@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from chat.models import ChatSession
 
 def role_select(request):
     return render(request, "role_select.html")
@@ -39,3 +40,40 @@ def student_dashboard(request):
 @login_required
 def staff_dashboard(request):
     return render(request, "staff_dashboard.html")
+
+@login_required
+def student_dashboard(request):
+    latest_session = ChatSession.objects.filter(
+        student=request.user
+    ).order_by("-created_at").first()
+
+    return render(
+        request,
+        "student_dashboard.html",
+        {"latest_session": latest_session}
+    )
+
+from chat.models import ChatSession
+from evaluations.models import Evaluation
+
+@login_required
+def student_dashboard(request):
+    latest_session = (
+        ChatSession.objects
+        .filter(student=request.user)
+        .order_by("-created_at")
+        .first()
+    )
+
+    evaluation = None
+    if latest_session:
+        evaluation = Evaluation.objects.filter(session=latest_session).first()
+
+    return render(
+        request,
+        "student_dashboard.html",
+        {
+            "latest_session": latest_session,
+            "evaluation": evaluation
+        }
+    )
