@@ -30,5 +30,6 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('evaluate/', include('evaluations.urls')),
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    path('courses/', include('courses.urls')),
 
 ]
