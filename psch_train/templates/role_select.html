@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+  <meta charset="UTF-8">
+  <title>Select Role</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Font utilities */
+    .font-heading {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-ui {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Fade-in page */
+    .fade-in {
+      animation: fadeIn 0.9s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card pop animation */
+    .pop {
+      animation: popIn 0.8s ease-out;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Floating animation */
+    .float:hover {
+      transform: translateY(-8px);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-700 to-rose-500 fade-in font-ui">
+
+  <div class="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-[900px] h-[460px] flex overflow-hidden pop">
+
+    <!-- Left Info Panel -->
+    <div class="w-1/2 bg-gradient-to-br from-pink-600 to-purple-700 text-white
+                flex items-center justify-center relative">
+
+      <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_top_left,_#fff,_transparent)]"></div>
+
+      <div class="text-center px-10 z-10">
+        <h1 class="text-4xl font-heading mb-4 tracking-wide">
+          AI PSYCHOLOGY LAB
+        </h1>
+        <p class="text-[15px] opacity-90 leading-relaxed font-ui">
+          A controlled environment for psychology students to practice
+          clinical skills using AI-simulated patients.
+        </p>
+      </div>
+    </div>
+
+    <!-- Role Selection -->
+    <div class="w-1/2 flex flex-col items-center justify-center gap-6">
+
+      <h2 class="text-2xl font-heading text-gray-700 mb-2 tracking-wide">
+        Choose Your Role
+      </h2>
+
+      <!-- Student Button -->
+      <a href="/login/student/"
+         class="font-ui float w-72 py-4 rounded-full
+                bg-gradient-to-r from-pink-600 to-rose-500
+                text-white text-lg font-medium text-center
+                shadow-lg transform transition duration-300
+                hover:shadow-2xl hover:scale-105 active:scale-95">
+        🎓 STUDENT
+      </a>
+
+      <!-- Staff Button -->
+      <a href="/login/staff/"
+         class="font-ui float w-72 py-4 rounded-full
+                bg-gradient-to-r from-purple-600 to-indigo-600
+                text-white text-lg font-medium text-center
+                shadow-lg transform transition duration-300
+                hover:shadow-2xl hover:scale-105 active:scale-95">
+        🧑‍🏫 STAFF
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

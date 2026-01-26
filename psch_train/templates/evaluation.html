@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-xl font-bold mb-4">
+  Evaluate {{ session.student.username }}
+</h2>
+
+<div class="bg-white p-4 rounded shadow mb-4">
+  <h3 class="font-semibold mb-2">Chat Review</h3>
+
+  {% for msg in session.chatmessage_set.all %}
+    <p class="mb-1">
+      <strong>{{ msg.sender }}:</strong> {{ msg.message }}
+    </p>
+  {% empty %}
+    <p class="text-gray-500">No messages found.</p>
+  {% endfor %}
+</div>
+
+<form method="post" class="bg-white p-4 rounded shadow">
+  {% csrf_token %}
+
+  <label class="block mb-2">Score (out of 10)</label>
+  <input type="number" name="score"
+         class="border p-2 w-full mb-3"
+         required>
+
+  <label class="block mb-2">Feedback</label>
+  <textarea name="feedback"
+            class="border p-2 w-full mb-3"
+            required></textarea>
+
+  <label class="inline-flex items-center mb-4">
+    <input type="checkbox" name="approved" class="mr-2">
+    Approve student for progression
+  </label>
+
+  <button class="bg-green-600 text-white px-4 py-2 rounded">
+    Submit Evaluation
+  </button>
+</form>
+{% endblock %}

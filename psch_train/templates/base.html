@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}PsySim{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Font utilities */
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-ui {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Page fade-in */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen fade-in font-ui">
+
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+
+            <!-- Brand -->
+            <h1 class="text-2xl font-heading tracking-wide">
+                PsySim
+            </h1>
+
+            <!-- Optional subtitle (can remove if you want ultra-minimal) -->
+            <span class="text-sm opacity-90 hidden md:block">
+                Psychology Training Platform
+            </span>
+
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

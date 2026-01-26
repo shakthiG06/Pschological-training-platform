@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Staff Dashboard</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  <!-- Pending Evaluations -->
+  <a href="/evaluate/1/"
+     class="group bg-white p-6 rounded-2xl shadow
+            transform transition hover:-translate-y-2 hover:shadow-xl">
+    <h3 class="text-lg font-semibold text-gray-800">
+      Pending Evaluations
+    </h3>
+    <p class="text-sm text-gray-600 mt-2">
+      Review student chatbot sessions
+    </p>
+    <span class="block mt-4 text-sm text-blue-600">
+      Review Now →
+    </span>
+  </a>
+
+  <!-- Approved Students -->
+  <div class="group bg-white p-6 rounded-2xl shadow
+              transform transition hover:-translate-y-2 hover:shadow-xl">
+    <h3 class="text-lg font-semibold text-gray-800">
+      Approved Students
+    </h3>
+    <p class="text-sm text-gray-600 mt-2">
+      Students ready for real patients
+    </p>
+  </div>
+
+</div>
+{% endblock %}

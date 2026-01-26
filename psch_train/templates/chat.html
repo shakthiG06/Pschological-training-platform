@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="text-xl font-bold mb-2">
+  Chat with {{ patient.name }} ({{ patient.condition }})
+</h2>
+
+<p class="text-sm text-red-600 mb-4">
+⚠️ This is a simulated patient for educational purposes only.
+</p>
+
+<div class="bg-white p-4 rounded shadow h-80 overflow-y-scroll mb-4">
+  {% for msg in messages %}
+    <div class="mb-2">
+      <strong>{{ msg.sender }}:</strong> {{ msg.message }}
+    </div>
+  {% endfor %}
+</div>
+
+<form method="post" class="flex gap-2">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="message"
+    class="flex-1 border p-2 rounded"
+    placeholder="Type your message..."
+    required
+  />
+  <button class="bg-blue-600 text-white px-4 rounded">
+    Send
+  </button>
+</form>
+{% endblock %}
