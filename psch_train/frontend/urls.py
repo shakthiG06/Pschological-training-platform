@@ -3,7 +3,7 @@ from .views import (
     role_select,
     login_view,
     student_dashboard,
-    staff_dashboard
+    staff_dashboard,
 )
 
 urlpatterns = [

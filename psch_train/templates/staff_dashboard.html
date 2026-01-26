@@ -1,35 +1,130 @@
 {% extends "base.html" %}
+{% block title %}Staff Dashboard | PsySim{% endblock %}
 
 {% block content %}
-<h1 class="text-2xl font-bold mb-6">Staff Dashboard</h1>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- HEADER -->
+<section class="mb-12">
+  <h1 class="text-4xl font-heading text-gray-800 mb-2">
+    Staff Dashboard
+  </h1>
+  <p class="text-gray-600">
+    Review student sessions and evaluate clinical readiness.
+  </p>
+</section>
 
-  <!-- Pending Evaluations -->
-  <a href="/evaluate/1/"
-     class="group bg-white p-6 rounded-2xl shadow
-            transform transition hover:-translate-y-2 hover:shadow-xl">
-    <h3 class="text-lg font-semibold text-gray-800">
-      Pending Evaluations
-    </h3>
-    <p class="text-sm text-gray-600 mt-2">
-      Review student chatbot sessions
-    </p>
-    <span class="block mt-4 text-sm text-blue-600">
-      Review Now →
-    </span>
-  </a>
+<!-- SUMMARY CARDS -->
+<section class="grid md:grid-cols-3 gap-6 mb-16">
 
-  <!-- Approved Students -->
-  <div class="group bg-white p-6 rounded-2xl shadow
-              transform transition hover:-translate-y-2 hover:shadow-xl">
-    <h3 class="text-lg font-semibold text-gray-800">
-      Approved Students
-    </h3>
-    <p class="text-sm text-gray-600 mt-2">
-      Students ready for real patients
+  <!-- Pending -->
+  <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <h3 class="text-lg font-semibold text-gray-700 mb-1">⏳ Pending Reviews</h3>
+    <p class="text-4xl font-bold text-yellow-500">
+      {{ pending_sessions|length }}
     </p>
   </div>
 
-</div>
+  <!-- Evaluated -->
+  <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <h3 class="text-lg font-semibold text-gray-700 mb-1">✅ Evaluated</h3>
+    <p class="text-4xl font-bold text-green-600">
+      {{ evaluated_sessions|length }}
+    </p>
+  </div>
+
+  <!-- Total -->
+  <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <h3 class="text-lg font-semibold text-gray-700 mb-1">📊 Total Sessions</h3>
+    <p class="text-4xl font-bold text-purple-600">
+      {{ pending_sessions|length|add:evaluated_sessions|length }}
+    </p>
+  </div>
+
+</section>
+
+<!-- PENDING SESSIONS -->
+<section class="mb-20">
+
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+    Pending Evaluations
+  </h2>
+
+  {% if pending_sessions %}
+    <div class="space-y-4">
+
+      {% for session in pending_sessions %}
+        <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+
+          <div>
+            <h3 class="font-semibold text-lg">
+              {{ session.student.username }}
+            </h3>
+            <p class="text-sm text-gray-600">
+              Patient: {{ session.patient.title }}
+            </p>
+            <span class="inline-block mt-2 px-3 py-1 text-xs rounded-full
+                         bg-yellow-100 text-yellow-700">
+              Pending Review
+            </span>
+          </div>
+
+          <a href="{% url 'evaluate' session.id %}"
+             class="px-6 py-2 rounded-full
+                    bg-gradient-to-r from-purple-600 to-pink-600
+                    text-white font-medium hover:scale-105 transition">
+            Evaluate
+          </a>
+
+        </div>
+      {% endfor %}
+
+    </div>
+  {% else %}
+    <p class="text-gray-500">No pending sessions 🎉</p>
+  {% endif %}
+
+</section>
+
+<!-- EVALUATED SESSIONS -->
+<section>
+
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800">
+    Evaluated Sessions
+  </h2>
+
+  {% if evaluated_sessions %}
+    <div class="space-y-4">
+
+      {% for session in evaluated_sessions %}
+        <div class="bg-white p-6 rounded-xl shadow flex justify-between items-center">
+
+          <div>
+            <h3 class="font-semibold text-lg">
+              {{ session.student.username }}
+            </h3>
+            <p class="text-sm text-gray-600">
+              Patient: {{ session.patient.title }}
+            </p>
+            <span class="inline-block mt-2 px-3 py-1 text-xs rounded-full
+                         bg-green-100 text-green-700">
+              Evaluated
+            </span>
+          </div>
+
+          <a href="{% url 'evaluation_result' session.id %}"
+             class="px-6 py-2 rounded-full border-2 border-green-500
+                    text-green-600 font-medium hover:bg-green-50 transition">
+            View Result
+          </a>
+
+        </div>
+      {% endfor %}
+
+    </div>
+  {% else %}
+    <p class="text-gray-500">No evaluations yet.</p>
+  {% endif %}
+
+</section>
+
 {% endblock %}

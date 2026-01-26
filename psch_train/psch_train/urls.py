@@ -15,21 +15,31 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from django.shortcuts import render
-from django.contrib.auth import views as auth_views
+from django.urls import path, include
 
-
-def home(request):
-    return render(request, "home.html")
-
+# ✅ IMPORT VIEWS EXPLICITLY
+from frontend.views import (
+    role_select,
+    login_view,
+    logout_view,
+    student_dashboard,
+    staff_dashboard,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("frontend.urls")),
-    path('chat/', include('chat.urls')),
-    path('evaluate/', include('evaluations.urls')),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
-    path('courses/', include('courses.urls')),
+    path("admin/", admin.site.urls),
 
+    # Role selection & auth
+    path("", role_select, name="role_select"),
+    path("login/<str:role>/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+
+    # Dashboards
+    path("student/dashboard/", student_dashboard, name="student_dashboard"),
+    path("staff/dashboard/", staff_dashboard, name="staff_dashboard"),
+
+    # Other apps
+    path("chat/", include("chat.urls")),
+    path("courses/", include("courses.urls")),
+    path("evaluate/", include("evaluations.urls")),
 ]

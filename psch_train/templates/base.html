@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Font utilities */
         .font-heading {
             font-family: 'Playfair Display', serif;
         }
@@ -23,7 +22,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Page fade-in */
         .fade-in {
             animation: fadeIn 0.8s ease-in-out;
         }
@@ -43,27 +41,57 @@
 
 <body class="bg-gray-100 min-h-screen fade-in font-ui">
 
-    <!-- Navbar -->
-    <nav class="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow">
-        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+<!-- NAVBAR -->
+<nav class="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow">
+  <div class="container mx-auto px-6 py-4 flex items-center justify-between">
 
-            <!-- Brand -->
-            <h1 class="text-2xl font-heading tracking-wide">
-                PsySim
-            </h1>
+    <!-- Brand -->
+    <h1 class="text-2xl font-heading tracking-wide">
+      PsySim
+    </h1>
 
-            <!-- Optional subtitle (can remove if you want ultra-minimal) -->
-            <span class="text-sm opacity-90 hidden md:block">
-                Psychology Training Platform
-            </span>
+    <!-- Right Side -->
+    <div class="flex items-center gap-6 text-sm font-medium">
 
-        </div>
-    </nav>
+      {% if request.user.is_authenticated %}
 
-    <!-- Page Content -->
-    <main class="container mx-auto p-6">
-        {% block content %}{% endblock %}
-    </main>
+        {% if request.user.profile.role == "student" %}
+          <a href="{% url 'student_dashboard' %}" class="hover:underline transition">
+            Dashboard
+          </a>
+        {% endif %}
+
+        {% if request.user.profile.role == "staff" %}
+          <a href="{% url 'staff_dashboard' %}" class="hover:underline transition">
+            Staff Dashboard
+          </a>
+        {% endif %}
+
+        <!-- ✅ LOGOUT (POST FORM – FIXED) -->
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit"
+                  class="px-4 py-1 rounded-full bg-white/20
+                         hover:bg-white/30 transition">
+            Logout
+          </button>
+        </form>
+
+      {% else %}
+        <span class="text-sm opacity-90 hidden md:block">
+          Psychology Training Platform
+        </span>
+      {% endif %}
+
+    </div>
+
+  </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<main class="container mx-auto p-6">
+    {% block content %}{% endblock %}
+</main>
 
 </body>
 </html>
