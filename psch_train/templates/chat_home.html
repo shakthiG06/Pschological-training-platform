@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}AI Practice Sessions{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+
+  <h1 class="text-3xl font-semibold mb-6">
+    AI Patient Simulations
+  </h1>
+
+  {% if patients %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% for patient in patients %}
+        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition">
+          <h2 class="text-xl font-medium mb-2">
+            {{ patient.name }}
+          </h2>
+          <p class="text-sm text-gray-600 mb-4">
+            Course: {{ patient.course.title }}
+          </p>
+          <a href="{% url 'chat' patient.id %}"
+             class="inline-block px-5 py-2 rounded-full
+                    bg-gradient-to-r from-pink-600 to-rose-500
+                    text-white text-sm
+                    hover:scale-105 transition">
+            Start AI Session →
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-500">
+      No AI patients unlocked yet. Complete a course to begin.
+    </p>
+  {% endif %}
+
+</div>
+{% endblock %}

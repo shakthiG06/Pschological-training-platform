@@ -1,56 +1,62 @@
-import random
+import os
+from openai import OpenAI
 
-def generate_patient_reply(persona_prompt, student_message):
+# Initialize OpenAI client using environment variable
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
+def generate_patient_reply(persona_prompt, user_message, conversation_history=None):
     """
-    Rule + persona based simulated patient response
-    (Academic / MVP version)
+    Generates an AI-simulated patient reply using ChatGPT.
+
+    Parameters:
+    - persona_prompt (str): Defines the patient's psychological persona
+    - user_message (str): Latest message from the student
+    - conversation_history (list): Optional previous messages for context
+
+    Returns:
+    - str: AI-generated patient reply
     """
 
-    msg = student_message.lower()
+    if conversation_history is None:
+        conversation_history = []
 
-    # Emotion-based responses
-    if any(word in msg for word in ["how are you", "how do you feel"]):
-        responses = [
-            "I feel low most of the time… it’s hard to feel motivated.",
-            "Honestly, I feel tired and empty.",
-            "I don’t really feel okay these days."
+    # System prompt = AI conditioning (this is your "training")
+    system_prompt = f"""
+You are a simulated psychology patient for training purposes.
+
+PATIENT PERSONA:
+{persona_prompt}
+
+STRICT RULES:
+- You are NOT a therapist, counselor, or doctor
+- You do NOT provide advice, diagnosis, or solutions
+- You only express thoughts, emotions, and experiences
+- Responses should sound human and emotionally realistic
+- Keep responses concise (1–3 sentences)
+- Let the student guide the interaction
+- This is a controlled training simulation, not real therapy
+"""
+
+    try:
+        messages = [
+            {"role": "system", "content": system_prompt},
+            *conversation_history,
+            {"role": "user", "content": user_message}
         ]
 
-    elif any(word in msg for word in ["sleep", "sleeping"]):
-        responses = [
-            "My sleep is very disturbed. I wake up a lot.",
-            "I don’t sleep properly… my mind keeps racing.",
-            "Some nights I barely sleep at all."
-        ]
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",  # recommended: low cost + strong reasoning
+            messages=messages,
+            temperature=0.7,
+            max_tokens=150
+        )
 
-    elif any(word in msg for word in ["sad", "depressed", "hopeless"]):
-        responses = [
-            "Yes… I often feel hopeless.",
-            "That word describes me very well.",
-            "I feel like nothing will get better."
-        ]
+        return response.choices[0].message.content.strip()
 
-    elif any(word in msg for word in ["family", "friends", "people"]):
-        responses = [
-            "I don’t really talk to people much anymore.",
-            "I feel disconnected from everyone.",
-            "Even around others, I feel alone."
-        ]
-
-    elif any(word in msg for word in ["why", "reason"]):
-        responses = [
-            "I don’t really know why… it just feels heavy inside.",
-            "I can’t explain it clearly.",
-            "I wish I knew the reason."
-        ]
-
-    else:
-        # Generic depressive responses
-        responses = [
-            "I’m not sure how to explain it.",
-            "I don’t have the energy to think much.",
-            "I feel exhausted emotionally.",
-            "It’s difficult to talk about."
-        ]
-
-    return random.choice(responses)
+    except Exception as e:
+        # Safe fallback for demo stability
+        return (
+            "I’m finding it hard to put my feelings into words right now. "
+            "It feels uncomfortable to talk about this."
+        )

@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
+    /* Font utilities */
+    .font-heading {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-ui {
+      font-family: 'Poppins', sans-serif;
+    }
+
     /* Page fade */
     .fade-in {
       animation: fadeIn 0.8s ease-in-out;
@@ -22,7 +38,7 @@
       }
     }
 
-    /* Slide animation */
+    /* Slide animations */
     .slide-left {
       animation: slideLeft 0.9s ease-out;
     }
@@ -55,7 +71,7 @@
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-700 to-rose-500 fade-in">
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-700 to-rose-500 fade-in font-ui">
 
   <div class="bg-white rounded-2xl shadow-2xl w-[900px] h-[520px] flex overflow-hidden">
 
@@ -66,7 +82,9 @@
       <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_#fff,_transparent)]"></div>
 
       <div class="text-center px-10 z-10">
-        <h2 class="text-3xl font-bold mb-4">Welcome Back</h2>
+        <h2 class="text-3xl font-heading font-bold mb-4">
+          Welcome Back
+        </h2>
         <p class="text-sm opacity-90 leading-relaxed">
           Continue your journey in AI-powered psychology training.
         </p>
@@ -82,7 +100,11 @@
                     shadow-lg transform transition hover:scale-110">
           👤
         </div>
-        <h2 class="text-2xl font-semibold mt-4">Login</h2>
+
+        <h2 class="text-2xl font-heading font-semibold mt-4">
+          Login
+        </h2>
+
         <p class="text-sm text-gray-500">
           {{ role|title }} Account
         </p>
@@ -95,7 +117,7 @@
         <div class="relative">
           <input type="text" name="username" placeholder="Username or Email"
             class="peer w-full border-b-2 border-gray-300 focus:border-pink-600
-                   outline-none py-2 transition-all">
+                   outline-none py-2 transition-all text-sm font-ui">
           <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-pink-600
                        transition-all peer-focus:w-full"></span>
         </div>
@@ -104,7 +126,7 @@
         <div class="relative">
           <input type="password" name="password" placeholder="Password"
             class="peer w-full border-b-2 border-gray-300 focus:border-pink-600
-                   outline-none py-2 transition-all">
+                   outline-none py-2 transition-all text-sm font-ui">
           <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-pink-600
                        transition-all peer-focus:w-full"></span>
         </div>
@@ -115,7 +137,8 @@
 
         <!-- Login Button -->
         <button
-          class="w-full py-3 rounded-full bg-pink-600 text-white font-medium
+          class="w-full py-3 rounded-full bg-pink-600 text-white
+                 font-medium tracking-wide
                  transform transition hover:scale-[1.03] hover:bg-pink-700
                  active:scale-95 shadow-lg">
           LOGIN
