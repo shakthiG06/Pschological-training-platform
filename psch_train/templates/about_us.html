@@ -4,12 +4,108 @@
 {% block title %}About Us - Syntax Slayers | PsySim{% endblock %}
 
 {% block extra_styles %}
-/* Team Card Styles */
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(17, 17, 17, 0.9) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at 20% 20%, rgba(225, 29, 72, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(225, 29, 72, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225, 29, 72, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+}
+
+/* Animated Gradient Border */
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.gradient-border {
+    position: relative;
+}
+
+.gradient-border::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--st-red), transparent);
+    border-radius: 2px;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* Stats Cards */
+.stat-card {
+    background: linear-gradient(145deg, rgba(17, 17, 17, 0.8), rgba(10, 10, 10, 0.9));
+    border: 1px solid rgba(225, 29, 72, 0.15);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(225, 29, 72, 0.05) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(225, 29, 72, 0.4);
+    box-shadow: 0 20px 40px -10px rgba(225, 29, 72, 0.2);
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--st-red), var(--st-red-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Team Cards - Enhanced */
 .team-card {
     background: linear-gradient(145deg, rgba(17, 17, 17, 0.95), rgba(10, 10, 10, 0.98));
-    border: 1px solid rgba(225, 29, 72, 0.3);
-    border-radius: 12px;
-    transition: all 0.4s ease;
+    border: 1px solid rgba(225, 29, 72, 0.15);
+    border-radius: 20px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
@@ -26,51 +122,51 @@
     transition: opacity 0.3s ease;
 }
 
-.team-card:hover {
-    border-color: rgba(225, 29, 72, 0.6);
-    transform: translateY(-8px);
-    box-shadow: 
-        0 20px 40px rgba(225, 29, 72, 0.15),
-        0 0 30px rgba(225, 29, 72, 0.1),
-        inset 0 0 30px rgba(225, 29, 72, 0.05);
-}
-
-.team-card:hover::before {
-    opacity: 1;
-}
-
-/* Photo Frame */
-.photo-frame {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 3px solid rgba(225, 29, 72, 0.5);
-    padding: 4px;
-    background: linear-gradient(145deg, rgba(225, 29, 72, 0.2), transparent);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.photo-frame::before {
+.team-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(45deg, transparent 40%, rgba(225, 29, 72, 0.3) 50%, transparent 60%);
-    animation: shimmer 3s infinite;
+    background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-@keyframes shimmer {
-    0% { transform: translateX(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) rotate(45deg); }
+.team-card:hover {
+    border-color: rgba(225, 29, 72, 0.4);
+    transform: translateY(-12px);
+    box-shadow: 
+        0 25px 50px -12px rgba(225, 29, 72, 0.25),
+        0 0 0 1px rgba(225, 29, 72, 0.1);
+}
+
+.team-card:hover::before,
+.team-card:hover::after {
+    opacity: 1;
+}
+
+/* Photo Frame - Enhanced */
+.photo-frame {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, var(--st-red), var(--st-red-dark), var(--st-red));
+    background-size: 200% 200%;
+    animation: gradientMove 4s ease infinite;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+@keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .team-card:hover .photo-frame {
-    border-color: var(--st-red);
     box-shadow: 
-        0 0 20px rgba(225, 29, 72, 0.4),
-        0 0 40px rgba(225, 29, 72, 0.2);
+        0 0 30px rgba(225, 29, 72, 0.4),
+        0 0 60px rgba(225, 29, 72, 0.2);
+    transform: scale(1.05);
 }
 
 .photo-inner {
@@ -83,61 +179,72 @@
     justify-content: center;
     overflow: hidden;
     position: relative;
-    z-index: 1;
 }
 
 .photo-inner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(20%) contrast(1.1);
-    transition: all 0.3s ease;
+    filter: grayscale(15%);
+    transition: all 0.4s ease;
 }
 
 .team-card:hover .photo-inner img {
-    filter: grayscale(0%) contrast(1);
-    transform: scale(1.05);
+    filter: grayscale(0%);
+    transform: scale(1.1);
 }
 
-/* Role Badge */
+/* Role Badge - Enhanced */
 .role-badge {
-    background: linear-gradient(135deg, rgba(225, 29, 72, 0.3), rgba(159, 18, 57, 0.3));
-    border: 1px solid rgba(225, 29, 72, 0.4);
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.15), rgba(159, 18, 57, 0.15));
+    border: 1px solid rgba(225, 29, 72, 0.3);
     color: var(--st-red-glow);
-    padding: 6px 16px;
-    border-radius: 20px;
+    padding: 8px 20px;
+    border-radius: 30px;
     font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     display: inline-block;
+    backdrop-filter: blur(10px);
 }
 
-/* Skills */
+/* Skills - Enhanced */
 .skill-tag {
-    background: rgba(17, 17, 17, 0.8);
-    border: 1px solid rgba(225, 29, 72, 0.2);
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px solid rgba(225, 29, 72, 0.15);
     color: var(--st-light-gray);
-    padding: 4px 12px;
-    border-radius: 4px;
+    padding: 6px 14px;
+    border-radius: 8px;
     font-size: 0.7rem;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skill-tag:hover {
     border-color: var(--st-red);
     color: var(--st-red);
     background: rgba(225, 29, 72, 0.1);
+    transform: translateY(-2px);
 }
 
-/* Mission Card */
+/* Mission Card - Enhanced */
 .mission-card {
     background: linear-gradient(145deg, rgba(17, 17, 17, 0.9), rgba(10, 10, 10, 0.95));
-    border: 1px solid rgba(225, 29, 72, 0.2);
-    border-radius: 12px;
+    border: 1px solid rgba(225, 29, 72, 0.15);
+    border-radius: 24px;
     position: relative;
     overflow: hidden;
+}
+
+.mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: radial-gradient(ellipse at top, rgba(225, 29, 72, 0.05) 0%, transparent 60%);
 }
 
 .mission-card::after {
@@ -146,296 +253,547 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, transparent, var(--st-red), transparent);
 }
 
-/* Stranger Things Alphabet Wall Effect */
-.alphabet-wall {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
-}
-
-.alphabet-letter {
-    font-family: 'Special Elite', cursive;
-    font-size: 1.5rem;
-    color: var(--st-gray);
-    transition: all 0.3s ease;
-}
-
-.alphabet-letter.active {
-    color: var(--st-red);
-    text-shadow: 0 0 10px var(--st-red-glow), 0 0 20px var(--st-red);
-}
-
-/* Glitch Effect for Title */
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-}
-
-.glitch:hover {
-    animation: glitch 0.3s infinite;
-}
-
-/* Upside Down Border */
-.upside-down-border {
+/* Feature Cards */
+.feature-card {
+    background: linear-gradient(145deg, rgba(17, 17, 17, 0.7), rgba(10, 10, 10, 0.8));
+    border: 1px solid rgba(225, 29, 72, 0.1);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
 }
 
-.upside-down-border::before,
-.upside-down-border::after {
+.feature-card:hover {
+    border-color: rgba(225, 29, 72, 0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px -10px rgba(225, 29, 72, 0.15);
+}
+
+.feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(159, 18, 57, 0.1));
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 8px 20px -5px rgba(225, 29, 72, 0.3);
+}
+
+/* Social Links */
+.social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(225, 29, 72, 0.1);
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: var(--st-light-gray);
+}
+
+.social-link:hover {
+    background: var(--st-red);
+    border-color: var(--st-red);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Section Divider */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.3), transparent);
+    margin: 60px 0;
+}
+
+/* Animated Background Dots */
+@keyframes floatDot {
+    0%, 100% { transform: translateY(0); opacity: 0.3; }
+    50% { transform: translateY(-20px); opacity: 0.6; }
+}
+
+.floating-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--st-red);
+    border-radius: 50%;
+    animation: floatDot 4s ease-in-out infinite;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(145deg, rgba(225, 29, 72, 0.1), rgba(159, 18, 57, 0.05));
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
     content: '';
     position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* Scroll Reveal Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* Title Underline */
+.title-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.title-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--st-red), transparent);
-}
-
-.upside-down-border::before {
-    top: 0;
-}
-
-.upside-down-border::after {
-    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--st-red), var(--st-red-glow));
+    border-radius: 2px;
 }
 {% endblock %}
 
 {% block content %}
-<div class="min-h-[70vh] py-8">
+<div class="min-h-screen">
     
-    <!-- Header Section -->
-    <div class="text-center mb-16 upside-down-border py-8">
-        <!-- Christmas Lights -->
-        <div class="christmas-lights justify-center mb-6">
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
+    <!-- Hero Section -->
+    <section class="hero-section py-20 md:py-28 relative">
+        <div class="hero-pattern"></div>
+        
+        <!-- Floating Decorative Elements -->
+        <div class="floating-dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-dot" style="top: 60%; left: 15%; animation-delay: 1s;"></div>
+        <div class="floating-dot" style="top: 30%; right: 10%; animation-delay: 2s;"></div>
+        <div class="floating-dot" style="top: 70%; right: 15%; animation-delay: 0.5s;"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center">
+                <!-- Breadcrumb -->
+                <div class="flex items-center justify-center gap-2 text-sm text-gray-500 mb-8">
+                    <a href="{% url 'role_select' %}" class="hover:text-red-400 transition-colors">Home</a>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    <span class="text-red-400">About Us</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                    <span class="text-white">Meet the</span>
+                    <span class="block mt-2 bg-gradient-to-r from-red-500 via-red-400 to-rose-500 bg-clip-text text-transparent">
+                        Syntax Slayers
+                    </span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-12">
+                    A passionate team of students bridging 
+                    <span class="text-red-400 font-medium">Artificial Intelligence</span> and 
+                    <span class="text-red-400 font-medium">Psychology</span> 
+                    to revolutionize clinical training.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="text-gray-500 text-sm mt-1">Team Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">AI</div>
+                        <div class="text-gray-500 text-sm mt-1">Powered Platform</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="text-gray-500 text-sm mt-1">Safe Learning</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">∞</div>
+                        <div class="text-gray-500 text-sm mt-1">Practice Sessions</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <h1 class="text-4xl md:text-6xl font-stranger neon-text flicker mb-4 tracking-[0.2em] glitch">
-            ABOUT US
-        </h1>
-        
-        <p class="text-2xl md:text-3xl font-stranger neon-text-subtle tracking-[0.15em] mb-4">
-            TEAM SYNTAX SLAYERS
-        </p>
-        
-        <p class="text-gray-500 text-lg tracking-wide max-w-2xl mx-auto">
-            Forging the future of psychology through AI
-        </p>
-    </div>
+    </section>
     
     <!-- Mission Section -->
-    <div class="mission-card p-8 md:p-12 mb-16 max-w-4xl mx-auto">
-        <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 rounded bg-red-900/30 flex items-center justify-center">
-                <i data-lucide="target" class="w-6 h-6 text-red-500"></i>
+    <section class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="mission-card p-10 md:p-14">
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row md:items-start gap-8">
+                        <!-- Icon -->
+                        <div class="flex-shrink-0">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500/20 to-red-900/20 border border-red-500/30 flex items-center justify-center">
+                                <i data-lucide="target" class="w-8 h-8 text-red-500"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="flex-1">
+                            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 title-underline">
+                                Our Mission
+                            </h2>
+                            
+                            <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                                We're building a <span class="text-red-400 font-semibold">safe, intelligent training environment</span> 
+                                where psychology students can practice clinical skills using AI-simulated patients — before 
+                                stepping into real-world practice.
+                            </p>
+                            
+                            <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                                Our platform creates a controlled space where mistakes become valuable learning opportunities, 
+                                helping future psychologists develop confidence and competence through realistic scenarios.
+                            </p>
+                            
+                            <!-- Key Values -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/30">
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                                        <i data-lucide="brain" class="w-5 h-5 text-red-500"></i>
+                                    </div>
+                                    <span class="text-gray-300 text-sm font-medium">AI-Powered</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/30">
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                                        <i data-lucide="shield-check" class="w-5 h-5 text-red-500"></i>
+                                    </div>
+                                    <span class="text-gray-300 text-sm font-medium">Safe Learning</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/30">
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                                        <i data-lucide="heart-pulse" class="w-5 h-5 text-red-500"></i>
+                                    </div>
+                                    <span class="text-gray-300 text-sm font-medium">Ethical AI</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-xl bg-black/30">
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                                        <i data-lucide="graduation-cap" class="w-5 h-5 text-red-500"></i>
+                                    </div>
+                                    <span class="text-gray-300 text-sm font-medium">Education First</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 class="text-2xl font-stranger neon-text-subtle tracking-wider">OUR MISSION</h2>
         </div>
-        
-        <p class="text-gray-400 text-lg leading-relaxed mb-6">
-            We are a <span class="text-red-400 font-semibold">multidisciplinary student team</span> passionate about 
-            combining <span class="text-red-400 font-semibold">Artificial Intelligence</span> and 
-            <span class="text-red-400 font-semibold">Psychology</span>.
-        </p>
-        
-        <p class="text-gray-400 text-lg leading-relaxed">
-            Our mission is to create a <span class="text-red-400">safe, intelligent training environment</span> where 
-            psychology students can practice clinical skills using AI-simulated patients before entering real-world practice.
-            Like entering the Upside Down, our platform allows students to explore challenging scenarios in a controlled 
-            dimension where mistakes become learning opportunities.
-        </p>
-        
-        <div class="flex flex-wrap gap-4 mt-8">
-            <div class="flex items-center gap-2 text-gray-500">
-                <i data-lucide="brain" class="w-5 h-5 text-red-500"></i>
-                <span>AI-Powered</span>
-            </div>
-            <div class="flex items-center gap-2 text-gray-500">
-                <i data-lucide="shield-check" class="w-5 h-5 text-red-500"></i>
-                <span>Safe Learning</span>
-            </div>
-            <div class="flex items-center gap-2 text-gray-500">
-                <i data-lucide="heart-pulse" class="w-5 h-5 text-red-500"></i>
-                <span>Ethical AI</span>
-            </div>
-            <div class="flex items-center gap-2 text-gray-500">
-                <i data-lucide="graduation-cap" class="w-5 h-5 text-red-500"></i>
-                <span>Education First</span>
-            </div>
-        </div>
-    </div>
+    </section>
     
-    <!-- Team Section Header -->
-    <div class="text-center mb-12">
-        <h2 class="text-3xl font-stranger neon-text-subtle tracking-[0.15em] mb-2">THE PARTY</h2>
-        <p class="text-gray-600 tracking-wide">Meet the minds behind PsySim</p>
-    </div>
+    <!-- Features Section -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 title-underline">
+                    What We Offer
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto mt-6">
+                    Comprehensive tools designed for effective psychological training
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="message-circle" class="w-7 h-7 text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">AI Patient Simulations</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Practice with realistic AI-powered patient personas exhibiting various psychological conditions and behaviors.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="clipboard-check" class="w-7 h-7 text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Expert Evaluation</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Receive detailed feedback on your clinical sessions from qualified psychology professionals.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i data-lucide="book-open" class="w-7 h-7 text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Learning Resources</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Access curated courses and materials to strengthen your theoretical knowledge alongside practice.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
     
-    <!-- Team Grid -->
-    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
-        
-        <!-- Shakthi G -->
-        <div class="team-card p-8">
-            <div class="flex flex-col items-center text-center">
-                <div class="photo-frame mb-6">
-                    <div class="photo-inner">
-                        <!-- Replace with actual photo -->
-                        <img src="{% static 'images/team/shakthi.jpg.jpeg' %}" alt="Shakthi G" 
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
-                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SHAKTHI G</h3>
-                <div class="role-badge mb-4">Full-Stack Developer & AI Integration Lead</div>
-                
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Lead developer of PsySim, responsible for backend architecture, AI chatbot integration, 
-                    and system logic. Passionate about building ethical AI systems for healthcare education.
-                </p>
-                
-                <div class="flex flex-wrap justify-center gap-2">
-                    <span class="skill-tag">Django</span>
-                    <span class="skill-tag">LLM Integration</span>
-                    <span class="skill-tag">System Design</span>
-                    <span class="skill-tag">AI Ethics</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Sanushia L -->
-        <div class="team-card p-8">
-            <div class="flex flex-col items-center text-center">
-                <div class="photo-frame mb-6">
-                    <div class="photo-inner">
-                        <!-- Replace with actual photo -->
-                        <img src="{% static 'images/team/sanushia.jpg.jpeg' %}" alt="Sanushia L"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
-                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SANUSHIA L</h3>
-                <div class="role-badge mb-4">Frontend Developer & UI Designer</div>
-                
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Focused on crafting intuitive and aesthetic user interfaces. Designed student and staff 
-                    dashboards with smooth interactions and modern UI principles.
-                </p>
-                
-                <div class="flex flex-wrap justify-center gap-2">
-                    <span class="skill-tag">HTML</span>
-                    <span class="skill-tag">Tailwind CSS</span>
-                    <span class="skill-tag">UI/UX Design</span>
-                    <span class="skill-tag">Accessibility</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Saranya B -->
-        <div class="team-card p-8">
-            <div class="flex flex-col items-center text-center">
-                <div class="photo-frame mb-6">
-                    <div class="photo-inner">
-                        <!-- Replace with actual photo -->
-                        <img src="{% static 'images/team/saranya.jpg.jpeg' %}" alt="Saranya B"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
-                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SARANYA B</h3>
-                <div class="role-badge mb-4">Content & Psychology Research Lead</div>
-                
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Contributed psychological scenario design, patient personas, and evaluation logic. 
-                    Ensures realism, ethics, and academic alignment of simulations.
-                </p>
-                
-                <div class="flex flex-wrap justify-center gap-2">
-                    <span class="skill-tag">Psychology Research</span>
-                    <span class="skill-tag">Case Design</span>
-                    <span class="skill-tag">Clinical Scenarios</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Sharmily V -->
-        <div class="team-card p-8">
-            <div class="flex flex-col items-center text-center">
-                <div class="photo-frame mb-6">
-                    <div class="photo-inner">
-                        <!-- Replace with actual photo -->
-                        <img src="{% static 'images/team/sharmily.jpg.jpeg' %}" alt="Sharmily V"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
-                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SHARMILY V</h3>
-                <div class="role-badge mb-4">Documentation & Testing Lead</div>
-                
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Managed documentation, testing workflows, and validation of platform features. 
-                    Ensures clarity, reliability, and smooth user experience.
-                </p>
-                
-                <div class="flex flex-wrap justify-center gap-2">
-                    <span class="skill-tag">Documentation</span>
-                    <span class="skill-tag">QA Testing</span>
-                    <span class="skill-tag">Project Coordination</span>
-                </div>
-            </div>
-        </div>
-        
-    </div>
+    <div class="section-divider max-w-4xl mx-auto"></div>
     
-    <!-- Quote Section -->
-    <div class="text-center py-12 border-t border-red-900/20">
-        <div class="christmas-lights justify-center mb-6">
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
+    <!-- Team Section -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 title-underline">
+                    Our Team
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto mt-6">
+                    Meet the talented individuals behind PsySim
+                </p>
+            </div>
+            
+            <!-- Team Grid -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Shakthi G -->
+                <div class="team-card p-8 fade-in-up">
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="photo-frame mb-6">
+                            <div class="photo-inner">
+                                <img src="{% static 'images/team/shakthi.jpg.jpeg' %}" alt="Shakthi G" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="user" class="w-14 h-14 text-red-500/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2">Shakthi G</h3>
+                        <div class="role-badge mb-5">Full-Stack Developer & AI Lead</div>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                            Lead developer responsible for backend architecture, AI chatbot integration, 
+                            and system logic. Passionate about building ethical AI systems for healthcare education.
+                        </p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-6">
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">LLM Integration</span>
+                            <span class="skill-tag">System Design</span>
+                            <span class="skill-tag">AI Ethics</span>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <a href="#" class="social-link">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sanushia L -->
+                <div class="team-card p-8 fade-in-up delay-100">
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="photo-frame mb-6">
+                            <div class="photo-inner">
+                                <img src="{% static 'images/team/sanushia.jpg.jpeg' %}" alt="Sanushia L"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="user" class="w-14 h-14 text-red-500/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2">Sanushia L</h3>
+                        <div class="role-badge mb-5">Frontend Developer & UI Designer</div>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                            Focused on crafting intuitive and aesthetic user interfaces. Designed student and staff 
+                            dashboards with smooth interactions and modern UI principles.
+                        </p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-6">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">Tailwind CSS</span>
+                            <span class="skill-tag">UI/UX Design</span>
+                            <span class="skill-tag">Accessibility</span>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <a href="#" class="social-link">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Saranya B -->
+                <div class="team-card p-8 fade-in-up delay-200">
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="photo-frame mb-6">
+                            <div class="photo-inner">
+                                <img src="{% static 'images/team/saranya.jpg.jpeg' %}" alt="Saranya B"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="user" class="w-14 h-14 text-red-500/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2">Saranya B</h3>
+                        <div class="role-badge mb-5">Psychology Research Lead</div>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                            Contributed psychological scenario design, patient personas, and evaluation logic. 
+                            Ensures realism, ethics, and academic alignment of simulations.
+                        </p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-6">
+                            <span class="skill-tag">Psychology Research</span>
+                            <span class="skill-tag">Case Design</span>
+                            <span class="skill-tag">Clinical Scenarios</span>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <a href="#" class="social-link">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sharmily V -->
+                <div class="team-card p-8 fade-in-up delay-300">
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="photo-frame mb-6">
+                            <div class="photo-inner">
+                                <img src="{% static 'images/team/sharmily.jpg.jpeg' %}" alt="Sharmily V"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                                    <i data-lucide="user" class="w-14 h-14 text-red-500/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2">Sharmily V</h3>
+                        <div class="role-badge mb-5">Documentation & QA Lead</div>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
+                            Managed documentation, testing workflows, and validation of platform features. 
+                            Ensures clarity, reliability, and smooth user experience.
+                        </p>
+                        
+                        <div class="flex flex-wrap justify-center gap-2 mb-6">
+                            <span class="skill-tag">Documentation</span>
+                            <span class="skill-tag">QA Testing</span>
+                            <span class="skill-tag">Project Coordination</span>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <a href="#" class="social-link">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i data-lucide="mail" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
-        
-        <p class="text-2xl font-stranger neon-text-subtle tracking-wider mb-4">
-            "FRIENDS DON'T LIE"
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="cta-section p-10 md:p-14 text-center">
+                <div class="relative z-10">
+                    <div class="w-16 h-16 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center mx-auto mb-6 pulse-slow">
+                        <i data-lucide="rocket" class="w-8 h-8 text-red-500"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Ready to Start Learning?
+                    </h2>
+                    
+                    <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+                        Join PsySim today and begin your journey toward becoming a more confident, 
+                        skilled psychology practitioner.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="{% url 'role_select' %}" class="st-btn">
+                            <i data-lucide="log-in" class="w-5 h-5"></i>
+                            Get Started
+                        </a>
+                        <a href="{% url 'role_select' %}" class="st-btn st-btn-outline">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            Back to Portal
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer Note -->
+    <div class="text-center py-10 border-t border-red-900/10">
+        <p class="text-gray-600 text-sm">
+            © 2026 PsySim by Syntax Slayers. Built with passion for psychology education.
         </p>
-        <p class="text-gray-600 tracking-wide">
-            — But our AI patients create realistic learning experiences
-        </p>
-        
-        <a href="{% url 'role_select' %}" class="st-btn mt-8 inline-flex">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-            BACK TO PORTAL
-        </a>
     </div>
     
 </div>
