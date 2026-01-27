@@ -24,6 +24,7 @@ from frontend.views import (
     logout_view,
     student_dashboard,
     staff_dashboard,
+    about_us,
 )
 
 urlpatterns = [
@@ -37,6 +38,9 @@ urlpatterns = [
     # Dashboards
     path("student/dashboard/", student_dashboard, name="student_dashboard"),
     path("staff/dashboard/", staff_dashboard, name="staff_dashboard"),
+
+    # About Us
+    path("about/", about_us, name="about_us"),
 
     # Other apps
     path("chat/", include("chat.urls")),

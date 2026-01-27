@@ -1,0 +1,442 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us - Syntax Slayers | PsySim{% endblock %}
+
+{% block extra_styles %}
+/* Team Card Styles */
+.team-card {
+    background: linear-gradient(145deg, rgba(17, 17, 17, 0.95), rgba(10, 10, 10, 0.98));
+    border: 1px solid rgba(225, 29, 72, 0.3);
+    border-radius: 12px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--st-red), var(--st-red-glow), var(--st-red));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.team-card:hover {
+    border-color: rgba(225, 29, 72, 0.6);
+    transform: translateY(-8px);
+    box-shadow: 
+        0 20px 40px rgba(225, 29, 72, 0.15),
+        0 0 30px rgba(225, 29, 72, 0.1),
+        inset 0 0 30px rgba(225, 29, 72, 0.05);
+}
+
+.team-card:hover::before {
+    opacity: 1;
+}
+
+/* Photo Frame */
+.photo-frame {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 3px solid rgba(225, 29, 72, 0.5);
+    padding: 4px;
+    background: linear-gradient(145deg, rgba(225, 29, 72, 0.2), transparent);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(45deg, transparent 40%, rgba(225, 29, 72, 0.3) 50%, transparent 60%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.team-card:hover .photo-frame {
+    border-color: var(--st-red);
+    box-shadow: 
+        0 0 20px rgba(225, 29, 72, 0.4),
+        0 0 40px rgba(225, 29, 72, 0.2);
+}
+
+.photo-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.photo-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(1.1);
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .photo-inner img {
+    filter: grayscale(0%) contrast(1);
+    transform: scale(1.05);
+}
+
+/* Role Badge */
+.role-badge {
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.3), rgba(159, 18, 57, 0.3));
+    border: 1px solid rgba(225, 29, 72, 0.4);
+    color: var(--st-red-glow);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-block;
+}
+
+/* Skills */
+.skill-tag {
+    background: rgba(17, 17, 17, 0.8);
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    color: var(--st-light-gray);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+    border-color: var(--st-red);
+    color: var(--st-red);
+    background: rgba(225, 29, 72, 0.1);
+}
+
+/* Mission Card */
+.mission-card {
+    background: linear-gradient(145deg, rgba(17, 17, 17, 0.9), rgba(10, 10, 10, 0.95));
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mission-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--st-red), transparent);
+}
+
+/* Stranger Things Alphabet Wall Effect */
+.alphabet-wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.alphabet-letter {
+    font-family: 'Special Elite', cursive;
+    font-size: 1.5rem;
+    color: var(--st-gray);
+    transition: all 0.3s ease;
+}
+
+.alphabet-letter.active {
+    color: var(--st-red);
+    text-shadow: 0 0 10px var(--st-red-glow), 0 0 20px var(--st-red);
+}
+
+/* Glitch Effect for Title */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.glitch:hover {
+    animation: glitch 0.3s infinite;
+}
+
+/* Upside Down Border */
+.upside-down-border {
+    position: relative;
+}
+
+.upside-down-border::before,
+.upside-down-border::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--st-red), transparent);
+}
+
+.upside-down-border::before {
+    top: 0;
+}
+
+.upside-down-border::after {
+    bottom: 0;
+}
+{% endblock %}
+
+{% block content %}
+<div class="min-h-[70vh] py-8">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-16 upside-down-border py-8">
+        <!-- Christmas Lights -->
+        <div class="christmas-lights justify-center mb-6">
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+        </div>
+        
+        <h1 class="text-4xl md:text-6xl font-stranger neon-text flicker mb-4 tracking-[0.2em] glitch">
+            ABOUT US
+        </h1>
+        
+        <p class="text-2xl md:text-3xl font-stranger neon-text-subtle tracking-[0.15em] mb-4">
+            TEAM SYNTAX SLAYERS
+        </p>
+        
+        <p class="text-gray-500 text-lg tracking-wide max-w-2xl mx-auto">
+            Forging the future of psychology through AI
+        </p>
+    </div>
+    
+    <!-- Mission Section -->
+    <div class="mission-card p-8 md:p-12 mb-16 max-w-4xl mx-auto">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded bg-red-900/30 flex items-center justify-center">
+                <i data-lucide="target" class="w-6 h-6 text-red-500"></i>
+            </div>
+            <h2 class="text-2xl font-stranger neon-text-subtle tracking-wider">OUR MISSION</h2>
+        </div>
+        
+        <p class="text-gray-400 text-lg leading-relaxed mb-6">
+            We are a <span class="text-red-400 font-semibold">multidisciplinary student team</span> passionate about 
+            combining <span class="text-red-400 font-semibold">Artificial Intelligence</span> and 
+            <span class="text-red-400 font-semibold">Psychology</span>.
+        </p>
+        
+        <p class="text-gray-400 text-lg leading-relaxed">
+            Our mission is to create a <span class="text-red-400">safe, intelligent training environment</span> where 
+            psychology students can practice clinical skills using AI-simulated patients before entering real-world practice.
+            Like entering the Upside Down, our platform allows students to explore challenging scenarios in a controlled 
+            dimension where mistakes become learning opportunities.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mt-8">
+            <div class="flex items-center gap-2 text-gray-500">
+                <i data-lucide="brain" class="w-5 h-5 text-red-500"></i>
+                <span>AI-Powered</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-500">
+                <i data-lucide="shield-check" class="w-5 h-5 text-red-500"></i>
+                <span>Safe Learning</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-500">
+                <i data-lucide="heart-pulse" class="w-5 h-5 text-red-500"></i>
+                <span>Ethical AI</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-500">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-red-500"></i>
+                <span>Education First</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Team Section Header -->
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-stranger neon-text-subtle tracking-[0.15em] mb-2">THE PARTY</h2>
+        <p class="text-gray-600 tracking-wide">Meet the minds behind PsySim</p>
+    </div>
+    
+    <!-- Team Grid -->
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+        
+        <!-- Shakthi G -->
+        <div class="team-card p-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="photo-frame mb-6">
+                    <div class="photo-inner">
+                        <!-- Replace with actual photo -->
+                        <img src="{% static 'images/team/shakthi.jpg.jpeg' %}" alt="Shakthi G" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SHAKTHI G</h3>
+                <div class="role-badge mb-4">Full-Stack Developer & AI Integration Lead</div>
+                
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Lead developer of PsySim, responsible for backend architecture, AI chatbot integration, 
+                    and system logic. Passionate about building ethical AI systems for healthcare education.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="skill-tag">Django</span>
+                    <span class="skill-tag">LLM Integration</span>
+                    <span class="skill-tag">System Design</span>
+                    <span class="skill-tag">AI Ethics</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sanushia L -->
+        <div class="team-card p-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="photo-frame mb-6">
+                    <div class="photo-inner">
+                        <!-- Replace with actual photo -->
+                        <img src="{% static 'images/team/sanushia.jpg.jpeg' %}" alt="Sanushia L"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SANUSHIA L</h3>
+                <div class="role-badge mb-4">Frontend Developer & UI Designer</div>
+                
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Focused on crafting intuitive and aesthetic user interfaces. Designed student and staff 
+                    dashboards with smooth interactions and modern UI principles.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">UI/UX Design</span>
+                    <span class="skill-tag">Accessibility</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Saranya B -->
+        <div class="team-card p-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="photo-frame mb-6">
+                    <div class="photo-inner">
+                        <!-- Replace with actual photo -->
+                        <img src="{% static 'images/team/saranya.jpg.jpeg' %}" alt="Saranya B"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SARANYA B</h3>
+                <div class="role-badge mb-4">Content & Psychology Research Lead</div>
+                
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Contributed psychological scenario design, patient personas, and evaluation logic. 
+                    Ensures realism, ethics, and academic alignment of simulations.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="skill-tag">Psychology Research</span>
+                    <span class="skill-tag">Case Design</span>
+                    <span class="skill-tag">Clinical Scenarios</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sharmily M -->
+        <div class="team-card p-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="photo-frame mb-6">
+                    <div class="photo-inner">
+                        <!-- Replace with actual photo -->
+                        <img src="{% static 'images/team/sharmily.jpg.jpeg' %}" alt="Sharmily M"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-full h-full bg-gradient-to-br from-red-900/50 to-black flex items-center justify-center" style="display: none;">
+                            <i data-lucide="user" class="w-16 h-16 text-red-500/50"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-stranger neon-text tracking-wider mb-2">SHARMILY M</h3>
+                <div class="role-badge mb-4">Documentation & Testing Lead</div>
+                
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    Managed documentation, testing workflows, and validation of platform features. 
+                    Ensures clarity, reliability, and smooth user experience.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="skill-tag">Documentation</span>
+                    <span class="skill-tag">QA Testing</span>
+                    <span class="skill-tag">Project Coordination</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Quote Section -->
+    <div class="text-center py-12 border-t border-red-900/20">
+        <div class="christmas-lights justify-center mb-6">
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+        </div>
+        
+        <p class="text-2xl font-stranger neon-text-subtle tracking-wider mb-4">
+            "FRIENDS DON'T LIE"
+        </p>
+        <p class="text-gray-600 tracking-wide">
+            — But our AI patients create realistic learning experiences
+        </p>
+        
+        <a href="{% url 'role_select' %}" class="st-btn mt-8 inline-flex">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            BACK TO PORTAL
+        </a>
+    </div>
+    
+</div>
+{% endblock %}

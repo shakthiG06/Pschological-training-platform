@@ -321,6 +321,10 @@
                             </a>
                         {% endif %}
 
+                        <a href="{% url 'about_us' %}" class="nav-link text-sm font-medium tracking-wide">
+                            About Us
+                        </a>
+
                         <form method="post" action="{% url 'logout' %}" class="inline">
                             {% csrf_token %}
                             <button type="submit" class="st-btn-outline st-btn text-xs py-2 px-4">
@@ -329,6 +333,9 @@
                             </button>
                         </form>
                     {% else %}
+                        <a href="{% url 'about_us' %}" class="nav-link text-sm font-medium tracking-wide">
+                            About Us
+                        </a>
                         <span class="text-sm text-gray-500 tracking-wide hidden md:block">
                             The Upside Down of Psychology
                         </span>
@@ -357,9 +364,14 @@
                     <div class="light"></div>
                     <div class="light"></div>
                 </div>
-                <p class="text-sm text-gray-600 font-stranger tracking-wider">
-                    HAWKINS PSYCHOLOGY LAB © 1986
-                </p>
+                <div class="flex items-center gap-6">
+                    <a href="{% url 'about_us' %}" class="nav-link text-sm text-gray-500 font-stranger tracking-wider hover:text-red-500">
+                        TEAM SYNTAX SLAYERS
+                    </a>
+                    <p class="text-sm text-gray-600 font-stranger tracking-wider">
+                        HAWKINS PSYCHOLOGY LAB © 1986
+                    </p>
+                </div>
             </div>
         </div>
     </footer>

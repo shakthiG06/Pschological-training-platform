@@ -4,6 +4,7 @@ from .views import (
     login_view,
     student_dashboard,
     staff_dashboard,
+    about_us,
 )
 
 urlpatterns = [
@@ -11,4 +12,5 @@ urlpatterns = [
     path("login/<str:role>/", login_view, name="login"),
     path("student/dashboard/", student_dashboard, name="student_dashboard"),
     path("staff/dashboard/", staff_dashboard, name="staff_dashboard"),
+    path("about/", about_us, name="about_us"),
 ]

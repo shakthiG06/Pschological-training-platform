@@ -48,6 +48,13 @@ def logout_view(request):
 
 
 # =========================
+# ABOUT US
+# =========================
+def about_us(request):
+    return render(request, "about_us.html")
+
+
+# =========================
 # STUDENT DASHBOARD
 # =========================
 @login_required
