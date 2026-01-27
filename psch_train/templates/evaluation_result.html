@@ -1,85 +1,157 @@
 {% extends "base.html" %}
 
-{% block title %}Evaluation Result{% endblock %}
+{% block title %}Evaluation Result | PsySim{% endblock %}
 
 {% block content %}
 <div class="max-w-5xl mx-auto">
 
   <!-- Header -->
-  <div class="flex justify-between items-center mb-8">
-    <div>
-      <h1 class="text-3xl font-semibold text-gray-800">
-        Session Evaluation
-      </h1>
-      <p class="text-gray-500 mt-1">
-        AI Patient: {{ session.patient.name }}
-      </p>
-    </div>
+  <div class="fade-up mb-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div>
+        <a href="{% url 'student_dashboard' %}" 
+           class="inline-flex items-center gap-2 text-dark-500 hover:text-dark-700 transition-colors mb-3">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          Back to Dashboard
+        </a>
+        <h1 class="text-3xl font-display font-bold text-dark-900 mb-2">
+          Session Evaluation
+        </h1>
+        <div class="flex items-center gap-3">
+          <i data-lucide="user" class="w-4 h-4 text-dark-400"></i>
+          <span class="text-dark-500">AI Patient: <span class="font-medium text-dark-700">{{ session.patient.name }}</span></span>
+        </div>
+      </div>
 
-    <!-- Status Badge -->
-    {% if evaluation %}
-      <span class="px-4 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
-        Evaluated
-      </span>
-    {% else %}
-      <span class="px-4 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-700">
-        Pending Review
-      </span>
-    {% endif %}
+      <!-- Status Badge -->
+      {% if evaluation %}
+        <span class="badge badge-success">
+          <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+          Evaluation Complete
+        </span>
+      {% else %}
+        <span class="badge badge-warning">
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+          Pending Review
+        </span>
+      {% endif %}
+    </div>
   </div>
+
+  {% if evaluation %}
 
   <!-- Score Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 fade-up fade-up-delay-1">
 
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-      <h3 class="text-lg font-semibold text-gray-700 mb-2">Empathy</h3>
-      <p class="text-4xl font-bold text-pink-600">
-        {{ evaluation.empathy_score }}/10
-      </p>
+    <div class="card p-6 hover-lift group">
+      <div class="flex items-start justify-between mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <i data-lucide="heart" class="w-7 h-7 text-pink-600"></i>
+        </div>
+        <span class="text-xs text-dark-400 font-medium">SCORE</span>
+      </div>
+      <h3 class="text-dark-500 text-sm font-semibold mb-2">Empathy</h3>
+      <div class="flex items-end gap-2">
+        <p class="text-5xl font-display font-bold stat-number">
+          {{ evaluation.empathy_score }}
+        </p>
+        <span class="text-dark-400 text-lg font-medium mb-1">/10</span>
+      </div>
+      <div class="mt-4 h-2 rounded-full bg-dark-100 overflow-hidden">
+        <div class="h-full rounded-full bg-gradient-to-r from-pink-400 to-rose-500" 
+             style="width: {{ evaluation.empathy_score }}0%"></div>
+      </div>
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-      <h3 class="text-lg font-semibold text-gray-700 mb-2">Communication</h3>
-      <p class="text-4xl font-bold text-purple-600">
-        {{ evaluation.communication_score }}/10
-      </p>
+    <div class="card p-6 hover-lift group">
+      <div class="flex items-start justify-between mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <i data-lucide="messages-square" class="w-7 h-7 text-primary-600"></i>
+        </div>
+        <span class="text-xs text-dark-400 font-medium">SCORE</span>
+      </div>
+      <h3 class="text-dark-500 text-sm font-semibold mb-2">Communication</h3>
+      <div class="flex items-end gap-2">
+        <p class="text-5xl font-display font-bold stat-number">
+          {{ evaluation.communication_score }}
+        </p>
+        <span class="text-dark-400 text-lg font-medium mb-1">/10</span>
+      </div>
+      <div class="mt-4 h-2 rounded-full bg-dark-100 overflow-hidden">
+        <div class="h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600" 
+             style="width: {{ evaluation.communication_score }}0%"></div>
+      </div>
     </div>
 
   </div>
 
-  <!-- Feedback -->
-  <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white
-              p-8 rounded-2xl shadow-lg mb-10">
-    <h3 class="text-xl font-semibold mb-3">Staff Feedback</h3>
-    <p class="leading-relaxed opacity-95">
-      {{ evaluation.notes }}
-    </p>
+  <!-- Staff Feedback -->
+  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 via-primary-600 to-accent-600 p-8 text-white mb-8 fade-up fade-up-delay-2">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -ml-24 -mb-24"></div>
+    <div class="relative">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+          <i data-lucide="user-check" class="w-5 h-5 text-white"></i>
+        </div>
+        <h3 class="text-xl font-display font-bold">Staff Feedback</h3>
+      </div>
+      <p class="text-white/90 leading-relaxed text-lg">
+        {{ evaluation.notes }}
+      </p>
+    </div>
   </div>
 
-  <!-- AI Feedback -->
-  <div class="bg-white p-6 rounded-2xl shadow mb-10">
-    <h3 class="text-xl font-semibold text-gray-700 mb-3">
-      AI Learning Insight
-    </h3>
-    <p class="text-gray-600 italic">
-      “{{ evaluation.ai_summary }}”
-    </p>
+  <!-- AI Insight -->
+  <div class="card p-6 mb-8 fade-up fade-up-delay-3">
+    <div class="flex items-start gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent-100 to-accent-200 flex items-center justify-center flex-shrink-0">
+        <i data-lucide="sparkles" class="w-6 h-6 text-accent-600"></i>
+      </div>
+      <div>
+        <h3 class="font-display font-bold text-dark-800 mb-2">AI Learning Insight</h3>
+        <p class="text-dark-600 leading-relaxed italic">
+          "{{ evaluation.ai_summary }}"
+        </p>
+      </div>
+    </div>
   </div>
 
-  <!-- Readiness Badge -->
-  <div class="text-center">
+  <!-- Readiness Status -->
+  <div class="text-center fade-up fade-up-delay-4">
     {% if evaluation.readiness == "Ready" %}
-      <div class="inline-block px-6 py-3 bg-green-500 text-white
-                  rounded-full font-semibold shadow-lg">
-        ✅ Ready for Real Patients
+      <div class="inline-flex flex-col items-center p-8 rounded-2xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center mb-4 shadow-xl shadow-emerald-500/30">
+          <i data-lucide="check" class="w-10 h-10 text-white"></i>
+        </div>
+        <h3 class="text-2xl font-display font-bold text-emerald-800 mb-2">Ready for Real Patients</h3>
+        <p class="text-emerald-600">Congratulations! You've demonstrated clinical readiness.</p>
       </div>
     {% else %}
-      <div class="inline-block px-6 py-3 bg-yellow-500 text-white
-                  rounded-full font-semibold shadow-lg">
-        🕒 Needs More Practice
+      <div class="inline-flex flex-col items-center p-8 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mb-4 shadow-xl shadow-amber-500/30">
+          <i data-lucide="trending-up" class="w-10 h-10 text-white"></i>
+        </div>
+        <h3 class="text-2xl font-display font-bold text-amber-800 mb-2">Keep Practicing</h3>
+        <p class="text-amber-600">Continue your training to build more clinical confidence.</p>
       </div>
     {% endif %}
   </div>
+
+  {% else %}
+
+  <!-- No Evaluation Yet -->
+  <div class="card p-12 text-center fade-up">
+    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mx-auto mb-6">
+      <i data-lucide="hourglass" class="w-10 h-10 text-amber-500"></i>
+    </div>
+    <h3 class="text-2xl font-display font-bold text-dark-800 mb-3">Evaluation Pending</h3>
+    <p class="text-dark-500 max-w-md mx-auto">
+      Your session is currently being reviewed by staff. Check back soon for your evaluation results and feedback.
+    </p>
+  </div>
+
+  {% endif %}
 
 </div>
 {% endblock %}

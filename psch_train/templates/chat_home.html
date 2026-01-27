@@ -1,38 +1,76 @@
 {% extends "base.html" %}
 
-{% block title %}AI Practice Sessions{% endblock %}
+{% block title %}AI Practice Sessions | PsySim{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto">
 
-  <h1 class="text-3xl font-semibold mb-6">
-    AI Patient Simulations
-  </h1>
+  <!-- Header -->
+  <div class="fade-up mb-10">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-display font-bold text-dark-900 mb-2">
+          AI Patient Simulations
+        </h1>
+        <p class="text-dark-500 text-lg">
+          Practice your clinical skills with realistic AI-powered patient scenarios
+        </p>
+      </div>
+      <span class="badge badge-info">
+        <i data-lucide="users" class="w-3.5 h-3.5"></i>
+        {{ patients|length }} Available
+      </span>
+    </div>
+  </div>
 
   {% if patients %}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {% for patient in patients %}
-        <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition">
-          <h2 class="text-xl font-medium mb-2">
-            {{ patient.name }}
-          </h2>
-          <p class="text-sm text-gray-600 mb-4">
-            Course: {{ patient.course.title }}
-          </p>
-          <a href="{% url 'chat' patient.id %}"
-             class="inline-block px-5 py-2 rounded-full
-                    bg-gradient-to-r from-pink-600 to-rose-500
-                    text-white text-sm
-                    hover:scale-105 transition">
-            Start AI Session →
-          </a>
+        <div class="card p-6 hover-lift group fade-up fade-up-delay-{{ forloop.counter }}">
+          
+          <div class="flex items-start gap-4">
+            <!-- Patient Avatar -->
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/25 group-hover:scale-110 transition-transform duration-300">
+              <i data-lucide="user" class="w-7 h-7 text-white"></i>
+            </div>
+            
+            <div class="flex-1">
+              <h2 class="text-xl font-display font-bold text-dark-800 mb-1 group-hover:text-accent-600 transition-colors">
+                {{ patient.name }}
+              </h2>
+              <div class="flex items-center gap-2 text-dark-400 text-sm mb-3">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                {{ patient.course.title }}
+              </div>
+              
+              <span class="badge badge-purple mb-4">
+                {{ patient.condition }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="mt-4 pt-4 border-t border-dark-100">
+            <a href="{% url 'chat' patient.id %}"
+               class="btn-secondary w-full py-3 rounded-xl text-white font-semibold flex items-center justify-center gap-2">
+              <i data-lucide="message-circle" class="w-5 h-5"></i>
+              Start Session
+            </a>
+          </div>
         </div>
       {% endfor %}
     </div>
   {% else %}
-    <p class="text-gray-500">
-      No AI patients unlocked yet. Complete a course to begin.
-    </p>
+    <div class="card p-12 text-center fade-up">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="lock" class="w-8 h-8 text-dark-400"></i>
+      </div>
+      <h3 class="font-display font-bold text-dark-800 mb-2">No Patients Available</h3>
+      <p class="text-dark-500 text-sm mb-6">Complete a course to unlock AI patient simulations</p>
+      <a href="/courses/" class="btn-primary px-6 py-3 rounded-xl text-white font-semibold inline-flex items-center gap-2">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+        Browse Courses
+      </a>
+    </div>
   {% endif %}
 
 </div>

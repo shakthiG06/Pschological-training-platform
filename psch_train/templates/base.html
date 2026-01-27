@@ -2,96 +2,331 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}PsySim{% endblock %}</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                300: '#7dd3fc',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              },
+              accent: {
+                50: '#fdf4ff',
+                100: '#fae8ff',
+                200: '#f5d0fe',
+                300: '#f0abfc',
+                400: '#e879f9',
+                500: '#d946ef',
+                600: '#c026d3',
+                700: '#a21caf',
+                800: '#86198f',
+                900: '#701a75',
+              },
+              dark: {
+                50: '#f8fafc',
+                100: '#f1f5f9',
+                200: '#e2e8f0',
+                300: '#cbd5e1',
+                400: '#94a3b8',
+                500: '#64748b',
+                600: '#475569',
+                700: '#334155',
+                800: '#1e293b',
+                900: '#0f172a',
+                950: '#020617',
+              }
+            }
+          }
+        }
+      }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        .font-heading {
-            font-family: 'Playfair Display', serif;
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .font-ui {
-            font-family: 'Poppins', sans-serif;
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        @keyframes fadeIn {
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Smooth animations */
+        .fade-up {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .fade-up-delay-1 { animation-delay: 0.1s; }
+        .fade-up-delay-2 { animation-delay: 0.2s; }
+        .fade-up-delay-3 { animation-delay: 0.3s; }
+        .fade-up-delay-4 { animation-delay: 0.4s; }
+
+        @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
+        /* Gradient mesh background */
+        .mesh-gradient {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 40% 20%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(217, 70, 239, 0.08) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, rgba(217, 70, 239, 0.06) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(14, 165, 233, 0.06) 0px, transparent 50%);
+        }
+
+        /* Hover effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            box-shadow: 0 4px 14px 0 rgba(14, 165, 233, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px 0 rgba(14, 165, 233, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #d946ef 0%, #a21caf 100%);
+            box-shadow: 0 4px 14px 0 rgba(217, 70, 239, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px 0 rgba(217, 70, 239, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* Card styles */
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 12px 28px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        /* Status badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-success {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #166534;
+        }
+
+        .badge-warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #075985;
+        }
+
+        .badge-purple {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            color: #7c3aed;
+        }
+
+        /* Stat card number animation */
+        .stat-number {
+            background: linear-gradient(135deg, #0ea5e9, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
+    {% block extra_styles %}{% endblock %}
 </head>
 
-<body class="bg-gray-100 min-h-screen fade-in font-ui">
+<body class="min-h-screen mesh-gradient">
 
 <!-- NAVBAR -->
-<nav class="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow">
-  <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+<nav class="sticky top-0 z-50 glass border-b border-white/20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
 
-    <!-- Brand -->
-    <h1 class="text-2xl font-heading tracking-wide">
-      PsySim
-    </h1>
-
-    <!-- Right Side -->
-    <div class="flex items-center gap-6 text-sm font-medium">
-
-      {% if request.user.is_authenticated %}
-
-        {% if request.user.profile.role == "student" %}
-          <a href="{% url 'student_dashboard' %}" class="hover:underline transition">
-            Dashboard
-          </a>
-        {% endif %}
-
-        {% if request.user.profile.role == "staff" %}
-          <a href="{% url 'staff_dashboard' %}" class="hover:underline transition">
-            Staff Dashboard
-          </a>
-        {% endif %}
-
-        <!-- ✅ LOGOUT (POST FORM – FIXED) -->
-        <form method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <button type="submit"
-                  class="px-4 py-1 rounded-full bg-white/20
-                         hover:bg-white/30 transition">
-            Logout
-          </button>
-        </form>
-
-      {% else %}
-        <span class="text-sm opacity-90 hidden md:block">
-          Psychology Training Platform
+      <!-- Brand -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg shadow-primary-500/25 group-hover:shadow-primary-500/40 transition-all duration-300">
+          <i data-lucide="brain" class="w-5 h-5 text-white"></i>
+        </div>
+        <span class="text-xl font-display font-bold text-dark-800">
+          PsySim
         </span>
-      {% endif %}
+      </a>
+
+      <!-- Navigation -->
+      <div class="flex items-center gap-2">
+
+        {% if request.user.is_authenticated %}
+
+          {% if request.user.profile.role == "student" %}
+            <a href="{% url 'student_dashboard' %}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl text-dark-600 hover:text-dark-800 hover:bg-dark-100/50 transition-all duration-200 text-sm font-medium">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+              Dashboard
+            </a>
+            <a href="/courses/" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl text-dark-600 hover:text-dark-800 hover:bg-dark-100/50 transition-all duration-200 text-sm font-medium">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              Courses
+            </a>
+          {% endif %}
+
+          {% if request.user.profile.role == "staff" %}
+            <a href="{% url 'staff_dashboard' %}" 
+               class="flex items-center gap-2 px-4 py-2 rounded-xl text-dark-600 hover:text-dark-800 hover:bg-dark-100/50 transition-all duration-200 text-sm font-medium">
+              <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+              Evaluations
+            </a>
+          {% endif %}
+
+          <!-- User Menu -->
+          <div class="flex items-center gap-3 ml-2 pl-4 border-l border-dark-200">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white text-sm font-semibold shadow-lg">
+              {{ request.user.username|slice:":1"|upper }}
+            </div>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit"
+                      class="flex items-center gap-2 px-4 py-2 rounded-xl text-dark-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200 text-sm font-medium">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                Logout
+              </button>
+            </form>
+          </div>
+
+        {% else %}
+          <span class="text-sm text-dark-500 hidden md:block">
+            Psychology Training Platform
+          </span>
+        {% endif %}
+
+      </div>
 
     </div>
-
   </div>
 </nav>
 
 <!-- PAGE CONTENT -->
-<main class="container mx-auto p-6">
+<main class="max-w-7xl mx-auto px-6 lg:px-8 py-8">
     {% block content %}{% endblock %}
 </main>
+
+<!-- Footer -->
+<footer class="mt-auto py-8 border-t border-dark-200/50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-dark-400 text-sm">
+        <i data-lucide="brain" class="w-4 h-4"></i>
+        <span>PsySim — AI Psychology Training Platform</span>
+      </div>
+      <div class="text-dark-400 text-sm">
+        © 2026 All rights reserved
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Initialize Lucide Icons -->
+<script>
+  lucide.createIcons();
+</script>
+
+{% block extra_scripts %}{% endblock %}
 
 </body>
 </html>

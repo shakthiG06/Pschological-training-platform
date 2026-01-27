@@ -1,34 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
   <meta charset="UTF-8">
-  <title>Select Role</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Role | PsySim</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            accent: {
+              50: '#fdf4ff',
+              100: '#fae8ff',
+              200: '#f5d0fe',
+              300: '#f0abfc',
+              400: '#e879f9',
+              500: '#d946ef',
+              600: '#c026d3',
+              700: '#a21caf',
+              800: '#86198f',
+              900: '#701a75',
+            },
+            dark: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            }
+          }
+        }
+      }
+    }
+  </script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Font utilities */
-    .font-heading {
-      font-family: 'Playfair Display', serif;
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
-    .font-ui {
-      font-family: 'Poppins', sans-serif;
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Fade-in page */
-    .fade-in {
-      animation: fadeIn 0.9s ease-in-out;
+    /* Mesh gradient background */
+    .mesh-bg {
+      background-color: #0f172a;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.3) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(217, 70, 239, 0.2) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.2) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(217, 70, 239, 0.15) 0px, transparent 50%);
     }
 
-    @keyframes fadeIn {
+    /* Animations */
+    .fade-up {
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .fade-up-delay-1 { animation-delay: 0.15s; }
+    .fade-up-delay-2 { animation-delay: 0.3s; }
+    .fade-up-delay-3 { animation-delay: 0.45s; }
+
+    @keyframes fadeUp {
       from {
         opacity: 0;
         transform: translateY(20px);
@@ -39,80 +103,171 @@
       }
     }
 
-    /* Card pop animation */
-    .pop {
-      animation: popIn 0.8s ease-out;
+    /* Card hover */
+    .role-card {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes popIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Floating animation */
-    .float:hover {
+    .role-card:hover {
       transform: translateY(-8px);
+    }
+
+    .role-card:hover .card-icon {
+      transform: scale(1.1);
+    }
+
+    .card-icon {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Floating shapes */
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .float-delay {
+      animation: float 6s ease-in-out infinite;
+      animation-delay: -3s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Glass effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-pink-700 to-rose-500 fade-in font-ui">
+<body class="min-h-screen mesh-bg flex items-center justify-center p-6">
 
-  <div class="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-[900px] h-[460px] flex overflow-hidden pop">
+  <!-- Decorative Elements -->
+  <div class="fixed top-20 left-20 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl float"></div>
+  <div class="fixed bottom-20 right-20 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl float-delay"></div>
 
-    <!-- Left Info Panel -->
-    <div class="w-1/2 bg-gradient-to-br from-pink-600 to-purple-700 text-white
-                flex items-center justify-center relative">
+  <div class="relative z-10 w-full max-w-4xl">
 
-      <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_top_left,_#fff,_transparent)]"></div>
-
-      <div class="text-center px-10 z-10">
-        <h1 class="text-4xl font-heading mb-4 tracking-wide">
-          AI PSYCHOLOGY LAB
-        </h1>
-        <p class="text-[15px] opacity-90 leading-relaxed font-ui">
-          A controlled environment for psychology students to practice
-          clinical skills using AI-simulated patients.
-        </p>
+    <!-- Header -->
+    <div class="text-center mb-12 fade-up">
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-xl shadow-primary-500/30">
+          <i data-lucide="brain" class="w-7 h-7 text-white"></i>
+        </div>
       </div>
+      <h1 class="text-4xl lg:text-5xl font-display font-bold text-white mb-4">
+        Welcome to PsySim
+      </h1>
+      <p class="text-dark-300 text-lg max-w-xl mx-auto">
+        AI-powered clinical training platform for psychology students and educators
+      </p>
     </div>
 
-    <!-- Role Selection -->
-    <div class="w-1/2 flex flex-col items-center justify-center gap-6">
+    <!-- Role Cards -->
+    <div class="grid md:grid-cols-2 gap-6">
 
-      <h2 class="text-2xl font-heading text-gray-700 mb-2 tracking-wide">
-        Choose Your Role
-      </h2>
+      <!-- Student Card -->
+      <a href="/login/student/" class="role-card glass rounded-3xl p-8 block fade-up fade-up-delay-1 group">
+        <div class="flex flex-col h-full">
+          
+          <!-- Icon -->
+          <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-6 shadow-xl shadow-primary-500/30">
+            <i data-lucide="graduation-cap" class="w-8 h-8 text-white"></i>
+          </div>
 
-      <!-- Student Button -->
-      <a href="/login/student/"
-         class="font-ui float w-72 py-4 rounded-full
-                bg-gradient-to-r from-pink-600 to-rose-500
-                text-white text-lg font-medium text-center
-                shadow-lg transform transition duration-300
-                hover:shadow-2xl hover:scale-105 active:scale-95">
-        🎓 STUDENT
+          <!-- Content -->
+          <h2 class="text-2xl font-display font-bold text-dark-800 mb-3">
+            Student
+          </h2>
+          <p class="text-dark-500 leading-relaxed mb-6 flex-grow">
+            Access courses, practice with AI-simulated patients, and track your clinical progress.
+          </p>
+
+          <!-- Features -->
+          <div class="space-y-2 mb-6">
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
+              Interactive AI patient simulations
+            </div>
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
+              Course-based learning path
+            </div>
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
+              Professional evaluation & feedback
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="flex items-center gap-2 text-primary-600 font-semibold group-hover:gap-4 transition-all">
+            Continue as Student
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </div>
+
+        </div>
       </a>
 
-      <!-- Staff Button -->
-      <a href="/login/staff/"
-         class="font-ui float w-72 py-4 rounded-full
-                bg-gradient-to-r from-purple-600 to-indigo-600
-                text-white text-lg font-medium text-center
-                shadow-lg transform transition duration-300
-                hover:shadow-2xl hover:scale-105 active:scale-95">
-        🧑‍🏫 STAFF
+      <!-- Staff Card -->
+      <a href="/login/staff/" class="role-card glass rounded-3xl p-8 block fade-up fade-up-delay-2 group">
+        <div class="flex flex-col h-full">
+          
+          <!-- Icon -->
+          <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center mb-6 shadow-xl shadow-accent-500/30">
+            <i data-lucide="clipboard-check" class="w-8 h-8 text-white"></i>
+          </div>
+
+          <!-- Content -->
+          <h2 class="text-2xl font-display font-bold text-dark-800 mb-3">
+            Staff / Educator
+          </h2>
+          <p class="text-dark-500 leading-relaxed mb-6 flex-grow">
+            Review student sessions, provide evaluations, and assess clinical readiness.
+          </p>
+
+          <!-- Features -->
+          <div class="space-y-2 mb-6">
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
+              Review session transcripts
+            </div>
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
+              Provide detailed feedback
+            </div>
+            <div class="flex items-center gap-2 text-dark-600 text-sm">
+              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
+              Track student progress
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="flex items-center gap-2 text-accent-600 font-semibold group-hover:gap-4 transition-all">
+            Continue as Staff
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </div>
+
+        </div>
       </a>
 
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-12 fade-up fade-up-delay-3">
+      <p class="text-dark-400 text-sm">
+        © 2026 PsySim — AI Psychology Training Platform
+      </p>
     </div>
 
   </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
 
 </body>
 </html>
