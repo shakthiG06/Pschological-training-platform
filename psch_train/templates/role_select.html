@@ -1,273 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Role | PsySim</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Lab | PsySim</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e',
-            },
-            accent: {
-              50: '#fdf4ff',
-              100: '#fae8ff',
-              200: '#f5d0fe',
-              300: '#f0abfc',
-              400: '#e879f9',
-              500: '#d946ef',
-              600: '#c026d3',
-              700: '#a21caf',
-              800: '#86198f',
-              900: '#701a75',
-            },
-            dark: {
-              50: '#f8fafc',
-              100: '#f1f5f9',
-              200: '#e2e8f0',
-              300: '#cbd5e1',
-              400: '#94a3b8',
-              500: '#64748b',
-              600: '#475569',
-              700: '#334155',
-              800: '#1e293b',
-              900: '#0f172a',
-              950: '#020617',
-            }
-          }
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts - Stranger Things Style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --st-black: #0a0a0a;
+            --st-red: #e11d48;
+            --st-red-glow: #ff2d55;
+            --st-cream: #f5f5dc;
         }
-      }
-    }
-  </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--st-black);
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+        .font-stranger {
+            font-family: 'Special Elite', cursive;
+            letter-spacing: 0.15em;
+        }
 
-  <style>
-    * {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+        /* Neon Glow */
+        .neon-text {
+            color: var(--st-red);
+            text-shadow: 
+                0 0 5px var(--st-red-glow),
+                0 0 10px var(--st-red-glow),
+                0 0 20px var(--st-red-glow),
+                0 0 40px var(--st-red);
+        }
 
-    .font-display {
-      font-family: 'Space Grotesk', sans-serif;
-    }
+        /* Flicker Animation */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 5px var(--st-red-glow),
+                    0 0 10px var(--st-red-glow),
+                    0 0 20px var(--st-red-glow),
+                    0 0 40px var(--st-red);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
 
-    /* Mesh gradient background */
-    .mesh-bg {
-      background-color: #0f172a;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.3) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(217, 70, 239, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(217, 70, 239, 0.15) 0px, transparent 50%);
-    }
+        .flicker {
+            animation: flicker 4s infinite alternate;
+        }
 
-    /* Animations */
-    .fade-up {
-      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-    }
+        /* Christmas Lights */
+        .christmas-lights {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
 
-    .fade-up-delay-1 { animation-delay: 0.15s; }
-    .fade-up-delay-2 { animation-delay: 0.3s; }
-    .fade-up-delay-3 { animation-delay: 0.45s; }
+        .light {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .light:nth-child(1) { background: #e11d48; animation-delay: 0s; }
+        .light:nth-child(2) { background: #22c55e; animation-delay: 0.3s; }
+        .light:nth-child(3) { background: #3b82f6; animation-delay: 0.6s; }
+        .light:nth-child(4) { background: #eab308; animation-delay: 0.9s; }
+        .light:nth-child(5) { background: #e11d48; animation-delay: 1.2s; }
+        .light:nth-child(6) { background: #22c55e; animation-delay: 1.5s; }
+        .light:nth-child(7) { background: #3b82f6; animation-delay: 1.8s; }
 
-    /* Card hover */
-    .role-card {
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; box-shadow: none; }
+            50% { opacity: 1; box-shadow: 0 0 15px currentColor, 0 0 30px currentColor; }
+        }
 
-    .role-card:hover {
-      transform: translateY(-8px);
-    }
+        /* Role Card */
+        .role-card {
+            background: linear-gradient(145deg, rgba(17, 17, 17, 0.95), rgba(10, 10, 10, 0.98));
+            border: 1px solid rgba(225, 29, 72, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .role-card:hover .card-icon {
-      transform: scale(1.1);
-    }
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
 
-    .card-icon {
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+        .role-card:hover::before {
+            left: 100%;
+        }
 
-    /* Floating shapes */
-    .float {
-      animation: float 6s ease-in-out infinite;
-    }
+        .role-card:hover {
+            border-color: var(--st-red);
+            box-shadow: 
+                0 0 30px rgba(225, 29, 72, 0.2),
+                0 0 60px rgba(225, 29, 72, 0.1),
+                inset 0 0 30px rgba(225, 29, 72, 0.05);
+            transform: translateY(-5px);
+        }
 
-    .float-delay {
-      animation: float 6s ease-in-out infinite;
-      animation-delay: -3s;
-    }
+        .role-card:hover .role-icon {
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.5);
+        }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
+        .role-icon {
+            transition: all 0.4s ease;
+        }
 
-    /* Glass effect */
-    .glass {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-  </style>
+        /* VHS Scanlines */
+        .vhs-overlay {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            z-index: 9999;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--st-red);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Fade in */
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 
-<body class="min-h-screen mesh-bg flex items-center justify-center p-6">
+<body class="flex items-center justify-center">
+    <!-- VHS Overlay -->
+    <div class="vhs-overlay"></div>
+    
+    <!-- Floating Particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 2.5s;"></div>
 
-  <!-- Decorative Elements -->
-  <div class="fixed top-20 left-20 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl float"></div>
-  <div class="fixed bottom-20 right-20 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl float-delay"></div>
-
-  <div class="relative z-10 w-full max-w-4xl">
-
-    <!-- Header -->
-    <div class="text-center mb-12 fade-up">
-      <div class="flex items-center justify-center gap-3 mb-6">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-xl shadow-primary-500/30">
-          <i data-lucide="brain" class="w-7 h-7 text-white"></i>
+    <div class="text-center fade-in relative z-10 px-6">
+        
+        <!-- Christmas Lights -->
+        <div class="christmas-lights mb-10">
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
         </div>
-      </div>
-      <h1 class="text-4xl lg:text-5xl font-display font-bold text-white mb-4">
-        Welcome to PsySim
-      </h1>
-      <p class="text-dark-300 text-lg max-w-xl mx-auto">
-        AI-powered clinical training platform for psychology students and educators
-      </p>
-    </div>
-
-    <!-- Role Cards -->
-    <div class="grid md:grid-cols-2 gap-6">
-
-      <!-- Student Card -->
-      <a href="/login/student/" class="role-card glass rounded-3xl p-8 block fade-up fade-up-delay-1 group">
-        <div class="flex flex-col h-full">
-          
-          <!-- Icon -->
-          <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-6 shadow-xl shadow-primary-500/30">
-            <i data-lucide="graduation-cap" class="w-8 h-8 text-white"></i>
-          </div>
-
-          <!-- Content -->
-          <h2 class="text-2xl font-display font-bold text-dark-800 mb-3">
-            Student
-          </h2>
-          <p class="text-dark-500 leading-relaxed mb-6 flex-grow">
-            Access courses, practice with AI-simulated patients, and track your clinical progress.
-          </p>
-
-          <!-- Features -->
-          <div class="space-y-2 mb-6">
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
-              Interactive AI patient simulations
-            </div>
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
-              Course-based learning path
-            </div>
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-primary-500"></i>
-              Professional evaluation & feedback
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="flex items-center gap-2 text-primary-600 font-semibold group-hover:gap-4 transition-all">
-            Continue as Student
-            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-          </div>
-
+        
+        <!-- Title -->
+        <h1 class="text-5xl md:text-7xl font-stranger neon-text flicker mb-4 tracking-[0.25em]">
+            PSYSIM
+        </h1>
+        
+        <p class="text-gray-500 tracking-[0.3em] text-sm mb-2 uppercase">
+            Hawkins Psychology Laboratory
+        </p>
+        
+        <p class="text-gray-600 mb-12 max-w-md mx-auto">
+            Enter the Upside Down of clinical training. Choose your path wisely.
+        </p>
+        
+        <!-- Role Selection -->
+        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+            
+            <!-- Student Card -->
+            <a href="/login/student/" class="role-card w-72 p-8 rounded-lg text-left group">
+                <div class="role-icon w-16 h-16 rounded-lg bg-red-900/30 flex items-center justify-center mb-6 border border-red-900/50">
+                    <i data-lucide="graduation-cap" class="w-8 h-8 text-red-500"></i>
+                </div>
+                <h2 class="font-stranger text-xl text-red-500 mb-2 tracking-wider">STUDENT</h2>
+                <p class="text-gray-500 text-sm mb-4">
+                    Learn, practice with AI patients, and get evaluated by staff.
+                </p>
+                <span class="text-red-500 text-sm flex items-center gap-2 font-medium tracking-wide">
+                    ENTER
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </span>
+            </a>
+            
+            <!-- Staff Card -->
+            <a href="/login/staff/" class="role-card w-72 p-8 rounded-lg text-left group">
+                <div class="role-icon w-16 h-16 rounded-lg bg-red-900/30 flex items-center justify-center mb-6 border border-red-900/50">
+                    <i data-lucide="shield" class="w-8 h-8 text-red-500"></i>
+                </div>
+                <h2 class="font-stranger text-xl text-red-500 mb-2 tracking-wider">STAFF</h2>
+                <p class="text-gray-500 text-sm mb-4">
+                    Review student sessions and provide clinical evaluations.
+                </p>
+                <span class="text-red-500 text-sm flex items-center gap-2 font-medium tracking-wide">
+                    ENTER
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </span>
+            </a>
+            
         </div>
-      </a>
-
-      <!-- Staff Card -->
-      <a href="/login/staff/" class="role-card glass rounded-3xl p-8 block fade-up fade-up-delay-2 group">
-        <div class="flex flex-col h-full">
-          
-          <!-- Icon -->
-          <div class="card-icon w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center mb-6 shadow-xl shadow-accent-500/30">
-            <i data-lucide="clipboard-check" class="w-8 h-8 text-white"></i>
-          </div>
-
-          <!-- Content -->
-          <h2 class="text-2xl font-display font-bold text-dark-800 mb-3">
-            Staff / Educator
-          </h2>
-          <p class="text-dark-500 leading-relaxed mb-6 flex-grow">
-            Review student sessions, provide evaluations, and assess clinical readiness.
-          </p>
-
-          <!-- Features -->
-          <div class="space-y-2 mb-6">
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
-              Review session transcripts
-            </div>
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
-              Provide detailed feedback
-            </div>
-            <div class="flex items-center gap-2 text-dark-600 text-sm">
-              <i data-lucide="check-circle" class="w-4 h-4 text-accent-500"></i>
-              Track student progress
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="flex items-center gap-2 text-accent-600 font-semibold group-hover:gap-4 transition-all">
-            Continue as Staff
-            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-          </div>
-
-        </div>
-      </a>
-
+        
+        <!-- Footer Text -->
+        <p class="text-gray-700 text-xs mt-12 font-stranger tracking-[0.2em]">
+            "FRIENDS DON'T LIE" - ELEVEN
+        </p>
+        
     </div>
-
-    <!-- Footer -->
-    <div class="text-center mt-12 fade-up fade-up-delay-3">
-      <p class="text-dark-400 text-sm">
-        © 2026 PsySim — AI Psychology Training Platform
-      </p>
-    </div>
-
-  </div>
-
-  <script>
-    lucide.createIcons();
-  </script>
-
+    
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

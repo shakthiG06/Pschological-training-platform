@@ -1,211 +1,151 @@
 {% extends "base.html" %}
-{% block title %}Staff Dashboard | PsySim{% endblock %}
+{% block title %}Staff Portal | PsySim{% endblock %}
 
 {% block content %}
 
-<!-- PAGE HEADER -->
-<div class="fade-up mb-8">
-  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-    <div>
-      <h1 class="text-3xl font-display font-bold text-dark-900 mb-2">
-        Evaluation Center
-      </h1>
-      <p class="text-dark-500 text-lg">
-        Review student sessions and assess clinical readiness
-      </p>
+<!-- Header -->
+<section class="mb-10">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">Staff Portal</p>
+            <h1 class="text-3xl md:text-4xl font-stranger neon-text tracking-wider">
+                {{ request.user.username|upper }}
+            </h1>
+            <p class="text-gray-500 mt-2">Review and evaluate student clinical sessions.</p>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="st-badge-yellow flex items-center gap-2 px-4 py-2">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+                <span>{{ pending_sessions|length }} Pending</span>
+            </div>
+        </div>
     </div>
-    <div class="flex items-center gap-3">
-      <span class="badge badge-info">
-        <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
-        Staff Access
-      </span>
-    </div>
-  </div>
+</section>
+
+<!-- Christmas Lights -->
+<div class="christmas-lights mb-10 justify-start">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
 </div>
 
-<!-- STATS OVERVIEW -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 fade-up fade-up-delay-1">
-
-  <!-- Pending Reviews -->
-  <div class="card p-6 hover-lift group">
-    <div class="flex items-start justify-between mb-4">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-        <i data-lucide="clock" class="w-6 h-6 text-amber-600"></i>
-      </div>
-      <span class="badge badge-warning">Pending</span>
+<!-- Stats Grid -->
+<section class="grid grid-cols-3 gap-4 mb-10">
+    <div class="st-card p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded bg-yellow-900/30 flex items-center justify-center">
+                <i data-lucide="clock" class="w-5 h-5 text-yellow-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-yellow-500">{{ pending_sessions|length }}</p>
+        <p class="text-sm text-gray-500">Pending Reviews</p>
     </div>
-    <p class="text-dark-500 text-sm font-medium mb-1">Awaiting Review</p>
-    <p class="text-4xl font-display font-bold text-dark-800">
-      {{ pending_sessions|length }}
-    </p>
-    <div class="mt-3 pt-3 border-t border-dark-100">
-      <span class="text-xs text-dark-400">Requires your attention</span>
+    
+    <div class="st-card p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded bg-green-900/30 flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-green-500">{{ evaluated_sessions|length }}</p>
+        <p class="text-sm text-gray-500">Evaluated</p>
     </div>
-  </div>
-
-  <!-- Evaluated -->
-  <div class="card p-6 hover-lift group">
-    <div class="flex items-start justify-between mb-4">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-        <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-600"></i>
-      </div>
-      <span class="badge badge-success">Completed</span>
+    
+    <div class="st-card p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded bg-red-900/30 flex items-center justify-center">
+                <i data-lucide="users" class="w-5 h-5 text-red-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-red-500">{{ pending_sessions|length|add:evaluated_sessions|length }}</p>
+        <p class="text-sm text-gray-500">Total Sessions</p>
     </div>
-    <p class="text-dark-500 text-sm font-medium mb-1">Sessions Evaluated</p>
-    <p class="text-4xl font-display font-bold text-dark-800">
-      {{ evaluated_sessions|length }}
-    </p>
-    <div class="mt-3 pt-3 border-t border-dark-100">
-      <span class="text-xs text-dark-400">Feedback provided</span>
-    </div>
-  </div>
+</section>
 
-  <!-- Total -->
-  <div class="card p-6 hover-lift group">
-    <div class="flex items-start justify-between mb-4">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-100 to-accent-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-        <i data-lucide="bar-chart-3" class="w-6 h-6 text-primary-600"></i>
-      </div>
-      <span class="badge badge-info">Overview</span>
-    </div>
-    <p class="text-dark-500 text-sm font-medium mb-1">Total Sessions</p>
-    <p class="text-4xl font-display font-bold stat-number">
-      {{ pending_sessions|length|add:evaluated_sessions|length }}
-    </p>
-    <div class="mt-3 pt-3 border-t border-dark-100">
-      <span class="text-xs text-dark-400">All time submissions</span>
-    </div>
-  </div>
-
-</div>
-
-<!-- MAIN CONTENT GRID -->
-<div class="grid lg:grid-cols-5 gap-8">
-
-  <!-- PENDING SESSIONS (Larger) -->
-  <div class="lg:col-span-3 fade-up fade-up-delay-2">
-    <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center gap-3">
-        <div class="w-2 h-8 rounded-full bg-gradient-to-b from-amber-400 to-orange-500"></div>
-        <h2 class="text-xl font-display font-bold text-dark-800">
-          Pending Evaluations
-        </h2>
-      </div>
-      <span class="text-sm text-dark-400">{{ pending_sessions|length }} sessions</span>
-    </div>
-
+<!-- Pending Sessions -->
+<section class="mb-12">
+    <h2 class="font-stranger text-xl neon-text-subtle tracking-wider mb-6 flex items-center gap-3">
+        <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        PENDING EVALUATIONS
+    </h2>
+    
     {% if pending_sessions %}
-      <div class="space-y-4">
+    <div class="space-y-4">
         {% for session in pending_sessions %}
-          <div class="card p-5 hover-lift group">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-4">
-                <!-- Student Avatar -->
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-amber-500/25">
-                  {{ session.student.username|slice:":1"|upper }}
+        <div class="st-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
+                    <i data-lucide="user" class="w-6 h-6 text-red-500"></i>
                 </div>
-                
                 <div>
-                  <h3 class="font-semibold text-dark-800 group-hover:text-primary-600 transition-colors">
-                    {{ session.student.username }}
-                  </h3>
-                  <div class="flex items-center gap-2 mt-1">
-                    <i data-lucide="user" class="w-3.5 h-3.5 text-dark-400"></i>
-                    <span class="text-sm text-dark-500">Patient: {{ session.patient.title }}</span>
-                  </div>
+                    <h3 class="font-semibold text-lg">{{ session.student.username }}</h3>
+                    <p class="text-sm text-gray-500">Patient: {{ session.patient.name }}</p>
+                    <span class="st-badge-yellow text-xs mt-1 inline-block">Pending Review</span>
                 </div>
-              </div>
-
-              <div class="flex items-center gap-3">
-                <span class="badge badge-warning">
-                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                  Pending
-                </span>
-                <a href="{% url 'evaluate' session.id %}"
-                   class="btn-primary px-5 py-2.5 rounded-xl text-white font-semibold text-sm flex items-center gap-2">
-                  <i data-lucide="clipboard-edit" class="w-4 h-4"></i>
-                  Evaluate
-                </a>
-              </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="card p-12 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center mx-auto mb-4">
-          <i data-lucide="check-check" class="w-8 h-8 text-emerald-600"></i>
+            
+            <a href="{% url 'evaluate' session.id %}" class="st-btn">
+                <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+                Evaluate
+            </a>
         </div>
-        <h3 class="font-semibold text-dark-800 mb-2">All Caught Up!</h3>
-        <p class="text-dark-500 text-sm">No pending sessions to review</p>
-      </div>
-    {% endif %}
-  </div>
-
-  <!-- EVALUATED SESSIONS (Sidebar) -->
-  <div class="lg:col-span-2 fade-up fade-up-delay-3">
-    <div class="flex items-center justify-between mb-6">
-      <div class="flex items-center gap-3">
-        <div class="w-2 h-8 rounded-full bg-gradient-to-b from-emerald-400 to-green-500"></div>
-        <h2 class="text-xl font-display font-bold text-dark-800">
-          Recent Evaluations
-        </h2>
-      </div>
+        {% endfor %}
     </div>
+    {% else %}
+    <div class="st-card p-12 text-center">
+        <div class="w-16 h-16 rounded-lg bg-green-900/30 border border-green-900/50 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="check-circle" class="w-8 h-8 text-green-500"></i>
+        </div>
+        <h3 class="font-stranger text-lg text-green-500 tracking-wider mb-2">ALL CAUGHT UP</h3>
+        <p class="text-gray-500">No pending evaluations. The Upside Down is quiet... for now.</p>
+    </div>
+    {% endif %}
+</section>
 
+<!-- Evaluated Sessions -->
+<section>
+    <h2 class="font-stranger text-xl neon-text-subtle tracking-wider mb-6 flex items-center gap-3">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        COMPLETED EVALUATIONS
+    </h2>
+    
     {% if evaluated_sessions %}
-      <div class="space-y-3">
+    <div class="space-y-4">
         {% for session in evaluated_sessions %}
-          <div class="card p-4 hover-lift group">
-            <div class="flex items-center gap-3">
-              <!-- Student Avatar -->
-              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center text-white font-semibold shadow-lg shadow-emerald-500/20">
-                {{ session.student.username|slice:":1"|upper }}
-              </div>
-              
-              <div class="flex-1 min-w-0">
-                <h3 class="font-medium text-dark-800 truncate group-hover:text-primary-600 transition-colors">
-                  {{ session.student.username }}
-                </h3>
-                <p class="text-xs text-dark-400 truncate">{{ session.patient.title }}</p>
-              </div>
-
-              <a href="{% url 'evaluation_result' session.id %}"
-                 class="w-9 h-9 rounded-xl bg-dark-50 hover:bg-primary-50 flex items-center justify-center text-dark-400 hover:text-primary-600 transition-all duration-200">
-                <i data-lucide="external-link" class="w-4 h-4"></i>
-              </a>
+        <div class="st-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-lg bg-green-900/30 border border-green-900/50 flex items-center justify-center">
+                    <i data-lucide="user-check" class="w-6 h-6 text-green-500"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg">{{ session.student.username }}</h3>
+                    <p class="text-sm text-gray-500">Patient: {{ session.patient.name }}</p>
+                    <span class="st-badge-green text-xs mt-1 inline-block">Evaluated</span>
+                </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="card p-8 text-center">
-        <div class="w-12 h-12 rounded-xl bg-dark-100 flex items-center justify-center mx-auto mb-3">
-          <i data-lucide="inbox" class="w-6 h-6 text-dark-400"></i>
+            
+            <a href="{% url 'evaluation_result' session.id %}" class="st-btn-outline st-btn">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+                View
+            </a>
         </div>
-        <p class="text-dark-500 text-sm">No evaluations yet</p>
-      </div>
-    {% endif %}
-  </div>
-
-</div>
-
-<!-- Quick Tips Section -->
-<div class="mt-10 fade-up fade-up-delay-4">
-  <div class="card p-6 bg-gradient-to-r from-primary-50 to-accent-50 border-primary-100">
-    <div class="flex items-start gap-4">
-      <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-        <i data-lucide="lightbulb" class="w-5 h-5 text-primary-600"></i>
-      </div>
-      <div>
-        <h3 class="font-semibold text-dark-800 mb-1">Evaluation Tips</h3>
-        <p class="text-dark-600 text-sm leading-relaxed">
-          Focus on communication patterns, empathy levels, and clinical reasoning when reviewing sessions. 
-          Provide constructive feedback that helps students improve their patient interaction skills.
-        </p>
-      </div>
+        {% endfor %}
     </div>
-  </div>
-</div>
+    {% else %}
+    <div class="st-card p-12 text-center">
+        <div class="w-16 h-16 rounded-lg bg-gray-800 flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="inbox" class="w-8 h-8 text-gray-600"></i>
+        </div>
+        <h3 class="font-stranger text-lg text-gray-500 tracking-wider mb-2">NO EVALUATIONS YET</h3>
+        <p class="text-gray-600">Completed evaluations will appear here.</p>
+    </div>
+    {% endif %}
+</section>
 
 {% endblock %}

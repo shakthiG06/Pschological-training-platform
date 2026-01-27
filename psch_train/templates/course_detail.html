@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} | PsySim{% endblock %}
+
+{% block content %}
+
+<!-- Back Button & Header -->
+<section class="mb-8">
+    <div class="flex items-start gap-4">
+        <a href="/courses/" class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center hover:bg-red-900/50 transition-colors flex-shrink-0 mt-1">
+            <i data-lucide="arrow-left" class="w-5 h-5 text-red-500"></i>
+        </a>
+        <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-3 mb-2">
+                <span class="st-badge-{% if course.difficulty == 'beginner' %}green{% elif course.difficulty == 'intermediate' %}yellow{% else %}red{% endif %} text-xs">
+                    {{ course.difficulty|title }}
+                </span>
+                <span class="text-gray-600 text-sm flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    {{ course.duration_hours }} hours
+                </span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-stranger neon-text tracking-wider">
+                {{ course.title|upper }}
+            </h1>
+        </div>
+    </div>
+</section>
+
+<!-- Christmas Lights -->
+<div class="christmas-lights mb-8 justify-center">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-8">
+    
+    <!-- Main Content -->
+    <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Course Description -->
+        <div class="st-card p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
+                    <i data-lucide="info" class="w-5 h-5 text-red-500"></i>
+                </div>
+                <h2 class="font-stranger text-lg neon-text-subtle tracking-wider">ABOUT THIS COURSE</h2>
+            </div>
+            <p class="text-gray-400 leading-relaxed">{{ course.description }}</p>
+        </div>
+        
+        <!-- Learning Objectives -->
+        {% if course.objectives %}
+        <div class="st-card p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
+                    <i data-lucide="target" class="w-5 h-5 text-red-500"></i>
+                </div>
+                <h2 class="font-stranger text-lg neon-text-subtle tracking-wider">LEARNING OBJECTIVES</h2>
+            </div>
+            <div class="text-gray-400 space-y-2">
+                {% for line in course.objectives.splitlines %}
+                {% if line.strip %}
+                <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mt-1 flex-shrink-0"></i>
+                    <span>{{ line.strip|cut:"•"|cut:"-" }}</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Course Content -->
+        {% if course.contents.exists %}
+        <div class="st-card p-6">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
+                    <i data-lucide="book-open" class="w-5 h-5 text-red-500"></i>
+                </div>
+                <h2 class="font-stranger text-lg neon-text-subtle tracking-wider">COURSE CONTENT</h2>
+            </div>
+            
+            <div class="space-y-6">
+                {% for content in course.contents.all %}
+                <div class="content-section" style="border-left: 2px solid rgba(225, 29, 72, 0.3); padding-left: 1.5rem;">
+                    <h3 class="text-lg text-gray-200 font-medium mb-3">{{ content.title }}</h3>
+                    <div class="prose prose-invert prose-sm max-w-none text-gray-400 course-content">
+                        {{ content.content|linebreaks }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="space-y-6">
+        
+        <!-- Enrollment Status -->
+        <div class="st-card p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg {% if enrollment.completed %}bg-green-900/30 border-green-900/50{% else %}bg-red-900/30 border-red-900/50{% endif %} border flex items-center justify-center">
+                    <i data-lucide="{% if enrollment.completed %}check-circle{% else %}user{% endif %}" class="w-5 h-5 {% if enrollment.completed %}text-green-500{% else %}text-red-500{% endif %}"></i>
+                </div>
+                <div>
+                    <h3 class="font-stranger tracking-wider {% if enrollment.completed %}text-green-400{% else %}neon-text-subtle{% endif %}">
+                        {% if enrollment.completed %}COMPLETED{% else %}ENROLLED{% endif %}
+                    </h3>
+                    <p class="text-gray-500 text-sm">
+                        {% if enrollment.enrolled_at %}
+                        Since {{ enrollment.enrolled_at|date:"M d, Y" }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            {% if enrollment.completed %}
+            <div class="p-3 rounded-lg bg-green-900/20 border border-green-900/30 text-center">
+                <i data-lucide="award" class="w-8 h-8 text-green-400 mx-auto mb-2"></i>
+                <p class="text-green-400 text-sm">Course Completed!</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Quiz Section -->
+        {% if quiz %}
+        <div class="st-card p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-lg bg-purple-900/30 border border-purple-900/50 flex items-center justify-center">
+                    <i data-lucide="file-question" class="w-5 h-5 text-purple-400"></i>
+                </div>
+                <h3 class="font-stranger text-lg text-purple-400 tracking-wider">COURSE QUIZ</h3>
+            </div>
+            
+            <div class="space-y-3 mb-4 text-sm">
+                <div class="flex justify-between text-gray-400">
+                    <span>Questions</span>
+                    <span class="text-gray-300">{{ quiz.questions.count }}</span>
+                </div>
+                <div class="flex justify-between text-gray-400">
+                    <span>Passing Score</span>
+                    <span class="text-gray-300">{{ quiz.passing_score }}%</span>
+                </div>
+                <div class="flex justify-between text-gray-400">
+                    <span>Time Limit</span>
+                    <span class="text-gray-300">{% if quiz.time_limit_minutes > 0 %}{{ quiz.time_limit_minutes }} min{% else %}Unlimited{% endif %}</span>
+                </div>
+            </div>
+            
+            {% if best_attempt %}
+            <div class="p-3 rounded-lg {% if best_attempt.passed %}bg-green-900/20 border-green-900/30{% else %}bg-yellow-900/20 border-yellow-900/30{% endif %} border mb-4">
+                <p class="text-sm {% if best_attempt.passed %}text-green-400{% else %}text-yellow-400{% endif %}">
+                    Best Score: {{ best_attempt.score }}/{{ best_attempt.total_questions }}
+                    {% if best_attempt.passed %}✓ Passed{% endif %}
+                </p>
+            </div>
+            {% endif %}
+            
+            <a href="{% url 'start_quiz' course.id %}" class="st-btn w-full justify-center">
+                <i data-lucide="play" class="w-4 h-4"></i>
+                {% if attempts %}Retake Quiz{% else %}Start Quiz{% endif %}
+            </a>
+            
+            {% if attempts %}
+            <div class="mt-4 pt-4" style="border-top: 1px solid rgba(225, 29, 72, 0.2);">
+                <p class="text-gray-500 text-xs mb-2">Recent Attempts</p>
+                <div class="space-y-2">
+                    {% for attempt in attempts %}
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-500">{{ attempt.started_at|date:"M d, H:i" }}</span>
+                        <span class="{% if attempt.passed %}text-green-400{% else %}text-red-400{% endif %}">
+                            {{ attempt.score }}/{{ attempt.total_questions }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Navigation -->
+        <div class="st-card p-6">
+            <h3 class="font-stranger text-lg neon-text-subtle tracking-wider mb-4">NAVIGATION</h3>
+            <div class="space-y-2">
+                <a href="/courses/" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-900/10">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                    All Courses
+                </a>
+                <a href="/chat/" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-900/10">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    AI Practice
+                </a>
+                <a href="/student/" class="flex items-center gap-2 text-gray-400 hover:text-red-400 transition-colors p-2 rounded-lg hover:bg-red-900/10">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    Dashboard
+                </a>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+<style>
+    .course-content h2 {
+        color: #e11d48;
+        font-family: 'Special Elite', cursive;
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .course-content h3 {
+        color: #f87171;
+        font-size: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .course-content strong {
+        color: #fca5a5;
+    }
+    
+    .course-content ul, .course-content ol {
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .course-content li {
+        margin-bottom: 0.25rem;
+    }
+</style>
+
+{% endblock %}

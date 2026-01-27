@@ -81,10 +81,25 @@ def chat_view(request, patient_id):
                 message=user_message
             )
 
-            # Generate AI patient reply using persona prompt
+            # Build conversation history for context (exclude the message we just saved)
+            all_messages = list(ChatMessage.objects.filter(
+                session=session
+            ).order_by("timestamp"))
+            history_messages = all_messages[:-1] if len(all_messages) > 1 else []
+            
+            conversation_history = []
+            for msg in history_messages:
+                role = "user" if msg.sender == "student" else "assistant"
+                conversation_history.append({
+                    "role": role,
+                    "content": msg.message
+                })
+
+            # Generate AI patient reply using persona prompt with history
             ai_reply = generate_patient_reply(
                 persona_prompt=patient.persona_prompt,
-                user_message=user_message
+                user_message=user_message,
+                conversation_history=conversation_history
             )
 
             # Save AI reply

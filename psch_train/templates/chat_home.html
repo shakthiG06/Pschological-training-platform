@@ -1,77 +1,96 @@
 {% extends "base.html" %}
-
-{% block title %}AI Practice Sessions | PsySim{% endblock %}
+{% block title %}AI Practice | PsySim{% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto">
 
-  <!-- Header -->
-  <div class="fade-up mb-10">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div>
-        <h1 class="text-3xl font-display font-bold text-dark-900 mb-2">
-          AI Patient Simulations
+<!-- Header -->
+<section class="mb-10">
+    <div class="text-center">
+        <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">Practice Mode</p>
+        <h1 class="text-3xl md:text-4xl font-stranger neon-text tracking-wider mb-4">
+            AI PATIENT SIMULATIONS
         </h1>
-        <p class="text-dark-500 text-lg">
-          Practice your clinical skills with realistic AI-powered patient scenarios
+        <p class="text-gray-500 max-w-xl mx-auto">
+            Practice your therapeutic skills with AI-simulated patients.
+            Each session will be recorded for staff evaluation.
         </p>
-      </div>
-      <span class="badge badge-info">
-        <i data-lucide="users" class="w-3.5 h-3.5"></i>
-        {{ patients|length }} Available
-      </span>
     </div>
-  </div>
+</section>
 
-  {% if patients %}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {% for patient in patients %}
-        <div class="card p-6 hover-lift group fade-up fade-up-delay-{{ forloop.counter }}">
-          
-          <div class="flex items-start gap-4">
-            <!-- Patient Avatar -->
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-accent-500/25 group-hover:scale-110 transition-transform duration-300">
-              <i data-lucide="user" class="w-7 h-7 text-white"></i>
-            </div>
-            
-            <div class="flex-1">
-              <h2 class="text-xl font-display font-bold text-dark-800 mb-1 group-hover:text-accent-600 transition-colors">
-                {{ patient.name }}
-              </h2>
-              <div class="flex items-center gap-2 text-dark-400 text-sm mb-3">
-                <i data-lucide="book-open" class="w-4 h-4"></i>
-                {{ patient.course.title }}
-              </div>
-              
-              <span class="badge badge-purple mb-4">
-                {{ patient.condition }}
-              </span>
-            </div>
-          </div>
-          
-          <div class="mt-4 pt-4 border-t border-dark-100">
-            <a href="{% url 'chat' patient.id %}"
-               class="btn-secondary w-full py-3 rounded-xl text-white font-semibold flex items-center justify-center gap-2">
-              <i data-lucide="message-circle" class="w-5 h-5"></i>
-              Start Session
-            </a>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="card p-12 text-center fade-up">
-      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center mx-auto mb-4">
-        <i data-lucide="lock" class="w-8 h-8 text-dark-400"></i>
-      </div>
-      <h3 class="font-display font-bold text-dark-800 mb-2">No Patients Available</h3>
-      <p class="text-dark-500 text-sm mb-6">Complete a course to unlock AI patient simulations</p>
-      <a href="/courses/" class="btn-primary px-6 py-3 rounded-xl text-white font-semibold inline-flex items-center gap-2">
-        <i data-lucide="book-open" class="w-5 h-5"></i>
-        Browse Courses
-      </a>
-    </div>
-  {% endif %}
-
+<!-- Christmas Lights -->
+<div class="christmas-lights mb-10 justify-center">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
 </div>
+
+<!-- Patients Grid -->
+{% if patients %}
+<section class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    {% for patient in patients %}
+    <a href="{% url 'chat' patient.id %}" class="st-card p-6 group">
+        <div class="flex items-start gap-4 mb-4">
+            <div class="w-14 h-14 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(225,29,72,0.3)] transition-all">
+                <i data-lucide="user" class="w-7 h-7 text-red-500"></i>
+            </div>
+            <div class="flex-1">
+                <h3 class="font-stranger text-lg neon-text-subtle tracking-wider">{{ patient.name|upper }}</h3>
+                <p class="text-gray-500 text-sm">{{ patient.condition }}</p>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors"></i>
+        </div>
+        
+        <p class="text-gray-500 text-sm mb-4">
+            Course: {{ patient.course.title }}
+        </p>
+        
+        <div class="flex items-center justify-between pt-4" style="border-top: 1px solid rgba(225, 29, 72, 0.2);">
+            <span class="text-red-500 text-sm font-medium flex items-center gap-2 tracking-wide">
+                Start Session
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+            </span>
+        </div>
+    </a>
+    {% endfor %}
+    
+</section>
+{% else %}
+<section class="st-card p-12 text-center max-w-lg mx-auto">
+    <div class="w-20 h-20 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center mx-auto mb-6">
+        <i data-lucide="lock" class="w-10 h-10 text-red-500"></i>
+    </div>
+    <h3 class="font-stranger text-xl neon-text tracking-wider mb-4">NO ACCESS</h3>
+    <p class="text-gray-500 mb-6">
+        Complete a course to unlock AI patient simulations.
+        The gateway to the Upside Down remains closed.
+    </p>
+    <a href="/courses/" class="st-btn">
+        <i data-lucide="book-open" class="w-4 h-4"></i>
+        Browse Courses
+    </a>
+</section>
+{% endif %}
+
+<!-- Warning Card -->
+<section class="mt-12">
+    <div class="st-card p-6 border-yellow-900/50" style="border-color: rgba(234, 179, 8, 0.3);">
+        <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-yellow-900/30 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="alert-triangle" class="w-6 h-6 text-yellow-500"></i>
+            </div>
+            <div>
+                <h3 class="font-stranger text-lg text-yellow-500 tracking-wider mb-2">EDUCATIONAL SIMULATION</h3>
+                <p class="text-gray-500 text-sm">
+                    These are AI-simulated patients for educational purposes only. 
+                    All conversations are recorded and will be reviewed by staff for your evaluation.
+                    Treat each session as a real clinical encounter.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
