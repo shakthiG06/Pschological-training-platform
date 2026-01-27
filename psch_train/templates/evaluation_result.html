@@ -7,74 +7,67 @@
 <section class="mb-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">Session Evaluation</p>
-            <h1 class="text-2xl md:text-3xl font-stranger neon-text tracking-wider">
-                YOUR RESULTS
+            <span class="text-zinc-500 text-sm mb-2 block">Session Evaluation</span>
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+                Your Results
             </h1>
-            <p class="text-gray-500 mt-1">AI Patient: {{ session.patient.name }}</p>
+            <p class="text-zinc-500 mt-1">AI Patient: {{ session.patient.name }}</p>
         </div>
         
         {% if evaluation %}
-        <span class="st-badge-green text-sm px-4 py-2">
-            <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
+        <span class="st-badge st-badge-green">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
             Evaluated
         </span>
         {% else %}
-        <span class="st-badge-yellow text-sm px-4 py-2">
-            <i data-lucide="clock" class="w-4 h-4 inline mr-1"></i>
+        <span class="st-badge st-badge-yellow">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
             Pending Review
         </span>
         {% endif %}
     </div>
 </section>
 
-<!-- Christmas Lights -->
-<div class="christmas-lights mb-8 justify-center">
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-</div>
-
 {% if evaluation %}
 
 <!-- Score Cards -->
-<section class="grid md:grid-cols-2 gap-6 mb-8">
+<section class="grid md:grid-cols-2 gap-5 mb-8">
     
     <!-- Empathy Score -->
-    <div class="st-card p-6 text-center group">
-        <div class="w-16 h-16 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center mx-auto mb-4 group-hover:shadow-[0_0_30px_rgba(225,29,72,0.3)] transition-all">
-            <i data-lucide="heart" class="w-8 h-8 text-red-500"></i>
+    <div class="st-card-static p-6 text-center group">
+        <div class="icon-box icon-box-lg icon-box-red mx-auto mb-5 group-hover:shadow-lg group-hover:shadow-rose-500/10 transition-all">
+            <i data-lucide="heart" class="w-7 h-7 text-rose-500"></i>
         </div>
-        <h3 class="text-gray-400 text-sm tracking-widest uppercase mb-2">Empathy</h3>
-        <p class="text-5xl font-stranger neon-text">{{ evaluation.empathy_score }}<span class="text-2xl text-gray-500">/10</span></p>
+        <h3 class="text-zinc-400 text-sm font-medium mb-2">Empathy</h3>
+        <p class="text-5xl font-bold text-white">{{ evaluation.empathy_score }}<span class="text-2xl text-zinc-500">/10</span></p>
     </div>
     
     <!-- Communication Score -->
-    <div class="st-card p-6 text-center group">
-        <div class="w-16 h-16 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center mx-auto mb-4 group-hover:shadow-[0_0_30px_rgba(225,29,72,0.3)] transition-all">
-            <i data-lucide="message-circle" class="w-8 h-8 text-red-500"></i>
+    <div class="st-card-static p-6 text-center group">
+        <div class="icon-box icon-box-lg icon-box-blue mx-auto mb-5 group-hover:shadow-lg group-hover:shadow-blue-500/10 transition-all">
+            <i data-lucide="message-circle" class="w-7 h-7 text-blue-500"></i>
         </div>
-        <h3 class="text-gray-400 text-sm tracking-widest uppercase mb-2">Communication</h3>
-        <p class="text-5xl font-stranger neon-text">{{ evaluation.communication_score }}<span class="text-2xl text-gray-500">/10</span></p>
+        <h3 class="text-zinc-400 text-sm font-medium mb-2">Communication</h3>
+        <p class="text-5xl font-bold text-white">{{ evaluation.communication_score }}<span class="text-2xl text-zinc-500">/10</span></p>
     </div>
     
 </section>
 
 <!-- Staff Feedback -->
 <section class="mb-8">
-    <div class="st-card p-8 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(225, 29, 72, 0.15) 0%, rgba(159, 18, 57, 0.1) 100%);">
-        <div class="absolute top-0 right-0 w-32 h-32 opacity-10">
-            <i data-lucide="quote" class="w-full h-full text-red-500"></i>
+    <div class="st-card-static p-6 relative overflow-hidden bg-gradient-to-br from-rose-500/10 to-rose-900/5">
+        <div class="absolute top-4 right-4 opacity-10">
+            <i data-lucide="quote" class="w-16 h-16 text-rose-500"></i>
         </div>
         
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-lg bg-red-900/50 border border-red-900/50 flex items-center justify-center">
-                <i data-lucide="user-check" class="w-5 h-5 text-red-500"></i>
+            <div class="icon-box icon-box-sm icon-box-red">
+                <i data-lucide="user-check" class="w-4 h-4 text-rose-500"></i>
             </div>
-            <h3 class="font-stranger text-lg neon-text-subtle tracking-wider">STAFF FEEDBACK</h3>
+            <h3 class="font-semibold text-white">Staff Feedback</h3>
         </div>
         
-        <p class="text-gray-300 leading-relaxed text-lg relative z-10">
+        <p class="text-zinc-300 leading-relaxed text-lg relative z-10">
             {{ evaluation.notes }}
         </p>
     </div>
@@ -82,15 +75,15 @@
 
 <!-- AI Learning Insight -->
 <section class="mb-8">
-    <div class="st-card p-6">
+    <div class="st-card-static p-5">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-lg bg-purple-900/30 border border-purple-900/50 flex items-center justify-center">
-                <i data-lucide="brain" class="w-5 h-5 text-purple-400"></i>
+            <div class="icon-box icon-box-sm" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
+                <i data-lucide="brain" class="w-4 h-4 text-purple-400"></i>
             </div>
-            <h3 class="font-stranger text-lg text-purple-400 tracking-wider">AI LEARNING INSIGHT</h3>
+            <h3 class="font-semibold text-purple-400">AI Learning Insight</h3>
         </div>
         
-        <p class="text-gray-400 italic leading-relaxed">
+        <p class="text-zinc-400 italic leading-relaxed">
             "{{ evaluation.ai_summary }}"
         </p>
     </div>
@@ -99,19 +92,19 @@
 <!-- Readiness Status -->
 <section class="text-center">
     {% if evaluation.readiness == "Ready" %}
-    <div class="inline-flex items-center gap-3 px-8 py-4 rounded-lg" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.2) 100%); border: 1px solid rgba(34, 197, 94, 0.5); box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);">
-        <i data-lucide="shield-check" class="w-8 h-8 text-green-400"></i>
+    <div class="inline-flex items-center gap-4 px-8 py-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+        <i data-lucide="shield-check" class="w-8 h-8 text-emerald-400"></i>
         <div class="text-left">
-            <p class="font-stranger text-xl text-green-400 tracking-wider">READY FOR REAL PATIENTS</p>
-            <p class="text-green-400/70 text-sm">You have demonstrated competency</p>
+            <p class="text-xl font-semibold text-emerald-400">Ready for Real Patients</p>
+            <p class="text-emerald-400/70 text-sm">You have demonstrated competency</p>
         </div>
     </div>
     {% else %}
-    <div class="inline-flex items-center gap-3 px-8 py-4 rounded-lg" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(202, 138, 4, 0.2) 100%); border: 1px solid rgba(234, 179, 8, 0.5); box-shadow: 0 0 30px rgba(234, 179, 8, 0.2);">
-        <i data-lucide="clock" class="w-8 h-8 text-yellow-400"></i>
+    <div class="inline-flex items-center gap-4 px-8 py-5 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+        <i data-lucide="clock" class="w-8 h-8 text-amber-400"></i>
         <div class="text-left">
-            <p class="font-stranger text-xl text-yellow-400 tracking-wider">NEEDS MORE PRACTICE</p>
-            <p class="text-yellow-400/70 text-sm">Continue training to improve</p>
+            <p class="text-xl font-semibold text-amber-400">Needs More Practice</p>
+            <p class="text-amber-400/70 text-sm">Continue training to improve</p>
         </div>
     </div>
     {% endif %}
@@ -120,12 +113,12 @@
 {% else %}
 
 <!-- Pending State -->
-<section class="st-card p-12 text-center max-w-lg mx-auto">
-    <div class="w-20 h-20 rounded-lg bg-yellow-900/30 border border-yellow-900/50 flex items-center justify-center mx-auto mb-6">
-        <i data-lucide="hourglass" class="w-10 h-10 text-yellow-500 animate-pulse"></i>
+<section class="st-card-static p-12 text-center max-w-lg mx-auto">
+    <div class="icon-box icon-box-lg icon-box-yellow mx-auto mb-6">
+        <i data-lucide="hourglass" class="w-8 h-8 text-amber-500 animate-pulse"></i>
     </div>
-    <h3 class="font-stranger text-2xl text-yellow-500 tracking-wider mb-4">AWAITING EVALUATION</h3>
-    <p class="text-gray-500 mb-6">
+    <h3 class="text-2xl font-semibold text-amber-400 mb-3">Awaiting Evaluation</h3>
+    <p class="text-zinc-500 mb-6 leading-relaxed">
         Your session has been submitted and is waiting for staff review.
         Check back later for your results.
     </p>
@@ -139,7 +132,7 @@
 
 <!-- Actions -->
 <section class="mt-10 flex flex-wrap justify-center gap-4">
-    <a href="/student/" class="st-btn-outline">
+    <a href="/student/" class="st-btn st-btn-outline">
         <i data-lucide="home" class="w-4 h-4"></i>
         Dashboard
     </a>

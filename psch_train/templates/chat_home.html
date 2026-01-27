@@ -6,49 +6,43 @@
 <!-- Header -->
 <section class="mb-10">
     <div class="text-center">
-        <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">Practice Mode</p>
-        <h1 class="text-3xl md:text-4xl font-stranger neon-text tracking-wider mb-4">
-            AI PATIENT SIMULATIONS
+        <span class="st-badge st-badge-red mb-4">
+            <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+            Practice Mode
+        </span>
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+            AI Patient Simulations
         </h1>
-        <p class="text-gray-500 max-w-xl mx-auto">
+        <p class="text-zinc-500 max-w-xl mx-auto leading-relaxed">
             Practice your therapeutic skills with AI-simulated patients.
             Each session will be recorded for staff evaluation.
         </p>
     </div>
 </section>
 
-<!-- Christmas Lights -->
-<div class="christmas-lights mb-10 justify-center">
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-</div>
-
 <!-- Patients Grid -->
 {% if patients %}
-<section class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+<section class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
     
     {% for patient in patients %}
-    <a href="{% url 'chat' patient.id %}" class="st-card p-6 group">
+    <a href="{% url 'chat' patient.id %}" class="st-card p-5 group">
         <div class="flex items-start gap-4 mb-4">
-            <div class="w-14 h-14 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(225,29,72,0.3)] transition-all">
-                <i data-lucide="user" class="w-7 h-7 text-red-500"></i>
+            <div class="icon-box icon-box-red group-hover:shadow-lg group-hover:shadow-rose-500/10 transition-all">
+                <i data-lucide="user" class="w-5 h-5 text-rose-500"></i>
             </div>
-            <div class="flex-1">
-                <h3 class="font-stranger text-lg neon-text-subtle tracking-wider">{{ patient.name|upper }}</h3>
-                <p class="text-gray-500 text-sm">{{ patient.condition }}</p>
+            <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-white group-hover:text-rose-400 transition-colors truncate">{{ patient.name }}</h3>
+                <p class="text-zinc-500 text-sm truncate">{{ patient.condition }}</p>
             </div>
-            <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors"></i>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-700 group-hover:text-rose-500 transition-colors flex-shrink-0"></i>
         </div>
         
-        <p class="text-gray-500 text-sm mb-4">
+        <p class="text-zinc-500 text-sm mb-4">
             Course: {{ patient.course.title }}
         </p>
         
-        <div class="flex items-center justify-between pt-4" style="border-top: 1px solid rgba(225, 29, 72, 0.2);">
-            <span class="text-red-500 text-sm font-medium flex items-center gap-2 tracking-wide">
+        <div class="flex items-center justify-between pt-4 border-t border-zinc-800">
+            <span class="text-rose-500 text-sm font-medium flex items-center gap-2">
                 Start Session
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
             </span>
@@ -58,14 +52,13 @@
     
 </section>
 {% else %}
-<section class="st-card p-12 text-center max-w-lg mx-auto">
-    <div class="w-20 h-20 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center mx-auto mb-6">
-        <i data-lucide="lock" class="w-10 h-10 text-red-500"></i>
+<section class="st-card-static p-12 text-center max-w-lg mx-auto">
+    <div class="icon-box icon-box-lg icon-box-red mx-auto mb-6">
+        <i data-lucide="lock" class="w-8 h-8 text-rose-500"></i>
     </div>
-    <h3 class="font-stranger text-xl neon-text tracking-wider mb-4">NO ACCESS</h3>
-    <p class="text-gray-500 mb-6">
+    <h3 class="text-xl font-semibold text-white mb-3">No Access Yet</h3>
+    <p class="text-zinc-500 mb-6 leading-relaxed">
         Complete a course to unlock AI patient simulations.
-        The gateway to the Upside Down remains closed.
     </p>
     <a href="/courses/" class="st-btn">
         <i data-lucide="book-open" class="w-4 h-4"></i>
@@ -75,15 +68,15 @@
 {% endif %}
 
 <!-- Warning Card -->
-<section class="mt-12">
-    <div class="st-card p-6 border-yellow-900/50" style="border-color: rgba(234, 179, 8, 0.3);">
+<section class="mt-10">
+    <div class="st-card-static p-5 border-amber-500/20">
         <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-yellow-900/30 flex items-center justify-center flex-shrink-0">
-                <i data-lucide="alert-triangle" class="w-6 h-6 text-yellow-500"></i>
+            <div class="icon-box icon-box-yellow flex-shrink-0">
+                <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i>
             </div>
             <div>
-                <h3 class="font-stranger text-lg text-yellow-500 tracking-wider mb-2">EDUCATIONAL SIMULATION</h3>
-                <p class="text-gray-500 text-sm">
+                <h3 class="font-semibold text-amber-400 mb-1">Educational Simulation</h3>
+                <p class="text-zinc-500 text-sm leading-relaxed">
                     These are AI-simulated patients for educational purposes only. 
                     All conversations are recorded and will be reviewed by staff for your evaluation.
                     Treat each session as a real clinical encounter.

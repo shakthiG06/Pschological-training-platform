@@ -7,161 +7,168 @@
 <section class="mb-10">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-            <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">Welcome back</p>
-            <h1 class="text-3xl md:text-4xl font-stranger neon-text tracking-wider">
-                {{ request.user.username|upper }}
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-zinc-500 text-sm">Welcome back,</span>
+                {% if evaluation %}
+                <span class="st-badge st-badge-green">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                    Clinically Evaluated
+                </span>
+                {% endif %}
+            </div>
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+                {{ request.user.username }}
             </h1>
-            <p class="text-gray-500 mt-2">Continue your journey into the Upside Down of psychology.</p>
+            <p class="text-zinc-400">Continue your journey in clinical psychology training.</p>
         </div>
         
-        {% if evaluation %}
-        <div class="st-badge-green flex items-center gap-2 px-4 py-2">
-            <i data-lucide="award" class="w-4 h-4"></i>
-            <span>Clinically Evaluated</span>
+        <div class="flex items-center gap-3">
+            <a href="/courses/" class="st-btn">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                Browse Courses
+            </a>
         </div>
-        {% endif %}
     </div>
 </section>
 
-<!-- Christmas Lights Divider -->
-<div class="christmas-lights mb-10 justify-start">
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-    <div class="light"></div>
-</div>
-
 <!-- Stats Grid -->
 <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-    <div class="st-card p-6">
+    <div class="st-card-static p-5">
         <div class="flex items-center justify-between mb-4">
-            <div class="w-10 h-10 rounded bg-red-900/30 flex items-center justify-center">
-                <i data-lucide="book-open" class="w-5 h-5 text-red-500"></i>
+            <div class="icon-box icon-box-sm icon-box-red">
+                <i data-lucide="book-open" class="w-4 h-4 text-rose-500"></i>
             </div>
-            <span class="text-xs text-gray-600 uppercase tracking-wider">Courses</span>
+            <span class="text-xs text-zinc-500 font-medium">Courses</span>
         </div>
-        <p class="text-3xl font-bold text-red-500">6</p>
-        <p class="text-sm text-gray-500">Available</p>
+        <p class="text-3xl font-bold text-white">6</p>
+        <p class="text-sm text-zinc-500">Available</p>
     </div>
     
-    <div class="st-card p-6">
+    <div class="st-card-static p-5">
         <div class="flex items-center justify-between mb-4">
-            <div class="w-10 h-10 rounded bg-green-900/30 flex items-center justify-center">
-                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+            <div class="icon-box icon-box-sm icon-box-green">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
             </div>
-            <span class="text-xs text-gray-600 uppercase tracking-wider">Done</span>
+            <span class="text-xs text-zinc-500 font-medium">Done</span>
         </div>
-        <p class="text-3xl font-bold text-green-500">{% if evaluation %}1{% else %}0{% endif %}</p>
-        <p class="text-sm text-gray-500">Evaluations</p>
+        <p class="text-3xl font-bold text-white">{% if evaluation %}1{% else %}0{% endif %}</p>
+        <p class="text-sm text-zinc-500">Evaluations</p>
     </div>
     
-    <div class="st-card p-6">
+    <div class="st-card-static p-5">
         <div class="flex items-center justify-between mb-4">
-            <div class="w-10 h-10 rounded bg-blue-900/30 flex items-center justify-center">
-                <i data-lucide="users" class="w-5 h-5 text-blue-500"></i>
+            <div class="icon-box icon-box-sm icon-box-blue">
+                <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
             </div>
-            <span class="text-xs text-gray-600 uppercase tracking-wider">Patients</span>
+            <span class="text-xs text-zinc-500 font-medium">Patients</span>
         </div>
-        <p class="text-3xl font-bold text-blue-500">15</p>
-        <p class="text-sm text-gray-500">AI Simulations</p>
+        <p class="text-3xl font-bold text-white">15</p>
+        <p class="text-sm text-zinc-500">AI Simulations</p>
     </div>
     
-    <div class="st-card p-6">
+    <div class="st-card-static p-5">
         <div class="flex items-center justify-between mb-4">
-            <div class="w-10 h-10 rounded bg-yellow-900/30 flex items-center justify-center">
-                <i data-lucide="trending-up" class="w-5 h-5 text-yellow-500"></i>
+            <div class="icon-box icon-box-sm icon-box-yellow">
+                <i data-lucide="trending-up" class="w-4 h-4 text-amber-500"></i>
             </div>
-            <span class="text-xs text-gray-600 uppercase tracking-wider">Progress</span>
+            <span class="text-xs text-zinc-500 font-medium">Progress</span>
         </div>
-        <p class="text-3xl font-bold text-yellow-500">{% if evaluation %}100{% else %}0{% endif %}%</p>
-        <p class="text-sm text-gray-500">Overall</p>
+        <p class="text-3xl font-bold text-white">{% if evaluation %}100{% else %}0{% endif %}%</p>
+        <p class="text-sm text-zinc-500">Overall</p>
     </div>
 </section>
 
 <!-- Quick Actions -->
-<section class="grid md:grid-cols-3 gap-6 mb-10">
+<section class="mb-10">
+    <h2 class="text-lg font-semibold text-white mb-5">Quick Actions</h2>
     
-    <!-- Courses Card -->
-    <a href="/courses/" class="st-card p-8 group">
-        <div class="flex items-start justify-between mb-6">
-            <div class="w-14 h-14 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center group-hover:shadow-[0_0_20px_rgba(225,29,72,0.3)] transition-all">
-                <i data-lucide="book-open" class="w-7 h-7 text-red-500"></i>
+    <div class="grid md:grid-cols-3 gap-5">
+        
+        <!-- Courses Card -->
+        <a href="/courses/" class="st-card p-6 group block">
+            <div class="flex items-start justify-between mb-5">
+                <div class="icon-box icon-box-lg icon-box-red group-hover:scale-110 transition-transform">
+                    <i data-lucide="book-open" class="w-7 h-7 text-rose-500"></i>
+                </div>
+                <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-600 group-hover:text-rose-500 transition-colors"></i>
             </div>
-            <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors"></i>
-        </div>
-        <h3 class="font-stranger text-lg neon-text-subtle tracking-wider mb-2">COURSES</h3>
-        <p class="text-gray-500 text-sm mb-4">Master clinical psychology theories, from CBT to trauma-informed care.</p>
-        <span class="text-red-500 text-sm font-medium flex items-center gap-2 tracking-wide">
-            Browse all
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-        </span>
-    </a>
-    
-    <!-- AI Practice Card -->
-    <div class="st-card p-8 group {% if not latest_session %}opacity-50{% endif %}">
-        <div class="flex items-start justify-between mb-6">
-            <div class="w-14 h-14 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
-                <i data-lucide="message-circle" class="w-7 h-7 text-red-500"></i>
-            </div>
-            {% if latest_session %}
-            <span class="st-badge-green text-xs">Active</span>
-            {% endif %}
-        </div>
-        <h3 class="font-stranger text-lg neon-text-subtle tracking-wider mb-2">AI PRACTICE</h3>
-        <p class="text-gray-500 text-sm mb-4">Practice therapeutic conversations with realistic AI-simulated patients.</p>
-        {% if latest_session %}
-            <a href="{% url 'chat' latest_session.patient.id %}" class="text-red-500 text-sm font-medium flex items-center gap-2 tracking-wide">
-                Continue session
+            <h3 class="text-lg font-semibold text-white mb-2">Courses</h3>
+            <p class="text-zinc-400 text-sm mb-4">Master clinical psychology theories, from CBT to trauma-informed care.</p>
+            <span class="text-rose-500 text-sm font-medium flex items-center gap-2">
+                Browse all
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            </a>
-        {% else %}
-            <span class="text-gray-600 text-sm">Complete a course to unlock</span>
-        {% endif %}
-    </div>
-    
-    <!-- Evaluation Card -->
-    <div class="st-card p-8 group">
-        <div class="flex items-start justify-between mb-6">
-            <div class="w-14 h-14 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
-                <i data-lucide="clipboard-check" class="w-7 h-7 text-red-500"></i>
-            </div>
-            {% if evaluation %}
-            <span class="st-badge-green text-xs">Complete</span>
-            {% elif latest_session %}
-            <span class="st-badge-yellow text-xs">Pending</span>
-            {% endif %}
-        </div>
-        <h3 class="font-stranger text-lg neon-text-subtle tracking-wider mb-2">EVALUATION</h3>
-        <p class="text-gray-500 text-sm mb-4">Get expert feedback on your clinical performance and readiness.</p>
-        {% if evaluation %}
-            <a href="{% url 'evaluation_result' latest_session.id %}" class="text-red-500 text-sm font-medium flex items-center gap-2 tracking-wide">
-                View results
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            </a>
-        {% elif latest_session %}
-            <span class="text-yellow-500 text-sm font-medium flex items-center gap-2">
-                <i data-lucide="clock" class="w-4 h-4"></i>
-                Awaiting review
             </span>
-        {% else %}
-            <span class="text-gray-600 text-sm">No session yet</span>
-        {% endif %}
+        </a>
+        
+        <!-- AI Practice Card -->
+        <div class="st-card p-6 group {% if not latest_session %}opacity-60{% endif %}">
+            <div class="flex items-start justify-between mb-5">
+                <div class="icon-box icon-box-lg icon-box-purple">
+                    <i data-lucide="message-circle" class="w-7 h-7 text-purple-500"></i>
+                </div>
+                {% if latest_session %}
+                <span class="st-badge st-badge-green">Active</span>
+                {% endif %}
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">AI Practice</h3>
+            <p class="text-zinc-400 text-sm mb-4">Practice therapeutic conversations with realistic AI-simulated patients.</p>
+            {% if latest_session %}
+                <a href="{% url 'chat' latest_session.patient.id %}" class="text-rose-500 text-sm font-medium flex items-center gap-2 hover:gap-3 transition-all">
+                    Continue session
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            {% else %}
+                <span class="text-zinc-500 text-sm">Complete a course to unlock</span>
+            {% endif %}
+        </div>
+        
+        <!-- Evaluation Card -->
+        <div class="st-card p-6 group">
+            <div class="flex items-start justify-between mb-5">
+                <div class="icon-box icon-box-lg icon-box-blue">
+                    <i data-lucide="clipboard-check" class="w-7 h-7 text-blue-500"></i>
+                </div>
+                {% if evaluation %}
+                <span class="st-badge st-badge-green">Complete</span>
+                {% elif latest_session %}
+                <span class="st-badge st-badge-yellow">Pending</span>
+                {% endif %}
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Evaluation</h3>
+            <p class="text-zinc-400 text-sm mb-4">Get expert feedback on your clinical performance and readiness.</p>
+            {% if evaluation %}
+                <a href="{% url 'evaluation_result' latest_session.id %}" class="text-rose-500 text-sm font-medium flex items-center gap-2 hover:gap-3 transition-all">
+                    View results
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            {% elif latest_session %}
+                <span class="text-amber-500 text-sm font-medium flex items-center gap-2">
+                    <i data-lucide="clock" class="w-4 h-4"></i>
+                    Awaiting review
+                </span>
+            {% else %}
+                <span class="text-zinc-500 text-sm">No session yet</span>
+            {% endif %}
+        </div>
+        
     </div>
-    
 </section>
 
-<!-- Quote Section -->
-<section class="st-card p-8 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-40 h-40 bg-red-500/5 rounded-full blur-3xl"></div>
-    <i data-lucide="quote" class="w-8 h-8 text-red-900 mb-4"></i>
-    <p class="text-xl text-gray-400 italic mb-4 relative z-10 font-light">
-        "The good life is a process, not a state of being. It is a direction, not a destination."
-    </p>
-    <p class="text-gray-600 font-stranger tracking-wider">— CARL ROGERS</p>
+<!-- Motivational Quote -->
+<section class="st-card-static p-8 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="icon-box icon-box-sm icon-box-red">
+                <i data-lucide="quote" class="w-4 h-4 text-rose-500"></i>
+            </div>
+            <span class="text-zinc-500 text-sm font-medium">Daily Inspiration</span>
+        </div>
+        <p class="text-xl text-zinc-300 italic mb-4 leading-relaxed max-w-2xl">
+            "The good life is a process, not a state of being. It is a direction, not a destination."
+        </p>
+        <p class="text-zinc-500 font-medium">— Carl Rogers</p>
+    </div>
 </section>
 
 {% endblock %}

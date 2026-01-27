@@ -6,72 +6,72 @@
 <!-- Header -->
 <section class="mb-8">
     <div class="flex items-center gap-4 mb-4">
-        <a href="/staff/" class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center hover:bg-red-900/50 transition-colors">
-            <i data-lucide="arrow-left" class="w-5 h-5 text-red-500"></i>
+        <a href="/staff/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-colors">
+            <i data-lucide="arrow-left" class="w-4 h-4 text-zinc-400"></i>
         </a>
         <div>
-            <p class="text-gray-500 text-sm tracking-widest uppercase">Staff Evaluation</p>
-            <h1 class="text-2xl md:text-3xl font-stranger neon-text tracking-wider">
-                EVALUATE {{ session.student.username|upper }}
+            <span class="text-zinc-500 text-sm">Staff Evaluation</span>
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+                Evaluate {{ session.student.username }}
             </h1>
         </div>
     </div>
 </section>
 
-<div class="grid lg:grid-cols-2 gap-8">
+<div class="grid lg:grid-cols-2 gap-6">
     
     <!-- Chat Review Panel -->
-    <div class="st-card p-6">
-        <div class="flex items-center gap-3 mb-6" style="border-bottom: 1px solid rgba(225, 29, 72, 0.2); padding-bottom: 1rem;">
-            <div class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
-                <i data-lucide="message-square" class="w-5 h-5 text-red-500"></i>
+    <div class="st-card-static p-5">
+        <div class="flex items-center gap-3 mb-5 pb-4 border-b border-zinc-800">
+            <div class="icon-box icon-box-sm icon-box-blue">
+                <i data-lucide="message-square" class="w-4 h-4 text-blue-500"></i>
             </div>
             <div>
-                <h3 class="font-stranger text-lg neon-text-subtle tracking-wider">SESSION TRANSCRIPT</h3>
-                <p class="text-gray-500 text-sm">Patient: {{ session.patient.name }}</p>
+                <h3 class="font-semibold text-white">Session Transcript</h3>
+                <p class="text-zinc-500 text-sm">Patient: {{ session.patient.name }}</p>
             </div>
         </div>
         
-        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-2" style="scrollbar-width: thin; scrollbar-color: rgba(225, 29, 72, 0.3) transparent;">
+        <div class="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
             {% for msg in session.chatmessage_set.all %}
             <div class="{% if msg.sender == 'user' %}ml-8{% else %}mr-8{% endif %}">
-                <div class="{% if msg.sender == 'user' %}bg-red-900/20 border-red-900/30{% else %}bg-gray-800/50 border-gray-700/50{% endif %} border p-4 rounded-lg">
+                <div class="{% if msg.sender == 'user' %}bg-rose-500/10 border-rose-500/20{% else %}bg-zinc-800/50 border-zinc-700/50{% endif %} border p-4 rounded-xl">
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="{% if msg.sender == 'user' %}text-red-400{% else %}text-gray-400{% endif %} text-xs font-medium tracking-wider uppercase">
-                            {% if msg.sender == 'user' %}THERAPIST{% else %}PATIENT{% endif %}
+                        <span class="{% if msg.sender == 'user' %}text-rose-400{% else %}text-zinc-400{% endif %} text-xs font-medium uppercase">
+                            {% if msg.sender == 'user' %}Therapist{% else %}Patient{% endif %}
                         </span>
                     </div>
-                    <p class="text-gray-300 text-sm">{{ msg.message }}</p>
+                    <p class="text-zinc-300 text-sm leading-relaxed">{{ msg.message }}</p>
                 </div>
             </div>
             {% empty %}
             <div class="text-center py-8">
-                <i data-lucide="message-circle-off" class="w-12 h-12 text-gray-600 mx-auto mb-3"></i>
-                <p class="text-gray-500">No messages in this session.</p>
+                <i data-lucide="message-circle-off" class="w-12 h-12 text-zinc-700 mx-auto mb-3"></i>
+                <p class="text-zinc-500">No messages in this session.</p>
             </div>
             {% endfor %}
         </div>
     </div>
     
     <!-- Evaluation Form -->
-    <div class="st-card p-6">
-        <div class="flex items-center gap-3 mb-6" style="border-bottom: 1px solid rgba(225, 29, 72, 0.2); padding-bottom: 1rem;">
-            <div class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
-                <i data-lucide="clipboard-check" class="w-5 h-5 text-red-500"></i>
+    <div class="st-card-static p-5">
+        <div class="flex items-center gap-3 mb-5 pb-4 border-b border-zinc-800">
+            <div class="icon-box icon-box-sm icon-box-red">
+                <i data-lucide="clipboard-check" class="w-4 h-4 text-rose-500"></i>
             </div>
             <div>
-                <h3 class="font-stranger text-lg neon-text-subtle tracking-wider">EVALUATION FORM</h3>
-                <p class="text-gray-500 text-sm">Provide your assessment</p>
+                <h3 class="font-semibold text-white">Evaluation Form</h3>
+                <p class="text-zinc-500 text-sm">Provide your assessment</p>
             </div>
         </div>
         
-        <form method="post" class="space-y-6">
+        <form method="post" class="space-y-5">
             {% csrf_token %}
             
             <!-- Score Input -->
             <div>
-                <label class="block text-gray-400 text-sm tracking-wider uppercase mb-2">
-                    <i data-lucide="star" class="w-4 h-4 inline mr-1 text-red-500"></i>
+                <label class="block text-zinc-400 text-sm font-medium mb-2">
+                    <i data-lucide="star" class="w-4 h-4 inline mr-1 text-rose-500"></i>
                     Score (out of 10)
                 </label>
                 <input 
@@ -79,11 +79,11 @@
                     name="score" 
                     min="1" 
                     max="10"
-                    class="eval-input w-full p-3 rounded-lg text-gray-200 text-2xl font-stranger text-center"
+                    class="eval-input w-full p-3 rounded-xl text-white text-2xl font-bold text-center"
                     placeholder="0"
                     required
                 >
-                <div class="flex justify-between mt-2 text-xs text-gray-600">
+                <div class="flex justify-between mt-2 text-xs text-zinc-600">
                     <span>Needs Work</span>
                     <span>Excellent</span>
                 </div>
@@ -91,36 +91,36 @@
             
             <!-- Feedback Input -->
             <div>
-                <label class="block text-gray-400 text-sm tracking-wider uppercase mb-2">
-                    <i data-lucide="message-circle" class="w-4 h-4 inline mr-1 text-red-500"></i>
+                <label class="block text-zinc-400 text-sm font-medium mb-2">
+                    <i data-lucide="message-circle" class="w-4 h-4 inline mr-1 text-rose-500"></i>
                     Feedback
                 </label>
                 <textarea 
                     name="feedback" 
                     rows="6"
-                    class="eval-input w-full p-4 rounded-lg text-gray-200 resize-none"
+                    class="eval-input w-full p-4 rounded-xl text-white resize-none"
                     placeholder="Provide detailed feedback on the student's performance..."
                     required
                 ></textarea>
             </div>
             
             <!-- Approval Checkbox -->
-            <div class="st-card p-4" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3);">
+            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <label class="flex items-center gap-3 cursor-pointer">
                     <input 
                         type="checkbox" 
                         name="approved" 
-                        class="w-5 h-5 rounded border-2 border-green-500 bg-transparent checked:bg-green-500 cursor-pointer"
+                        class="w-5 h-5 rounded border-2 border-emerald-500 bg-transparent checked:bg-emerald-500 cursor-pointer accent-emerald-500"
                     >
                     <div>
-                        <span class="text-green-400 font-medium">Approve for Progression</span>
-                        <p class="text-gray-500 text-sm">Student will advance to the next level</p>
+                        <span class="text-emerald-400 font-medium">Approve for Progression</span>
+                        <p class="text-zinc-500 text-sm">Student will advance to the next level</p>
                     </div>
                 </label>
             </div>
             
             <!-- Submit Button -->
-            <button type="submit" class="st-btn w-full py-4 text-lg">
+            <button type="submit" class="st-btn w-full py-4 text-base">
                 <i data-lucide="check-circle" class="w-5 h-5"></i>
                 Submit Evaluation
             </button>
@@ -131,19 +131,32 @@
 
 <style>
     .eval-input {
-        background: rgba(17, 17, 17, 0.8);
-        border: 1px solid rgba(225, 29, 72, 0.3);
-        transition: all 0.3s ease;
+        background: rgba(24, 24, 27, 0.8);
+        border: 1px solid rgba(63, 63, 70, 0.5);
+        transition: all 0.2s ease;
     }
     
     .eval-input:focus {
         outline: none;
-        border-color: rgba(225, 29, 72, 0.6);
-        box-shadow: 0 0 20px rgba(225, 29, 72, 0.15);
+        border-color: rgba(225, 29, 72, 0.4);
+        box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
     }
     
     .eval-input::placeholder {
-        color: rgba(156, 163, 175, 0.5);
+        color: rgba(113, 113, 122, 0.5);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(24, 24, 27, 0.5);
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(63, 63, 70, 0.5);
+        border-radius: 3px;
     }
 </style>
 

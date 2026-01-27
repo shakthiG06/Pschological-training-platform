@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter the Lab | PsySim</title>
+    <meta name="description" content="PsySim - AI-Powered Psychology Training Platform">
+    <title>Welcome | PsySim</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,93 +13,60 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts - Stranger Things Style -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --st-black: #0a0a0a;
-            --st-red: #e11d48;
-            --st-red-glow: #ff2d55;
-            --st-cream: #f5f5dc;
+            --primary: #e11d48;
+            --primary-light: #fb7185;
+            --bg-dark: #09090b;
+            --bg-card: #18181b;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--st-black);
+            background: var(--bg-dark);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        .font-stranger {
-            font-family: 'Special Elite', cursive;
-            letter-spacing: 0.15em;
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Neon Glow */
-        .neon-text {
-            color: var(--st-red);
-            text-shadow: 
-                0 0 5px var(--st-red-glow),
-                0 0 10px var(--st-red-glow),
-                0 0 20px var(--st-red-glow),
-                0 0 40px var(--st-red);
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(225, 29, 72, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(225, 29, 72, 0.03) 0%, transparent 50%);
         }
 
-        /* Flicker Animation */
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 
-                    0 0 5px var(--st-red-glow),
-                    0 0 10px var(--st-red-glow),
-                    0 0 20px var(--st-red-glow),
-                    0 0 40px var(--st-red);
-                opacity: 1;
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-                opacity: 0.8;
-            }
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        .flicker {
-            animation: flicker 4s infinite alternate;
-        }
-
-        /* Christmas Lights */
-        .christmas-lights {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-        }
-
-        .light {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        .light:nth-child(1) { background: #e11d48; animation-delay: 0s; }
-        .light:nth-child(2) { background: #22c55e; animation-delay: 0.3s; }
-        .light:nth-child(3) { background: #3b82f6; animation-delay: 0.6s; }
-        .light:nth-child(4) { background: #eab308; animation-delay: 0.9s; }
-        .light:nth-child(5) { background: #e11d48; animation-delay: 1.2s; }
-        .light:nth-child(6) { background: #22c55e; animation-delay: 1.5s; }
-        .light:nth-child(7) { background: #3b82f6; animation-delay: 1.8s; }
-
-        @keyframes glow {
-            0%, 100% { opacity: 0.3; box-shadow: none; }
-            50% { opacity: 1; box-shadow: 0 0 15px currentColor, 0 0 30px currentColor; }
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #e11d48, #fb7185, #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Role Card */
         .role-card {
-            background: linear-gradient(145deg, rgba(17, 17, 17, 0.95), rgba(10, 10, 10, 0.98));
-            border: 1px solid rgba(225, 29, 72, 0.2);
-            transition: all 0.4s ease;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -106,161 +74,237 @@
         .role-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .role-card:hover::before {
-            left: 100%;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(225, 29, 72, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .role-card:hover {
-            border-color: var(--st-red);
+            border-color: rgba(225, 29, 72, 0.3);
+            transform: translateY(-8px);
             box-shadow: 
-                0 0 30px rgba(225, 29, 72, 0.2),
-                0 0 60px rgba(225, 29, 72, 0.1),
-                inset 0 0 30px rgba(225, 29, 72, 0.05);
-            transform: translateY(-5px);
+                0 24px 48px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(225, 29, 72, 0.1);
+        }
+
+        .role-card:hover::before {
+            opacity: 1;
         }
 
         .role-card:hover .role-icon {
-            box-shadow: 0 0 20px rgba(225, 29, 72, 0.5);
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(225, 29, 72, 0.3);
+        }
+
+        .role-card:hover .role-arrow {
+            transform: translateX(4px);
         }
 
         .role-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.4s ease;
         }
 
-        /* VHS Scanlines */
-        .vhs-overlay {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            z-index: 9999;
+        .role-arrow {
+            transition: transform 0.3s ease;
         }
 
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--st-red);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite;
+        /* Feature Badge */
+        .feature-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* Fade in */
-        .fade-in {
-            animation: fadeIn 1s ease-out;
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .delay-300 { animation-delay: 0.3s; opacity: 0; }
+        .delay-400 { animation-delay: 0.4s; opacity: 0; }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Decorative Elements */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        /* Stats */
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e11d48, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
 
-<body class="flex items-center justify-center">
-    <!-- VHS Overlay -->
-    <div class="vhs-overlay"></div>
+<body class="flex items-center justify-center min-h-screen bg-pattern">
+    <!-- Background Grid -->
+    <div class="fixed inset-0 bg-grid pointer-events-none"></div>
     
-    <!-- Floating Particles -->
-    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-    <div class="particle" style="left: 50%; animation-delay: 1s;"></div>
-    <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
-    <div class="particle" style="left: 80%; animation-delay: 5s;"></div>
-    <div class="particle" style="left: 90%; animation-delay: 2.5s;"></div>
+    <!-- Glow Orbs -->
+    <div class="glow-orb w-96 h-96 bg-rose-500/10 -top-48 -left-48 fixed"></div>
+    <div class="glow-orb w-80 h-80 bg-rose-500/5 -bottom-40 -right-40 fixed"></div>
 
-    <div class="text-center fade-in relative z-10 px-6">
+    <div class="relative z-10 w-full max-w-5xl px-6 py-12">
         
-        <!-- Christmas Lights -->
-        <div class="christmas-lights mb-10">
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
+        <!-- Logo & Title -->
+        <div class="text-center mb-16 fade-in-up">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-rose-500/10 border border-rose-500/20 mb-6 float">
+                <i data-lucide="brain" class="w-10 h-10 text-rose-500"></i>
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl font-display font-bold mb-4">
+                <span class="text-white">Welcome to </span>
+                <span class="gradient-text">PsySim</span>
+            </h1>
+            
+            <p class="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+                AI-powered clinical psychology training platform for students and educators
+            </p>
         </div>
         
-        <!-- Title -->
-        <h1 class="text-5xl md:text-7xl font-stranger neon-text flicker mb-4 tracking-[0.25em]">
-            PSYSIM
-        </h1>
-        
-        <p class="text-gray-500 tracking-[0.3em] text-sm mb-2 uppercase">
-            Hawkins Psychology Laboratory
-        </p>
-        
-        <p class="text-gray-600 mb-12 max-w-md mx-auto">
-            Enter the Upside Down of clinical training. Choose your path wisely.
-        </p>
-        
         <!-- Role Selection -->
-        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+        <div class="grid md:grid-cols-2 gap-6 mb-16">
             
             <!-- Student Card -->
-            <a href="/login/student/" class="role-card w-72 p-8 rounded-lg text-left group">
-                <div class="role-icon w-16 h-16 rounded-lg bg-red-900/30 flex items-center justify-center mb-6 border border-red-900/50">
-                    <i data-lucide="graduation-cap" class="w-8 h-8 text-red-500"></i>
+            <a href="/login/student/" class="role-card p-8 block fade-in-up delay-100">
+                <div class="relative z-10">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="role-icon">
+                            <i data-lucide="graduation-cap" class="w-8 h-8 text-rose-500"></i>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-zinc-500 role-arrow"></i>
+                    </div>
+                    
+                    <h2 class="text-2xl font-display font-semibold text-white mb-2">Student</h2>
+                    <p class="text-zinc-400 mb-6 leading-relaxed">
+                        Learn clinical techniques, practice with AI-simulated patients, and receive expert evaluations on your performance.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-badge">
+                            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                            Courses
+                        </span>
+                        <span class="feature-badge">
+                            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                            AI Practice
+                        </span>
+                        <span class="feature-badge">
+                            <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                            Evaluations
+                        </span>
+                    </div>
                 </div>
-                <h2 class="font-stranger text-xl text-red-500 mb-2 tracking-wider">STUDENT</h2>
-                <p class="text-gray-500 text-sm mb-4">
-                    Learn, practice with AI patients, and get evaluated by staff.
-                </p>
-                <span class="text-red-500 text-sm flex items-center gap-2 font-medium tracking-wide">
-                    ENTER
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </span>
             </a>
             
             <!-- Staff Card -->
-            <a href="/login/staff/" class="role-card w-72 p-8 rounded-lg text-left group">
-                <div class="role-icon w-16 h-16 rounded-lg bg-red-900/30 flex items-center justify-center mb-6 border border-red-900/50">
-                    <i data-lucide="shield" class="w-8 h-8 text-red-500"></i>
+            <a href="/login/staff/" class="role-card p-8 block fade-in-up delay-200">
+                <div class="relative z-10">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="role-icon">
+                            <i data-lucide="shield-check" class="w-8 h-8 text-rose-500"></i>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-5 h-5 text-zinc-500 role-arrow"></i>
+                    </div>
+                    
+                    <h2 class="text-2xl font-display font-semibold text-white mb-2">Staff</h2>
+                    <p class="text-zinc-400 mb-6 leading-relaxed">
+                        Review student therapy sessions, provide clinical evaluations, and guide the next generation of psychologists.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-badge">
+                            <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
+                            Review Sessions
+                        </span>
+                        <span class="feature-badge">
+                            <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                            Feedback
+                        </span>
+                        <span class="feature-badge">
+                            <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
+                            Analytics
+                        </span>
+                    </div>
                 </div>
-                <h2 class="font-stranger text-xl text-red-500 mb-2 tracking-wider">STAFF</h2>
-                <p class="text-gray-500 text-sm mb-4">
-                    Review student sessions and provide clinical evaluations.
-                </p>
-                <span class="text-red-500 text-sm flex items-center gap-2 font-medium tracking-wide">
-                    ENTER
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </span>
             </a>
             
         </div>
         
-        <!-- Footer Text -->
-        <p class="text-gray-700 text-xs mt-12 font-stranger tracking-[0.2em]">
-            "FRIENDS DON'T LIE" - ELEVEN
-        </p>
+        <!-- Stats Section -->
+        <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12 fade-in-up delay-300">
+            <div class="stat-item">
+                <div class="stat-number">AI</div>
+                <div class="text-sm text-zinc-500">Powered</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="text-sm text-zinc-500">Safe Practice</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="text-sm text-zinc-500">Sessions</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center fade-in-up delay-400">
+            <a href="{% url 'about_us' %}" class="inline-flex items-center gap-2 text-zinc-500 hover:text-rose-400 transition-colors text-sm">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                Meet Team Syntax Slayers
+            </a>
+            <p class="text-zinc-600 text-xs mt-4">
+                © 2026 PsySim. Built for psychology education.
+            </p>
+        </div>
         
     </div>
     

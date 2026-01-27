@@ -7,18 +7,18 @@
 <section class="mb-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <p class="text-gray-500 text-sm tracking-widest uppercase mb-2">{{ quiz.course.title }}</p>
-            <h1 class="text-2xl md:text-3xl font-stranger neon-text tracking-wider">
-                {{ quiz.title|upper }}
+            <span class="text-zinc-500 text-sm mb-2 block">{{ quiz.course.title }}</span>
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+                {{ quiz.title }}
             </h1>
         </div>
         
         {% if time_remaining %}
-        <div class="st-card p-4 flex items-center gap-3" id="timer-card">
-            <i data-lucide="clock" class="w-6 h-6 text-red-500"></i>
+        <div class="st-card-static p-4 flex items-center gap-3" id="timer-card">
+            <i data-lucide="clock" class="w-5 h-5 text-rose-500"></i>
             <div>
-                <p class="text-gray-500 text-xs">Time Remaining</p>
-                <p class="font-stranger text-xl neon-text" id="timer">--:--</p>
+                <p class="text-zinc-500 text-xs">Time Remaining</p>
+                <p class="font-bold text-xl text-white" id="timer">--:--</p>
             </div>
         </div>
         {% endif %}
@@ -26,13 +26,13 @@
 </section>
 
 <!-- Progress Bar -->
-<div class="st-card p-4 mb-8">
+<div class="st-card-static p-4 mb-8">
     <div class="flex items-center justify-between mb-2">
-        <span class="text-gray-400 text-sm">Progress</span>
-        <span class="text-gray-400 text-sm"><span id="answered-count">0</span> / {{ questions|length }} answered</span>
+        <span class="text-zinc-400 text-sm">Progress</span>
+        <span class="text-zinc-400 text-sm"><span id="answered-count">0</span> / {{ questions|length }} answered</span>
     </div>
-    <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+    <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-rose-600 to-rose-500 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
     </div>
 </div>
 
@@ -40,27 +40,27 @@
 <form method="POST" id="quiz-form">
     {% csrf_token %}
     
-    <div class="space-y-6">
+    <div class="space-y-5">
         {% for question in questions %}
-        <div class="st-card p-6 question-card" data-question="{{ question.id }}">
-            <div class="flex items-start gap-4 mb-6">
-                <span class="w-10 h-10 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center flex-shrink-0 font-stranger text-red-500">
+        <div class="st-card-static p-5 question-card" data-question="{{ question.id }}">
+            <div class="flex items-start gap-4 mb-5">
+                <span class="icon-box icon-box-sm icon-box-red flex-shrink-0 font-bold text-sm text-rose-500">
                     {{ forloop.counter }}
                 </span>
-                <p class="text-gray-200 text-lg leading-relaxed pt-1">{{ question.text }}</p>
+                <p class="text-white text-lg leading-relaxed pt-0.5">{{ question.text }}</p>
             </div>
             
-            <div class="space-y-3 ml-14">
+            <div class="space-y-2.5 ml-12">
                 {% for choice in question.choices.all %}
-                <label class="quiz-choice flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all">
+                <label class="quiz-choice flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all">
                     <input 
                         type="radio" 
                         name="question_{{ question.id }}" 
                         value="{{ choice.id }}"
-                        class="w-5 h-5 text-red-500 border-2 border-gray-600 focus:ring-red-500 focus:ring-offset-0 bg-transparent"
+                        class="w-5 h-5 text-rose-500 border-2 border-zinc-600 focus:ring-rose-500 focus:ring-offset-0 bg-transparent"
                         onchange="updateProgress()"
                     >
-                    <span class="text-gray-300">{{ choice.text }}</span>
+                    <span class="text-zinc-300">{{ choice.text }}</span>
                 </label>
                 {% endfor %}
             </div>
@@ -69,14 +69,14 @@
     </div>
     
     <!-- Submit Section -->
-    <div class="mt-8 st-card p-6">
+    <div class="mt-8 st-card-static p-5">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3 text-gray-400">
-                <i data-lucide="alert-circle" class="w-5 h-5 text-yellow-500"></i>
+            <div class="flex items-center gap-3 text-zinc-400">
+                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-500"></i>
                 <span class="text-sm">Make sure to answer all questions before submitting.</span>
             </div>
-            <button type="submit" class="st-btn px-8 py-3 text-lg" id="submit-btn">
-                <i data-lucide="send" class="w-5 h-5"></i>
+            <button type="submit" class="st-btn px-8 py-3" id="submit-btn">
+                <i data-lucide="send" class="w-4 h-4"></i>
                 Submit Quiz
             </button>
         </div>
@@ -85,19 +85,18 @@
 
 <style>
     .quiz-choice {
-        background: rgba(17, 17, 17, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(24, 24, 27, 0.5);
+        border: 1px solid rgba(63, 63, 70, 0.5);
     }
     
     .quiz-choice:hover {
-        background: rgba(225, 29, 72, 0.1);
-        border-color: rgba(225, 29, 72, 0.3);
+        background: rgba(225, 29, 72, 0.05);
+        border-color: rgba(225, 29, 72, 0.25);
     }
     
     .quiz-choice:has(input:checked) {
-        background: rgba(225, 29, 72, 0.2);
-        border-color: rgba(225, 29, 72, 0.5);
-        box-shadow: 0 0 15px rgba(225, 29, 72, 0.1);
+        background: rgba(225, 29, 72, 0.1);
+        border-color: rgba(225, 29, 72, 0.4);
     }
     
     .quiz-choice input[type="radio"] {
@@ -153,9 +152,11 @@
             // Warning colors
             if (timeRemaining <= 60) {
                 timerCard.classList.add('animate-pulse');
-                timerEl.classList.add('text-red-400');
+                timerEl.classList.remove('text-white');
+                timerEl.classList.add('text-rose-400');
             } else if (timeRemaining <= 300) {
-                timerEl.classList.add('text-yellow-400');
+                timerEl.classList.remove('text-white');
+                timerEl.classList.add('text-amber-400');
             }
             
             timeRemaining--;

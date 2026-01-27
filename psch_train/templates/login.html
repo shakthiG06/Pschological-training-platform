@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | PsySim</title>
+    <title>Sign In | PsySim</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,94 +14,66 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --st-black: #0a0a0a;
-            --st-dark: #111111;
-            --st-red: #e11d48;
-            --st-red-glow: #ff2d55;
-            --st-cream: #f5f5dc;
+            --primary: #e11d48;
+            --primary-light: #fb7185;
+            --bg-dark: #09090b;
+            --bg-card: #18181b;
+            --bg-elevated: #27272a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--st-black);
+            background: var(--bg-dark);
             min-height: 100vh;
-            overflow: hidden;
         }
 
-        .font-stranger {
-            font-family: 'Special Elite', cursive;
-            letter-spacing: 0.15em;
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        .neon-text {
-            color: var(--st-red);
-            text-shadow: 
-                0 0 5px var(--st-red-glow),
-                0 0 10px var(--st-red-glow),
-                0 0 20px var(--st-red-glow);
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(225, 29, 72, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(225, 29, 72, 0.04) 0%, transparent 50%);
         }
 
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 
-                    0 0 5px var(--st-red-glow),
-                    0 0 10px var(--st-red-glow),
-                    0 0 20px var(--st-red-glow);
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-            }
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        .flicker {
-            animation: flicker 4s infinite alternate;
-        }
-
-        /* Christmas Lights */
-        .christmas-lights {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        .light:nth-child(1) { background: #e11d48; animation-delay: 0s; }
-        .light:nth-child(2) { background: #22c55e; animation-delay: 0.25s; }
-        .light:nth-child(3) { background: #3b82f6; animation-delay: 0.5s; }
-        .light:nth-child(4) { background: #eab308; animation-delay: 0.75s; }
-        .light:nth-child(5) { background: #e11d48; animation-delay: 1s; }
-
-        @keyframes glow {
-            0%, 100% { opacity: 0.3; box-shadow: none; }
-            50% { opacity: 1; box-shadow: 0 0 12px currentColor, 0 0 24px currentColor; }
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #e11d48, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Login Card */
         .login-card {
-            background: linear-gradient(145deg, rgba(17, 17, 17, 0.95), rgba(10, 10, 10, 0.98));
-            border: 1px solid rgba(225, 29, 72, 0.3);
-            box-shadow: 
-                0 0 40px rgba(225, 29, 72, 0.1),
-                inset 0 0 40px rgba(0, 0, 0, 0.5);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5);
         }
 
         /* Input Styles */
         .st-input {
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(225, 29, 72, 0.3);
-            border-radius: 4px;
-            padding: 14px 16px 14px 48px;
-            color: var(--st-cream);
+            background: var(--bg-elevated);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px 16px 16px 52px;
+            color: var(--text-primary);
             width: 100%;
             transition: all 0.3s ease;
             font-size: 0.95rem;
@@ -109,125 +81,132 @@
 
         .st-input:focus {
             outline: none;
-            border-color: var(--st-red);
-            box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
         }
 
         .st-input::placeholder {
-            color: #6b7280;
+            color: #71717a;
         }
 
         /* Button */
         .st-btn {
-            background: linear-gradient(135deg, var(--st-red), #9f1239);
+            background: linear-gradient(135deg, var(--primary), #9f1239);
             color: white;
-            padding: 14px 28px;
-            border-radius: 4px;
+            padding: 16px 28px;
+            border-radius: 12px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             width: 100%;
             border: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .st-btn:hover {
-            box-shadow: 
-                0 0 25px rgba(225, 29, 72, 0.5),
-                0 0 50px rgba(225, 29, 72, 0.3);
+            box-shadow: 0 8px 24px -4px rgba(225, 29, 72, 0.5);
             transform: translateY(-2px);
         }
 
-        /* VHS Scanlines */
-        .vhs-overlay {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            z-index: 9999;
+        .st-btn:active {
+            transform: translateY(0);
         }
 
-        /* Floating particles */
-        .particle {
+        /* Icon Box */
+        .icon-box {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Input Icon */
+        .input-icon {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: var(--st-red);
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #71717a;
+            transition: color 0.2s ease;
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Error Alert */
+        .error-alert {
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.25);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.875rem;
+        }
+
+        /* Glow Orb */
+        .glow-orb {
+            position: fixed;
             border-radius: 50%;
-            opacity: 0.2;
-            animation: floatUp 20s infinite;
-        }
-
-        @keyframes floatUp {
-            0%, 100% { transform: translateY(100vh); opacity: 0; }
-            10% { opacity: 0.2; }
-            90% { opacity: 0.2; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            filter: blur(80px);
+            pointer-events: none;
         }
     </style>
 </head>
 
-<body class="flex items-center justify-center">
-    <!-- VHS Overlay -->
-    <div class="vhs-overlay"></div>
+<body class="flex items-center justify-center min-h-screen bg-pattern">
+    <!-- Background Grid -->
+    <div class="fixed inset-0 bg-grid pointer-events-none"></div>
     
-    <!-- Particles -->
-    <div class="particle" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="particle" style="left: 35%; animation-delay: 3s;"></div>
-    <div class="particle" style="left: 55%; animation-delay: 1s;"></div>
-    <div class="particle" style="left: 75%; animation-delay: 4s;"></div>
-    <div class="particle" style="left: 85%; animation-delay: 2s;"></div>
+    <!-- Glow Orbs -->
+    <div class="glow-orb w-80 h-80 bg-rose-500/10 -top-40 -right-40"></div>
+    <div class="glow-orb w-64 h-64 bg-rose-500/5 -bottom-32 -left-32"></div>
 
-    <div class="login-card w-full max-w-md p-10 rounded-lg fade-in relative z-10 mx-4">
-        
-        <!-- Christmas Lights -->
-        <div class="christmas-lights mb-8">
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-            <div class="light"></div>
-        </div>
+    <div class="login-card w-full max-w-md p-10 fade-in-up relative z-10 mx-4">
         
         <!-- Logo & Title -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-stranger neon-text flicker tracking-[0.2em] mb-2">
-                PSYSIM
-            </h1>
-            <p class="text-gray-500 text-sm tracking-widest uppercase">
-                {{ role|title }} Access
-            </p>
-        </div>
-        
-        <!-- Role Icon -->
-        <div class="flex justify-center mb-8">
-            <div class="w-20 h-20 rounded-lg bg-red-900/30 border border-red-900/50 flex items-center justify-center">
+        <div class="text-center mb-10">
+            <div class="icon-box mx-auto mb-6">
                 {% if role == 'student' %}
-                <i data-lucide="graduation-cap" class="w-10 h-10 text-red-500"></i>
+                <i data-lucide="graduation-cap" class="w-9 h-9 text-rose-500"></i>
                 {% else %}
-                <i data-lucide="shield" class="w-10 h-10 text-red-500"></i>
+                <i data-lucide="shield-check" class="w-9 h-9 text-rose-500"></i>
                 {% endif %}
             </div>
+            
+            <h1 class="text-3xl font-display font-bold text-white mb-2">
+                Welcome Back
+            </h1>
+            <p class="text-zinc-400">
+                Sign in as <span class="text-rose-400 font-medium">{{ role|title }}</span>
+            </p>
         </div>
         
         <!-- Login Form -->
@@ -235,48 +214,56 @@
             {% csrf_token %}
 
             <!-- Username -->
-            <div class="relative">
-                <i data-lucide="user" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <div class="input-wrapper relative">
+                <i data-lucide="user" class="w-5 h-5 input-icon"></i>
                 <input type="text" name="username" placeholder="Username" required
                     class="st-input">
             </div>
 
             <!-- Password -->
-            <div class="relative">
-                <i data-lucide="lock" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <div class="input-wrapper relative">
+                <i data-lucide="lock" class="w-5 h-5 input-icon"></i>
                 <input type="password" name="password" placeholder="Password" required
                     class="st-input">
             </div>
 
             <!-- Error Message -->
             {% if error %}
-            <div class="p-3 rounded bg-red-900/30 border border-red-900/50 text-red-400 text-sm flex items-center gap-2">
-                <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                {{ error }}
+            <div class="error-alert">
+                <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <span>{{ error }}</span>
             </div>
             {% endif %}
 
             <!-- Submit Button -->
-            <button type="submit" class="st-btn mt-6">
-                <span class="flex items-center justify-center gap-2">
-                    <i data-lucide="log-in" class="w-5 h-5"></i>
-                    Enter the Lab
-                </span>
+            <button type="submit" class="st-btn mt-2">
+                <i data-lucide="log-in" class="w-5 h-5"></i>
+                Sign In
             </button>
         </form>
         
-        <!-- Back Link -->
-        <div class="mt-8 text-center">
-            <a href="/" class="text-gray-500 hover:text-red-500 transition-colors text-sm flex items-center justify-center gap-2">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                Back to Role Selection
-            </a>
+        <!-- Divider -->
+        <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-zinc-800"></div>
+            </div>
+            <div class="relative flex justify-center">
+                <span class="bg-zinc-900 px-4 text-sm text-zinc-500">or</span>
+            </div>
         </div>
         
+        <!-- Back Link -->
+        <a href="{% url 'role_select' %}" class="flex items-center justify-center gap-2 text-zinc-400 hover:text-rose-400 transition-colors text-sm group">
+            <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+            Choose a different role
+        </a>
+        
         <!-- Footer -->
-        <p class="text-center text-gray-700 text-xs mt-8 font-stranger tracking-wider">
-            HAWKINS LAB © 1986
-        </p>
+        <div class="mt-10 pt-6 border-t border-zinc-800/50 text-center">
+            <p class="text-zinc-600 text-xs">
+                © 2026 PsySim. Secure authentication.
+            </p>
+        </div>
         
     </div>
     

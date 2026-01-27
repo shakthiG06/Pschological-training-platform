@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PsySim - AI-Powered Psychology Training Platform for clinical practice">
     <title>{% block title %}PsySim{% endblock %}</title>
 
     <!-- Tailwind CSS -->
@@ -11,270 +12,386 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts - Stranger Things Style -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --st-black: #0a0a0a;
-            --st-dark: #111111;
-            --st-darker: #0d0d0d;
-            --st-red: #e11d48;
-            --st-red-glow: #ff2d55;
-            --st-red-dark: #9f1239;
-            --st-cream: #f5f5dc;
-            --st-gray: #374151;
-            --st-light-gray: #9ca3af;
+            --primary: #e11d48;
+            --primary-light: #fb7185;
+            --primary-dark: #9f1239;
+            --bg-dark: #09090b;
+            --bg-card: #18181b;
+            --bg-elevated: #27272a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(225, 29, 72, 0.3);
         }
 
         * {
             scrollbar-width: thin;
-            scrollbar-color: var(--st-red-dark) var(--st-dark);
+            scrollbar-color: var(--primary-dark) var(--bg-card);
         }
 
         *::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
 
         *::-webkit-scrollbar-track {
-            background: var(--st-dark);
+            background: var(--bg-card);
         }
 
         *::-webkit-scrollbar-thumb {
-            background: var(--st-red-dark);
+            background: var(--primary-dark);
             border-radius: 3px;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--st-black);
-            color: var(--st-cream);
+            background: var(--bg-dark);
+            color: var(--text-primary);
             min-height: 100vh;
+            line-height: 1.6;
         }
 
-        .font-stranger {
-            font-family: 'Special Elite', cursive;
-            letter-spacing: 0.15em;
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Neon Red Glow Effect */
-        .neon-text {
-            color: var(--st-red);
-            text-shadow: 
-                0 0 5px var(--st-red-glow),
-                0 0 10px var(--st-red-glow),
-                0 0 20px var(--st-red-glow),
-                0 0 40px var(--st-red);
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .neon-text-subtle {
-            color: var(--st-red);
-            text-shadow: 
-                0 0 5px rgba(225, 29, 72, 0.5),
-                0 0 10px rgba(225, 29, 72, 0.3);
-        }
-
-        /* Flickering Animation */
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 
-                    0 0 5px var(--st-red-glow),
-                    0 0 10px var(--st-red-glow),
-                    0 0 20px var(--st-red-glow),
-                    0 0 40px var(--st-red);
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-            }
-        }
-
-        .flicker {
-            animation: flicker 3s infinite alternate;
-        }
-
-        /* Card Styles */
+        /* Modern Card Styles */
         .st-card {
-            background: linear-gradient(145deg, rgba(17, 17, 17, 0.9), rgba(10, 10, 10, 0.95));
-            border: 1px solid rgba(225, 29, 72, 0.2);
-            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .st-card:hover {
-            border-color: rgba(225, 29, 72, 0.5);
-            box-shadow: 
-                0 0 20px rgba(225, 29, 72, 0.1),
-                inset 0 0 20px rgba(225, 29, 72, 0.05);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
         }
 
-        /* Button Styles */
+        .st-card-static {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        /* Modern Button Styles */
         .st-btn {
-            background: linear-gradient(135deg, var(--st-red), var(--st-red-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 12px 28px;
-            border-radius: 4px;
+            padding: 12px 24px;
+            border-radius: 12px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
             font-size: 0.875rem;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            cursor: pointer;
         }
 
         .st-btn:hover {
-            box-shadow: 
-                0 0 20px rgba(225, 29, 72, 0.4),
-                0 0 40px rgba(225, 29, 72, 0.2);
+            box-shadow: 0 8px 24px -4px rgba(225, 29, 72, 0.5);
             transform: translateY(-2px);
+        }
+
+        .st-btn:active {
+            transform: translateY(0);
         }
 
         .st-btn-outline {
             background: transparent;
-            border: 1px solid var(--st-red);
-            color: var(--st-red);
+            border: 1px solid var(--border-hover);
+            color: var(--primary);
         }
 
         .st-btn-outline:hover {
             background: rgba(225, 29, 72, 0.1);
+            border-color: var(--primary);
         }
 
-        /* Input Styles */
+        .st-btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+        }
+
+        .st-btn-ghost:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Modern Input Styles */
         .st-input {
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(225, 29, 72, 0.3);
-            border-radius: 4px;
-            padding: 12px 16px;
-            color: var(--st-cream);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: var(--text-primary);
             width: 100%;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .st-input:focus {
             outline: none;
-            border-color: var(--st-red);
-            box-shadow: 0 0 15px rgba(225, 29, 72, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
         }
 
         .st-input::placeholder {
-            color: var(--st-light-gray);
+            color: var(--text-muted);
         }
 
-        /* Badge Styles */
+        /* Modern Badge Styles */
         .st-badge {
-            padding: 4px 12px;
-            border-radius: 2px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .st-badge-red {
-            background: rgba(225, 29, 72, 0.2);
-            color: var(--st-red);
-            border: 1px solid rgba(225, 29, 72, 0.3);
+            background: rgba(225, 29, 72, 0.15);
+            color: var(--primary-light);
+            border: 1px solid rgba(225, 29, 72, 0.25);
         }
 
         .st-badge-green {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.25);
         }
 
         .st-badge-yellow {
-            background: rgba(234, 179, 8, 0.2);
-            color: #eab308;
-            border: 1px solid rgba(234, 179, 8, 0.3);
+            background: rgba(234, 179, 8, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(234, 179, 8, 0.25);
         }
 
-        /* Christmas Lights Effect */
-        .christmas-lights {
+        .st-badge-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+        }
+
+        .st-badge-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+        }
+
+        /* Icon Box */
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
-            gap: 20px;
-            padding: 10px 0;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            animation: glow 2s ease-in-out infinite;
+        .icon-box-sm {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
         }
 
-        .light:nth-child(1) { background: #e11d48; animation-delay: 0s; }
-        .light:nth-child(2) { background: #22c55e; animation-delay: 0.2s; }
-        .light:nth-child(3) { background: #3b82f6; animation-delay: 0.4s; }
-        .light:nth-child(4) { background: #eab308; animation-delay: 0.6s; }
-        .light:nth-child(5) { background: #e11d48; animation-delay: 0.8s; }
-        .light:nth-child(6) { background: #22c55e; animation-delay: 1s; }
-        .light:nth-child(7) { background: #3b82f6; animation-delay: 1.2s; }
-        .light:nth-child(8) { background: #eab308; animation-delay: 1.4s; }
-
-        @keyframes glow {
-            0%, 100% { opacity: 0.4; box-shadow: none; }
-            50% { opacity: 1; box-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+        .icon-box-lg {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
         }
 
-        /* VHS Scanline Effect */
-        .vhs-overlay {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.1),
-                rgba(0, 0, 0, 0.1) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            z-index: 9999;
-            opacity: 0.3;
+        .icon-box-red {
+            background: rgba(225, 29, 72, 0.15);
+            border: 1px solid rgba(225, 29, 72, 0.2);
         }
 
-        /* Fade In Animation */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
+        .icon-box-green {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
+        .icon-box-blue {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .icon-box-yellow {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        .icon-box-purple {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Nav Link Hover */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .pulse-soft {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+
+        /* Nav Link */
         .nav-link {
             position: relative;
-            color: var(--st-cream);
-            transition: color 0.3s ease;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
         .nav-link:hover {
-            color: var(--st-red);
+            color: var(--text-primary);
+            background: var(--bg-elevated);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--st-red);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--st-red);
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(225, 29, 72, 0.1);
         }
 
-        .nav-link:hover::after {
-            width: 100%;
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        /* Glow Effects */
+        .glow-red {
+            box-shadow: 0 0 40px -10px rgba(225, 29, 72, 0.5);
+        }
+
+        .glow-green {
+            box-shadow: 0 0 40px -10px rgba(34, 197, 94, 0.5);
+        }
+
+        /* Status Dot */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot-green {
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        .status-dot-yellow {
+            background: #eab308;
+            box-shadow: 0 0 8px #eab308;
+        }
+
+        .status-dot-red {
+            background: #e11d48;
+            box-shadow: 0 0 8px #e11d48;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--bg-card) 50%, var(--bg-elevated) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Hover Card Effect */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Text Styles */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         {% block extra_styles %}{% endblock %}
@@ -282,63 +399,73 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-<body>
-    <!-- VHS Scanline Overlay -->
-    <div class="vhs-overlay"></div>
+<body class="min-h-screen flex flex-col">
 
     <!-- NAVBAR -->
-    <nav class="sticky top-0 z-50 border-b border-red-900/30" style="background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px);">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
+    <nav class="sticky top-0 z-50 border-b border-white/5" style="background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(20px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
                 
                 <!-- Logo -->
-                <a href="/" class="flex items-center gap-3">
-                    <div class="christmas-lights hidden md:flex">
-                        <div class="light"></div>
-                        <div class="light"></div>
-                        <div class="light"></div>
+                <a href="{% url 'role_select' %}" class="flex items-center gap-3 group">
+                    <div class="icon-box icon-box-sm icon-box-red group-hover:scale-110 transition-transform">
+                        <i data-lucide="brain" class="w-5 h-5 text-rose-500"></i>
                     </div>
-                    <h1 class="text-2xl font-stranger neon-text flicker tracking-widest">
-                        PSYSIM
-                    </h1>
+                    <span class="text-xl font-display font-bold gradient-text">
+                        PsySim
+                    </span>
                 </a>
 
                 <!-- Navigation -->
-                <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2">
                     {% if request.user.is_authenticated %}
                         {% if request.user.profile.role == "student" %}
-                            <a href="{% url 'student_dashboard' %}" class="nav-link text-sm font-medium tracking-wide">
+                            <a href="{% url 'student_dashboard' %}" class="nav-link text-sm">
+                                <i data-lucide="layout-dashboard" class="w-4 h-4 inline mr-1.5"></i>
                                 Dashboard
                             </a>
-                            <a href="/courses/" class="nav-link text-sm font-medium tracking-wide">
+                            <a href="/courses/" class="nav-link text-sm">
+                                <i data-lucide="book-open" class="w-4 h-4 inline mr-1.5"></i>
                                 Courses
+                            </a>
+                            <a href="/chat/" class="nav-link text-sm">
+                                <i data-lucide="message-circle" class="w-4 h-4 inline mr-1.5"></i>
+                                Practice
                             </a>
                         {% endif %}
 
                         {% if request.user.profile.role == "staff" %}
-                            <a href="{% url 'staff_dashboard' %}" class="nav-link text-sm font-medium tracking-wide">
-                                Staff Portal
+                            <a href="{% url 'staff_dashboard' %}" class="nav-link text-sm">
+                                <i data-lucide="clipboard-list" class="w-4 h-4 inline mr-1.5"></i>
+                                Evaluations
                             </a>
                         {% endif %}
 
-                        <a href="{% url 'about_us' %}" class="nav-link text-sm font-medium tracking-wide">
-                            About Us
+                        <a href="{% url 'about_us' %}" class="nav-link text-sm">
+                            <i data-lucide="users" class="w-4 h-4 inline mr-1.5"></i>
+                            About
                         </a>
 
-                        <form method="post" action="{% url 'logout' %}" class="inline">
-                            {% csrf_token %}
-                            <button type="submit" class="st-btn-outline st-btn text-xs py-2 px-4">
-                                <i data-lucide="log-out" class="w-4 h-4"></i>
-                                Exit
-                            </button>
-                        </form>
+                        <div class="w-px h-6 bg-white/10 mx-2"></div>
+
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm text-zinc-400">
+                                {{ request.user.username }}
+                            </span>
+                            <form method="post" action="{% url 'logout' %}" class="inline">
+                                {% csrf_token %}
+                                <button type="submit" class="st-btn-ghost text-sm">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                        </div>
                     {% else %}
-                        <a href="{% url 'about_us' %}" class="nav-link text-sm font-medium tracking-wide">
+                        <a href="{% url 'about_us' %}" class="nav-link text-sm">
                             About Us
                         </a>
-                        <span class="text-sm text-gray-500 tracking-wide hidden md:block">
-                            The Upside Down of Psychology
-                        </span>
+                        <a href="{% url 'role_select' %}" class="st-btn text-sm py-2 px-4">
+                            Sign In
+                        </a>
                     {% endif %}
                 </div>
             </div>
@@ -346,31 +473,31 @@
     </nav>
 
     <!-- PAGE CONTENT -->
-    <main class="container mx-auto px-6 py-8 fade-in">
-        {% block content %}{% endblock %}
+    <main class="flex-1 fade-in">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            {% block content %}{% endblock %}
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-red-900/20 mt-auto py-6">
-        <div class="container mx-auto px-6">
+    <footer class="border-t border-white/5 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="christmas-lights">
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
-                    <div class="light"></div>
+                <div class="flex items-center gap-3">
+                    <div class="icon-box icon-box-sm icon-box-red">
+                        <i data-lucide="brain" class="w-4 h-4 text-rose-500"></i>
+                    </div>
+                    <span class="text-sm text-zinc-500">
+                        PsySim — AI Psychology Training Platform
+                    </span>
                 </div>
                 <div class="flex items-center gap-6">
-                    <a href="{% url 'about_us' %}" class="nav-link text-sm text-gray-500 font-stranger tracking-wider hover:text-red-500">
-                        TEAM SYNTAX SLAYERS
+                    <a href="{% url 'about_us' %}" class="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
+                        Team Syntax Slayers
                     </a>
-                    <p class="text-sm text-gray-600 font-stranger tracking-wider">
-                        HAWKINS PSYCHOLOGY LAB © 1986
-                    </p>
+                    <span class="text-sm text-zinc-600">
+                        © 2026 All rights reserved
+                    </span>
                 </div>
             </div>
         </div>
