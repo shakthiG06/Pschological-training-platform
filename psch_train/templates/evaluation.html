@@ -68,18 +68,52 @@
         <form method="post" class="space-y-5">
             {% csrf_token %}
             
-            <!-- Score Input -->
+            <!-- Communication Score -->
             <div>
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
-                    <i data-lucide="star" class="w-4 h-4 inline mr-1 text-rose-500"></i>
-                    Score (out of 10)
+                    <i data-lucide="message-circle" class="w-4 h-4 inline mr-1 text-blue-500"></i>
+                    Communication Score (1-10)
                 </label>
                 <input 
                     type="number" 
-                    name="score" 
+                    name="communication_score" 
                     min="1" 
                     max="10"
-                    class="eval-input w-full p-3 rounded-xl text-white text-2xl font-bold text-center"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
+                    placeholder="0"
+                    required
+                >
+            </div>
+            
+            <!-- Empathy Score -->
+            <div>
+                <label class="block text-zinc-400 text-sm font-medium mb-2">
+                    <i data-lucide="heart" class="w-4 h-4 inline mr-1 text-rose-500"></i>
+                    Empathy Score (1-10)
+                </label>
+                <input 
+                    type="number" 
+                    name="empathy_score" 
+                    min="1" 
+                    max="10"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
+                    placeholder="0"
+                    required
+                >
+            </div>
+            
+            <!-- Clinical Reasoning Score -->
+            <div>
+                <label class="block text-zinc-400 text-sm font-medium mb-2">
+                    <i data-lucide="brain" class="w-4 h-4 inline mr-1 text-purple-500"></i>
+                    Clinical Reasoning Score (1-10)
+                </label>
+                <input 
+                    type="number" 
+                    name="clinical_reasoning_score" 
+                    min="1" 
+                    max="10"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
                     placeholder="0"
                     required
                 >
@@ -89,34 +123,33 @@
                 </div>
             </div>
             
-            <!-- Feedback Input -->
+            <!-- Notes -->
             <div>
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
-                    <i data-lucide="message-circle" class="w-4 h-4 inline mr-1 text-rose-500"></i>
-                    Feedback
+                    <i data-lucide="file-text" class="w-4 h-4 inline mr-1 text-amber-500"></i>
+                    Staff Notes
                 </label>
                 <textarea 
-                    name="feedback" 
-                    rows="6"
+                    name="notes" 
+                    rows="4"
                     class="eval-input w-full p-4 rounded-xl text-white resize-none"
                     placeholder="Provide detailed feedback on the student's performance..."
                     required
                 ></textarea>
             </div>
             
-            <!-- Approval Checkbox -->
-            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <label class="flex items-center gap-3 cursor-pointer">
-                    <input 
-                        type="checkbox" 
-                        name="approved" 
-                        class="w-5 h-5 rounded border-2 border-emerald-500 bg-transparent checked:bg-emerald-500 cursor-pointer accent-emerald-500"
-                    >
-                    <div>
-                        <span class="text-emerald-400 font-medium">Approve for Progression</span>
-                        <p class="text-zinc-500 text-sm">Student will advance to the next level</p>
-                    </div>
+            <!-- AI Feedback (optional) -->
+            <div>
+                <label class="block text-zinc-400 text-sm font-medium mb-2">
+                    <i data-lucide="sparkles" class="w-4 h-4 inline mr-1 text-emerald-500"></i>
+                    AI Feedback (Optional)
                 </label>
+                <textarea 
+                    name="ai_feedback" 
+                    rows="3"
+                    class="eval-input w-full p-4 rounded-xl text-white resize-none"
+                    placeholder="Additional AI-generated insights..."
+                ></textarea>
             </div>
             
             <!-- Submit Button -->

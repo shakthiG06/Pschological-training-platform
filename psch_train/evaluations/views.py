@@ -45,14 +45,17 @@ def evaluate_session(request, session_id):
 
 
 # =====================================
-# STUDENT: View evaluation result
+# STUDENT/STAFF: View evaluation result
 # =====================================
 @login_required
 def evaluation_result(request, session_id):
     session = get_object_or_404(ChatSession, id=session_id)
 
-    # 🔐 Student can only see THEIR session
-    if session.student != request.user:
+    # 🔐 Student can only see THEIR session, staff can see any
+    is_owner = session.student == request.user
+    is_staff = request.user.profile.role == "staff"
+    
+    if not (is_owner or is_staff):
         return HttpResponseForbidden("You are not authorized to view this result.")
 
     evaluation = Evaluation.objects.filter(session=session).first()

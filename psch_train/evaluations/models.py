@@ -26,5 +26,29 @@ class Evaluation(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     evaluated_at = models.DateTimeField(null=True, blank=True)
 
+    @property
+    def average_score(self):
+        """Calculate average of all three scores"""
+        return (self.communication_score + self.empathy_score + self.clinical_reasoning_score) / 3
+
+    @property
+    def readiness(self):
+        """Determine if student is ready based on average score"""
+        if self.average_score >= 7:
+            return "Ready"
+        return "Needs Practice"
+
+    @property
+    def ai_summary(self):
+        """Return AI feedback or generate a default summary"""
+        if self.ai_feedback:
+            return self.ai_feedback
+        if self.average_score >= 8:
+            return "Excellent performance demonstrating strong clinical skills and empathetic communication."
+        elif self.average_score >= 6:
+            return "Good foundational skills with room for improvement in some areas."
+        else:
+            return "Continue practicing to strengthen your therapeutic communication skills."
+
     def __str__(self):
         return f"Evaluation for Session {self.session.id}"

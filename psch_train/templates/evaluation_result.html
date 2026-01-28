@@ -31,7 +31,7 @@
 {% if evaluation %}
 
 <!-- Score Cards -->
-<section class="grid md:grid-cols-2 gap-5 mb-8">
+<section class="grid md:grid-cols-3 gap-5 mb-8">
     
     <!-- Empathy Score -->
     <div class="st-card-static p-6 text-center group">
@@ -49,6 +49,15 @@
         </div>
         <h3 class="text-zinc-400 text-sm font-medium mb-2">Communication</h3>
         <p class="text-5xl font-bold text-white">{{ evaluation.communication_score }}<span class="text-2xl text-zinc-500">/10</span></p>
+    </div>
+    
+    <!-- Clinical Reasoning Score -->
+    <div class="st-card-static p-6 text-center group">
+        <div class="icon-box icon-box-lg mx-auto mb-5 group-hover:shadow-lg group-hover:shadow-purple-500/10 transition-all" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
+            <i data-lucide="brain" class="w-7 h-7 text-purple-500"></i>
+        </div>
+        <h3 class="text-zinc-400 text-sm font-medium mb-2">Clinical Reasoning</h3>
+        <p class="text-5xl font-bold text-white">{{ evaluation.clinical_reasoning_score }}<span class="text-2xl text-zinc-500">/10</span></p>
     </div>
     
 </section>
@@ -74,11 +83,12 @@
 </section>
 
 <!-- AI Learning Insight -->
+{% if evaluation.ai_summary %}
 <section class="mb-8">
     <div class="st-card-static p-5">
         <div class="flex items-center gap-3 mb-4">
             <div class="icon-box icon-box-sm" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
-                <i data-lucide="brain" class="w-4 h-4 text-purple-400"></i>
+                <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
             </div>
             <h3 class="font-semibold text-purple-400">AI Learning Insight</h3>
         </div>
@@ -88,6 +98,7 @@
         </p>
     </div>
 </section>
+{% endif %}
 
 <!-- Readiness Status -->
 <section class="text-center">

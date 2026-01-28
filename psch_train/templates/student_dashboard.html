@@ -154,6 +154,112 @@
     </div>
 </section>
 
+<!-- Evaluation Results Section (if evaluated) -->
+{% if evaluation %}
+<section class="mb-10">
+    <h2 class="text-lg font-semibold text-white mb-5 flex items-center gap-3">
+        <div class="icon-box icon-box-sm icon-box-green">
+            <i data-lucide="clipboard-check" class="w-4 h-4 text-emerald-500"></i>
+        </div>
+        Your Evaluation Results
+    </h2>
+    
+    <div class="st-card-static p-6">
+        <!-- Patient Info -->
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-zinc-800">
+            <div class="flex items-center gap-3">
+                <div class="icon-box icon-box-sm icon-box-blue">
+                    <i data-lucide="user" class="w-4 h-4 text-blue-500"></i>
+                </div>
+                <div>
+                    <p class="text-zinc-500 text-sm">AI Patient</p>
+                    <p class="text-white font-semibold">{{ latest_session.patient.name }}</p>
+                </div>
+            </div>
+            <span class="st-badge st-badge-green">
+                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                Evaluated
+            </span>
+        </div>
+        
+        <!-- Score Grid -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+            <div class="text-center p-4 rounded-xl bg-rose-500/10 border border-rose-500/20">
+                <div class="icon-box icon-box-sm icon-box-red mx-auto mb-2">
+                    <i data-lucide="heart" class="w-4 h-4 text-rose-500"></i>
+                </div>
+                <p class="text-zinc-400 text-xs font-medium mb-1">Empathy</p>
+                <p class="text-2xl font-bold text-white">{{ evaluation.empathy_score }}<span class="text-sm text-zinc-500">/10</span></p>
+            </div>
+            
+            <div class="text-center p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div class="icon-box icon-box-sm icon-box-blue mx-auto mb-2">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-blue-500"></i>
+                </div>
+                <p class="text-zinc-400 text-xs font-medium mb-1">Communication</p>
+                <p class="text-2xl font-bold text-white">{{ evaluation.communication_score }}<span class="text-sm text-zinc-500">/10</span></p>
+            </div>
+            
+            <div class="text-center p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div class="icon-box icon-box-sm" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
+                    <i data-lucide="brain" class="w-4 h-4 text-purple-500"></i>
+                </div>
+                <p class="text-zinc-400 text-xs font-medium mb-1">Clinical Reasoning</p>
+                <p class="text-2xl font-bold text-white">{{ evaluation.clinical_reasoning_score }}<span class="text-sm text-zinc-500">/10</span></p>
+            </div>
+        </div>
+        
+        <!-- Staff Feedback -->
+        {% if evaluation.notes %}
+        <div class="mb-6 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="user-check" class="w-4 h-4 text-rose-500"></i>
+                <span class="text-zinc-400 text-sm font-medium">Staff Feedback</span>
+            </div>
+            <p class="text-zinc-300 leading-relaxed">{{ evaluation.notes }}</p>
+        </div>
+        {% endif %}
+        
+        <!-- AI Insight -->
+        {% if evaluation.ai_summary %}
+        <div class="mb-6 p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+            <div class="flex items-center gap-2 mb-2">
+                <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+                <span class="text-purple-400 text-sm font-medium">AI Learning Insight</span>
+            </div>
+            <p class="text-zinc-400 italic leading-relaxed">"{{ evaluation.ai_summary }}"</p>
+        </div>
+        {% endif %}
+        
+        <!-- Readiness Status -->
+        <div class="flex items-center justify-between">
+            {% if evaluation.readiness == "Ready" %}
+            <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+                <div>
+                    <p class="text-emerald-400 font-semibold">Ready for Real Patients</p>
+                    <p class="text-emerald-400/70 text-xs">You have demonstrated competency</p>
+                </div>
+            </div>
+            {% else %}
+            <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <i data-lucide="clock" class="w-5 h-5 text-amber-400"></i>
+                <div>
+                    <p class="text-amber-400 font-semibold">Needs More Practice</p>
+                    <p class="text-amber-400/70 text-xs">Continue training to improve</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <a href="{% url 'evaluation_result' latest_session.id %}" class="st-btn st-btn-outline">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+                View Full Results
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <!-- Motivational Quote -->
 <section class="st-card-static p-8 relative overflow-hidden">
     <div class="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
