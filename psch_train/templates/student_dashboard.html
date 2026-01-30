@@ -4,7 +4,7 @@
 {% block content %}
 
 <!-- Welcome Section -->
-<section class="mb-10">
+<section class="mb-10 fade-in-up">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
             <div class="flex items-center gap-3 mb-3">
@@ -33,7 +33,7 @@
 
 <!-- Stats Grid -->
 <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-100">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-red">
                 <i data-lucide="book-open" class="w-4 h-4 text-rose-500"></i>
@@ -44,7 +44,7 @@
         <p class="text-sm text-zinc-500">Available</p>
     </div>
     
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-200">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-green">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
@@ -55,7 +55,7 @@
         <p class="text-sm text-zinc-500">Evaluations</p>
     </div>
     
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-300">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-blue">
                 <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
@@ -66,7 +66,7 @@
         <p class="text-sm text-zinc-500">AI Simulations</p>
     </div>
     
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-400">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-yellow">
                 <i data-lucide="trending-up" class="w-4 h-4 text-amber-500"></i>
@@ -79,7 +79,7 @@
 </section>
 
 <!-- Quick Actions -->
-<section class="mb-10">
+<section class="mb-10 fade-in-up delay-200">
     <h2 class="text-lg font-semibold text-white mb-5">Quick Actions</h2>
     
     <div class="grid md:grid-cols-3 gap-5">
@@ -87,14 +87,14 @@
         <!-- Courses Card -->
         <a href="/courses/" class="st-card p-6 group block">
             <div class="flex items-start justify-between mb-5">
-                <div class="icon-box icon-box-lg icon-box-red group-hover:scale-110 transition-transform">
+                <div class="icon-box icon-box-lg icon-box-red group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <i data-lucide="book-open" class="w-7 h-7 text-rose-500"></i>
                 </div>
-                <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-600 group-hover:text-rose-500 transition-colors"></i>
+                <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-600 group-hover:text-rose-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300"></i>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Courses</h3>
             <p class="text-zinc-400 text-sm mb-4">Master clinical psychology theories, from CBT to trauma-informed care.</p>
-            <span class="text-rose-500 text-sm font-medium flex items-center gap-2">
+            <span class="text-rose-500 text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
                 Browse all
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </span>
@@ -103,7 +103,7 @@
         <!-- AI Practice Card -->
         <div class="st-card p-6 group {% if not latest_session %}opacity-60{% endif %}">
             <div class="flex items-start justify-between mb-5">
-                <div class="icon-box icon-box-lg icon-box-purple">
+                <div class="icon-box icon-box-lg icon-box-purple group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <i data-lucide="message-circle" class="w-7 h-7 text-purple-500"></i>
                 </div>
                 {% if latest_session %}
@@ -125,7 +125,7 @@
         <!-- Evaluation Card -->
         <div class="st-card p-6 group">
             <div class="flex items-start justify-between mb-5">
-                <div class="icon-box icon-box-lg icon-box-blue">
+                <div class="icon-box icon-box-lg icon-box-blue group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <i data-lucide="clipboard-check" class="w-7 h-7 text-blue-500"></i>
                 </div>
                 {% if evaluation %}

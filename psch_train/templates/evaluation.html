@@ -4,14 +4,14 @@
 {% block content %}
 
 <!-- Header -->
-<section class="mb-8">
+<section class="mb-8 fade-in-down">
     <div class="flex items-center gap-4 mb-4">
-        <a href="/staff/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-colors">
+        <a href="/staff/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-all duration-300 hover:scale-110">
             <i data-lucide="arrow-left" class="w-4 h-4 text-zinc-400"></i>
         </a>
         <div>
             <span class="text-zinc-500 text-sm">Staff Evaluation</span>
-            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white gradient-text-animated">
                 Evaluate {{ session.student.username }}
             </h1>
         </div>
@@ -21,9 +21,9 @@
 <div class="grid lg:grid-cols-2 gap-6">
     
     <!-- Chat Review Panel -->
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 fade-in-left hover-lift">
         <div class="flex items-center gap-3 mb-5 pb-4 border-b border-zinc-800">
-            <div class="icon-box icon-box-sm icon-box-blue">
+            <div class="icon-box icon-box-sm icon-box-blue pulse-glow">
                 <i data-lucide="message-square" class="w-4 h-4 text-blue-500"></i>
             </div>
             <div>
@@ -34,8 +34,8 @@
         
         <div class="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
             {% for msg in session.chatmessage_set.all %}
-            <div class="{% if msg.sender == 'user' %}ml-8{% else %}mr-8{% endif %}">
-                <div class="{% if msg.sender == 'user' %}bg-rose-500/10 border-rose-500/20{% else %}bg-zinc-800/50 border-zinc-700/50{% endif %} border p-4 rounded-xl">
+            <div class="{% if msg.sender == 'user' %}ml-8{% else %}mr-8{% endif %} message-appear" style="animation-delay: {{ forloop.counter0 }}50ms;">
+                <div class="{% if msg.sender == 'user' %}bg-rose-500/10 border-rose-500/20{% else %}bg-zinc-800/50 border-zinc-700/50{% endif %} border p-4 rounded-xl hover:scale-[1.01] transition-transform duration-300">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="{% if msg.sender == 'user' %}text-rose-400{% else %}text-zinc-400{% endif %} text-xs font-medium uppercase">
                             {% if msg.sender == 'user' %}Therapist{% else %}Patient{% endif %}
@@ -45,8 +45,8 @@
                 </div>
             </div>
             {% empty %}
-            <div class="text-center py-8">
-                <i data-lucide="message-circle-off" class="w-12 h-12 text-zinc-700 mx-auto mb-3"></i>
+            <div class="text-center py-8 fade-in-up">
+                <i data-lucide="message-circle-off" class="w-12 h-12 text-zinc-700 mx-auto mb-3 float"></i>
                 <p class="text-zinc-500">No messages in this session.</p>
             </div>
             {% endfor %}
@@ -54,9 +54,9 @@
     </div>
     
     <!-- Evaluation Form -->
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 fade-in-right hover-lift">
         <div class="flex items-center gap-3 mb-5 pb-4 border-b border-zinc-800">
-            <div class="icon-box icon-box-sm icon-box-red">
+            <div class="icon-box icon-box-sm icon-box-red pulse-glow">
                 <i data-lucide="clipboard-check" class="w-4 h-4 text-rose-500"></i>
             </div>
             <div>
@@ -69,7 +69,7 @@
             {% csrf_token %}
             
             <!-- Communication Score -->
-            <div>
+            <div class="fade-in-up delay-100">
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
                     <i data-lucide="message-circle" class="w-4 h-4 inline mr-1 text-blue-500"></i>
                     Communication Score (1-10)
@@ -79,14 +79,14 @@
                     name="communication_score" 
                     min="1" 
                     max="10"
-                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center focus:scale-105 transition-transform"
                     placeholder="0"
                     required
                 >
             </div>
             
             <!-- Empathy Score -->
-            <div>
+            <div class="fade-in-up delay-200">
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
                     <i data-lucide="heart" class="w-4 h-4 inline mr-1 text-rose-500"></i>
                     Empathy Score (1-10)
@@ -96,14 +96,14 @@
                     name="empathy_score" 
                     min="1" 
                     max="10"
-                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center focus:scale-105 transition-transform"
                     placeholder="0"
                     required
                 >
             </div>
             
             <!-- Clinical Reasoning Score -->
-            <div>
+            <div class="fade-in-up delay-300">
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
                     <i data-lucide="brain" class="w-4 h-4 inline mr-1 text-purple-500"></i>
                     Clinical Reasoning Score (1-10)
@@ -113,7 +113,7 @@
                     name="clinical_reasoning_score" 
                     min="1" 
                     max="10"
-                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center"
+                    class="eval-input w-full p-3 rounded-xl text-white text-xl font-bold text-center focus:scale-105 transition-transform"
                     placeholder="0"
                     required
                 >
@@ -124,7 +124,7 @@
             </div>
             
             <!-- Notes -->
-            <div>
+            <div class="fade-in-up delay-400">
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
                     <i data-lucide="file-text" class="w-4 h-4 inline mr-1 text-amber-500"></i>
                     Staff Notes
@@ -132,14 +132,14 @@
                 <textarea 
                     name="notes" 
                     rows="4"
-                    class="eval-input w-full p-4 rounded-xl text-white resize-none"
+                    class="eval-input w-full p-4 rounded-xl text-white resize-none focus:scale-[1.01] transition-transform"
                     placeholder="Provide detailed feedback on the student's performance..."
                     required
                 ></textarea>
             </div>
             
             <!-- AI Feedback (optional) -->
-            <div>
+            <div class="fade-in-up delay-500">
                 <label class="block text-zinc-400 text-sm font-medium mb-2">
                     <i data-lucide="sparkles" class="w-4 h-4 inline mr-1 text-emerald-500"></i>
                     AI Feedback (Optional)
@@ -147,7 +147,7 @@
                 <textarea 
                     name="ai_feedback" 
                     rows="3"
-                    class="eval-input w-full p-4 rounded-xl text-white resize-none"
+                    class="eval-input w-full p-4 rounded-xl text-white resize-none focus:scale-[1.01] transition-transform"
                     placeholder="Additional AI-generated insights..."
                 ></textarea>
             </div>

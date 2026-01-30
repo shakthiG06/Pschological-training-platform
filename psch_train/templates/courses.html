@@ -6,7 +6,7 @@
 {% block content %}
 
 <!-- Header -->
-<section class="mb-10">
+<section class="mb-10 fade-in-up">
     <div class="text-center">
         <span class="st-badge st-badge-red mb-4">
             <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
@@ -27,12 +27,12 @@
     
     {% for course in courses %}
     {% with enrollment=enrollment_map|get_item:course.id %}
-    <a href="{% url 'course_detail' course.id %}" class="st-card overflow-hidden group block">
+    <a href="{% url 'course_detail' course.id %}" class="st-card overflow-hidden group block hover-lift fade-in-up delay-{{ forloop.counter }}00" style="animation-delay: {{ forloop.counter }}00ms;">
         
         <!-- Course Header -->
-        <div class="h-32 relative bg-gradient-to-br from-rose-500/10 to-rose-900/20">
+        <div class="h-32 relative bg-gradient-to-br from-rose-500/10 to-rose-900/20 overflow-hidden">
             <div class="absolute inset-0 flex items-center justify-center">
-                <i data-lucide="brain" class="w-16 h-16 text-rose-500/10 group-hover:text-rose-500/20 transition-colors"></i>
+                <i data-lucide="brain" class="w-16 h-16 text-rose-500/10 group-hover:text-rose-500/30 group-hover:scale-110 transition-all duration-500"></i>
             </div>
             
             <!-- Status Badge -->
@@ -50,7 +50,7 @@
             
             <!-- Course Number -->
             <div class="absolute bottom-4 left-4">
-                <span class="text-4xl font-bold text-rose-500/20">0{{ forloop.counter }}</span>
+                <span class="text-4xl font-bold text-rose-500/20 group-hover:text-rose-500/40 transition-colors">0{{ forloop.counter }}</span>
             </div>
             
             <!-- Difficulty Badge -->
@@ -83,7 +83,7 @@
                     {% else %}
                     Start
                     {% endif %}
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                 </span>
             </div>
         </div>
@@ -91,8 +91,8 @@
     </a>
     {% endwith %}
     {% empty %}
-    <div class="col-span-full st-card-static p-12 text-center">
-        <div class="icon-box icon-box-lg icon-box-red mx-auto mb-5">
+    <div class="col-span-full st-card-static p-12 text-center fade-in-up">
+        <div class="icon-box icon-box-lg icon-box-red mx-auto mb-5 float">
             <i data-lucide="book-x" class="w-8 h-8 text-rose-500"></i>
         </div>
         <h3 class="text-xl font-semibold text-white mb-2">No Courses Available</h3>

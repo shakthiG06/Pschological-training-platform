@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
 # ✅ IMPORT VIEWS EXPLICITLY
 from frontend.views import (
@@ -35,8 +36,10 @@ urlpatterns = [
     path("login/<str:role>/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
 
-    # Dashboards
+    # Dashboards (with shortcuts)
+    path("student/", lambda r: redirect("student_dashboard")),
     path("student/dashboard/", student_dashboard, name="student_dashboard"),
+    path("staff/", lambda r: redirect("staff_dashboard")),
     path("staff/dashboard/", staff_dashboard, name="staff_dashboard"),
 
     # About Us

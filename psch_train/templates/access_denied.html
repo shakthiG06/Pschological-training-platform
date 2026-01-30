@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="min-h-[60vh] flex items-center justify-center">
-    <div class="st-card-static p-12 text-center max-w-lg relative overflow-hidden">
+    <div class="st-card-static p-12 text-center max-w-lg relative overflow-hidden scale-in hover-lift">
         
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-5">
@@ -12,32 +12,32 @@
         </div>
         
         <!-- Icon -->
-        <div class="icon-box icon-box-lg icon-box-red mx-auto mb-8 relative z-10">
+        <div class="icon-box icon-box-lg icon-box-red mx-auto mb-8 relative z-10 float pulse-glow">
             <i data-lucide="lock" class="w-8 h-8 text-rose-500"></i>
         </div>
         
         <!-- Title -->
-        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-6 relative z-10">
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-6 relative z-10 fade-in-up">
             Access Denied
         </h1>
         
         <!-- Message -->
-        <p class="text-zinc-400 mb-2 relative z-10">
+        <p class="text-zinc-400 mb-2 relative z-10 fade-in-up delay-100">
             This content is currently locked.
         </p>
-        <p class="text-zinc-500 mb-8 relative z-10">
+        <p class="text-zinc-500 mb-8 relative z-10 fade-in-up delay-200">
             You must complete the course 
-            <span class="text-rose-400 font-medium">{{ course.title }}</span>
+            <span class="text-rose-400 font-medium gradient-text-animated">{{ course.title }}</span>
             before accessing this AI patient simulation.
         </p>
         
         <!-- Actions -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-            <a href="/courses/" class="st-btn">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10 fade-in-up delay-300">
+            <a href="/courses/" class="st-btn hover-lift">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
                 Go to Courses
             </a>
-            <a href="/student/" class="st-btn st-btn-outline">
+            <a href="/student/" class="st-btn st-btn-outline hover-lift">
                 <i data-lucide="home" class="w-4 h-4"></i>
                 Dashboard
             </a>

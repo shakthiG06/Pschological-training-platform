@@ -153,10 +153,74 @@
                 transform: translateY(0);
             }
         }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(225, 29, 72, 0.2); }
+        }
 
         .fade-in-up {
             animation: fadeInUp 0.6s ease-out forwards;
         }
+        
+        .fade-in-down {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
 
         /* Error Alert */
         .error-alert {
@@ -169,6 +233,7 @@
             align-items: center;
             gap: 10px;
             font-size: 0.875rem;
+            animation: fadeInUp 0.3s ease-out;
         }
 
         /* Glow Orb */
@@ -177,6 +242,31 @@
             border-radius: 50%;
             filter: blur(80px);
             pointer-events: none;
+            animation: orbFloat 10s ease-in-out infinite;
+        }
+        
+        .glow-orb-slow {
+            animation: orbFloat 15s ease-in-out infinite reverse;
+        }
+        
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Gradient text animation */
+        .gradient-text-animated {
+            background: linear-gradient(135deg, #e11d48, #fb7185, #fda4af, #fb7185, #e11d48);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
         }
     </style>
 </head>
@@ -187,13 +277,13 @@
     
     <!-- Glow Orbs -->
     <div class="glow-orb w-80 h-80 bg-rose-500/10 -top-40 -right-40"></div>
-    <div class="glow-orb w-64 h-64 bg-rose-500/5 -bottom-32 -left-32"></div>
+    <div class="glow-orb glow-orb-slow w-64 h-64 bg-rose-500/5 -bottom-32 -left-32"></div>
 
-    <div class="login-card w-full max-w-md p-10 fade-in-up relative z-10 mx-4">
+    <div class="login-card w-full max-w-md p-10 scale-in hover-lift relative z-10 mx-4">
         
         <!-- Logo & Title -->
         <div class="text-center mb-10">
-            <div class="icon-box mx-auto mb-6">
+            <div class="icon-box mx-auto mb-6 float pulse-glow">
                 {% if role == 'student' %}
                 <i data-lucide="graduation-cap" class="w-9 h-9 text-rose-500"></i>
                 {% else %}
@@ -201,11 +291,11 @@
                 {% endif %}
             </div>
             
-            <h1 class="text-3xl font-display font-bold text-white mb-2">
+            <h1 class="text-3xl font-display font-bold text-white mb-2 fade-in-down delay-100">
                 Welcome Back
             </h1>
-            <p class="text-zinc-400">
-                Sign in as <span class="text-rose-400 font-medium">{{ role|title }}</span>
+            <p class="text-zinc-400 fade-in-down delay-200">
+                Sign in as <span class="text-rose-400 font-medium gradient-text-animated">{{ role|title }}</span>
             </p>
         </div>
         
@@ -214,14 +304,14 @@
             {% csrf_token %}
 
             <!-- Username -->
-            <div class="input-wrapper relative">
+            <div class="input-wrapper relative fade-in-up delay-200">
                 <i data-lucide="user" class="w-5 h-5 input-icon"></i>
                 <input type="text" name="username" placeholder="Username" required
                     class="st-input">
             </div>
 
             <!-- Password -->
-            <div class="input-wrapper relative">
+            <div class="input-wrapper relative fade-in-up delay-300">
                 <i data-lucide="lock" class="w-5 h-5 input-icon"></i>
                 <input type="password" name="password" placeholder="Password" required
                     class="st-input">
@@ -236,14 +326,14 @@
             {% endif %}
 
             <!-- Submit Button -->
-            <button type="submit" class="st-btn mt-2">
+            <button type="submit" class="st-btn mt-2 fade-in-up delay-400">
                 <i data-lucide="log-in" class="w-5 h-5"></i>
                 Sign In
             </button>
         </form>
         
         <!-- Divider -->
-        <div class="relative my-8">
+        <div class="relative my-8 fade-in-up delay-400">
             <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-zinc-800"></div>
             </div>
@@ -253,13 +343,13 @@
         </div>
         
         <!-- Back Link -->
-        <a href="{% url 'role_select' %}" class="flex items-center justify-center gap-2 text-zinc-400 hover:text-rose-400 transition-colors text-sm group">
-            <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+        <a href="{% url 'role_select' %}" class="flex items-center justify-center gap-2 text-zinc-400 hover:text-rose-400 transition-all text-sm group fade-in-up delay-400">
+            <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-2 transition-transform duration-300"></i>
             Choose a different role
         </a>
         
         <!-- Footer -->
-        <div class="mt-10 pt-6 border-t border-zinc-800/50 text-center">
+        <div class="mt-10 pt-6 border-t border-zinc-800/50 text-center fade-in-up delay-400">
             <p class="text-zinc-600 text-xs">
                 © 2026 PsySim. Secure authentication.
             </p>

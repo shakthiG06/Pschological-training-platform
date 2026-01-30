@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 from chat.models import ChatSession
 from .models import Evaluation
@@ -20,7 +21,9 @@ def evaluate_session(request, session_id):
     # Prevent duplicate evaluations
     evaluation = Evaluation.objects.filter(session=session).first()
     if evaluation:
-        return redirect("evaluation_result", session_id=session.id)
+        # Staff already evaluated - redirect to staff dashboard with message
+        messages.info(request, f"This session has already been evaluated.")
+        return redirect("staff_dashboard")
 
     if request.method == "POST":
         Evaluation.objects.create(
@@ -33,7 +36,9 @@ def evaluate_session(request, session_id):
             ai_feedback=request.POST.get("ai_feedback"),
         )
 
-        return redirect("evaluation_result", session_id=session.id)
+        # Redirect staff to dashboard with success message instead of result page
+        messages.success(request, f"Evaluation for {session.student.username} submitted successfully!")
+        return redirect("staff_dashboard")
 
     return render(
         request,
@@ -51,7 +56,7 @@ def evaluate_session(request, session_id):
 def evaluation_result(request, session_id):
     session = get_object_or_404(ChatSession, id=session_id)
 
-    # 🔐 Student can only see THEIR session, staff can see any
+    # 🔐 Student can only see THEIR session results, staff can view any evaluated session
     is_owner = session.student == request.user
     is_staff = request.user.profile.role == "staff"
     
@@ -65,6 +70,7 @@ def evaluation_result(request, session_id):
         "evaluation_result.html",
         {
             "session": session,
-            "evaluation": evaluation
+            "evaluation": evaluation,
+            "is_staff": is_staff
         }
     )

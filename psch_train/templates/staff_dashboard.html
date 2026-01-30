@@ -3,14 +3,32 @@
 
 {% block content %}
 
+<!-- Success/Info Messages -->
+{% if messages %}
+<section class="mb-6 fade-in-down">
+    {% for message in messages %}
+    <div class="{% if message.tags == 'success' %}bg-emerald-500/10 border-emerald-500/30 text-emerald-400{% elif message.tags == 'info' %}bg-blue-500/10 border-blue-500/30 text-blue-400{% else %}bg-amber-500/10 border-amber-500/30 text-amber-400{% endif %} border rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm">
+        {% if message.tags == 'success' %}
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        {% elif message.tags == 'info' %}
+        <i data-lucide="info" class="w-5 h-5"></i>
+        {% else %}
+        <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        {% endif %}
+        <span>{{ message }}</span>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
 <!-- Header -->
-<section class="mb-10">
+<section class="mb-10 fade-in-up">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
             <div class="flex items-center gap-3 mb-3">
                 <span class="text-zinc-500 text-sm">Staff Portal</span>
                 {% if pending_sessions|length > 0 %}
-                <span class="st-badge st-badge-yellow">
+                <span class="st-badge st-badge-yellow pulse-glow">
                     <i data-lucide="clock" class="w-3.5 h-3.5"></i>
                     {{ pending_sessions|length }} Pending
                 </span>
@@ -26,7 +44,7 @@
 
 <!-- Stats Grid -->
 <section class="grid grid-cols-3 gap-4 mb-10">
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-100">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-yellow">
                 <i data-lucide="clock" class="w-4 h-4 text-amber-500"></i>
@@ -36,7 +54,7 @@
         <p class="text-sm text-zinc-500">Pending Reviews</p>
     </div>
     
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-200">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-green">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
@@ -46,7 +64,7 @@
         <p class="text-sm text-zinc-500">Evaluated</p>
     </div>
     
-    <div class="st-card-static p-5">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-300">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-blue">
                 <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
@@ -58,7 +76,7 @@
 </section>
 
 <!-- Pending Sessions -->
-<section class="mb-12">
+<section class="mb-12 fade-in-up delay-200">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-lg font-semibold text-white flex items-center gap-3">
             <div class="icon-box icon-box-sm icon-box-yellow">
@@ -72,9 +90,9 @@
     {% if pending_sessions %}
     <div class="space-y-3">
         {% for session in pending_sessions %}
-        <div class="st-card-static p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-rose-500/30 transition-colors">
+        <div class="st-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 group">
             <div class="flex items-center gap-4">
-                <div class="icon-box icon-box-red">
+                <div class="icon-box icon-box-red group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <i data-lucide="user" class="w-5 h-5 text-rose-500"></i>
                 </div>
                 <div>
@@ -84,7 +102,7 @@
                 </div>
             </div>
             
-            <a href="{% url 'evaluate' session.id %}" class="st-btn">
+            <a href="{% url 'evaluate' session.id %}" class="st-btn group-hover:shadow-lg group-hover:shadow-rose-500/20 transition-all">
                 <i data-lucide="clipboard-check" class="w-4 h-4"></i>
                 Evaluate
             </a>
@@ -93,7 +111,7 @@
     </div>
     {% else %}
     <div class="st-card-static p-12 text-center">
-        <div class="icon-box icon-box-lg icon-box-green mx-auto mb-5">
+        <div class="icon-box icon-box-lg icon-box-green mx-auto mb-5 float">
             <i data-lucide="check-circle" class="w-8 h-8 text-emerald-500"></i>
         </div>
         <h3 class="text-xl font-semibold text-emerald-400 mb-2">All Caught Up</h3>
@@ -103,7 +121,7 @@
 </section>
 
 <!-- Evaluated Sessions -->
-<section>
+<section class="fade-in-up delay-300">
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-lg font-semibold text-white flex items-center gap-3">
             <div class="icon-box icon-box-sm icon-box-green">
@@ -117,9 +135,9 @@
     {% if evaluated_sessions %}
     <div class="space-y-3">
         {% for session in evaluated_sessions %}
-        <div class="st-card-static p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-emerald-500/30 transition-colors">
+        <div class="st-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 group">
             <div class="flex items-center gap-4">
-                <div class="icon-box icon-box-green">
+                <div class="icon-box icon-box-green group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     <i data-lucide="user-check" class="w-5 h-5 text-emerald-500"></i>
                 </div>
                 <div>
@@ -129,7 +147,7 @@
                 </div>
             </div>
             
-            <a href="{% url 'evaluation_result' session.id %}" class="st-btn st-btn-outline">
+            <a href="{% url 'evaluation_result' session.id %}" class="st-btn st-btn-outline group-hover:bg-emerald-500/10 group-hover:border-emerald-500/50 transition-all">
                 <i data-lucide="eye" class="w-4 h-4"></i>
                 View
             </a>

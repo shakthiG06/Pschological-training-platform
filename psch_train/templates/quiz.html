@@ -4,18 +4,18 @@
 {% block content %}
 
 <!-- Quiz Header -->
-<section class="mb-8">
+<section class="mb-8 fade-in-down">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <span class="text-zinc-500 text-sm mb-2 block">{{ quiz.course.title }}</span>
-            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white gradient-text-animated">
                 {{ quiz.title }}
             </h1>
         </div>
         
         {% if time_remaining %}
-        <div class="st-card-static p-4 flex items-center gap-3" id="timer-card">
-            <i data-lucide="clock" class="w-5 h-5 text-rose-500"></i>
+        <div class="st-card-static p-4 flex items-center gap-3 pulse-glow" id="timer-card">
+            <i data-lucide="clock" class="w-5 h-5 text-rose-500 bounce-soft"></i>
             <div>
                 <p class="text-zinc-500 text-xs">Time Remaining</p>
                 <p class="font-bold text-xl text-white" id="timer">--:--</p>
@@ -26,13 +26,13 @@
 </section>
 
 <!-- Progress Bar -->
-<div class="st-card-static p-4 mb-8">
+<div class="st-card-static p-4 mb-8 fade-in-up delay-100">
     <div class="flex items-center justify-between mb-2">
         <span class="text-zinc-400 text-sm">Progress</span>
         <span class="text-zinc-400 text-sm"><span id="answered-count">0</span> / {{ questions|length }} answered</span>
     </div>
     <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
-        <div class="h-full bg-gradient-to-r from-rose-600 to-rose-500 transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+        <div class="h-full bg-gradient-to-r from-rose-600 to-rose-500 transition-all duration-500 ease-out progress-bar-shimmer" id="progress-bar" style="width: 0%"></div>
     </div>
 </div>
 
@@ -42,9 +42,9 @@
     
     <div class="space-y-5">
         {% for question in questions %}
-        <div class="st-card-static p-5 question-card" data-question="{{ question.id }}">
+        <div class="st-card-static p-5 question-card fade-in-up hover-lift" data-question="{{ question.id }}" style="animation-delay: {{ forloop.counter0 }}50ms;">
             <div class="flex items-start gap-4 mb-5">
-                <span class="icon-box icon-box-sm icon-box-red flex-shrink-0 font-bold text-sm text-rose-500">
+                <span class="icon-box icon-box-sm icon-box-red flex-shrink-0 font-bold text-sm text-rose-500 bounce-soft">
                     {{ forloop.counter }}
                 </span>
                 <p class="text-white text-lg leading-relaxed pt-0.5">{{ question.text }}</p>
@@ -52,7 +52,7 @@
             
             <div class="space-y-2.5 ml-12">
                 {% for choice in question.choices.all %}
-                <label class="quiz-choice flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all">
+                <label class="quiz-choice flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-300">
                     <input 
                         type="radio" 
                         name="question_{{ question.id }}" 
@@ -69,13 +69,13 @@
     </div>
     
     <!-- Submit Section -->
-    <div class="mt-8 st-card-static p-5">
+    <div class="mt-8 st-card-static p-5 fade-in-up">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3 text-zinc-400">
-                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-500"></i>
+                <i data-lucide="alert-circle" class="w-5 h-5 text-amber-500 bounce-soft"></i>
                 <span class="text-sm">Make sure to answer all questions before submitting.</span>
             </div>
-            <button type="submit" class="st-btn px-8 py-3" id="submit-btn">
+            <button type="submit" class="st-btn px-8 py-3 hover-lift" id="submit-btn">
                 <i data-lucide="send" class="w-4 h-4"></i>
                 Submit Quiz
             </button>
@@ -92,11 +92,13 @@
     .quiz-choice:hover {
         background: rgba(225, 29, 72, 0.05);
         border-color: rgba(225, 29, 72, 0.25);
+        transform: translateX(4px);
     }
     
     .quiz-choice:has(input:checked) {
         background: rgba(225, 29, 72, 0.1);
         border-color: rgba(225, 29, 72, 0.4);
+        box-shadow: 0 0 20px rgba(225, 29, 72, 0.1);
     }
     
     .quiz-choice input[type="radio"] {
@@ -104,11 +106,19 @@
         -webkit-appearance: none;
         border-radius: 50%;
         position: relative;
+        transition: all 0.3s ease;
     }
     
     .quiz-choice input[type="radio"]:checked {
         background: #e11d48;
         border-color: #e11d48;
+        animation: radioSelect 0.3s ease;
+    }
+    
+    @keyframes radioSelect {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
     }
     
     .quiz-choice input[type="radio"]:checked::after {
@@ -121,6 +131,26 @@
         height: 8px;
         background: white;
         border-radius: 50%;
+    }
+    
+    .progress-bar-shimmer {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .progress-bar-shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        100% { left: 100%; }
     }
 </style>
 

@@ -4,14 +4,14 @@
 {% block content %}
 
 <!-- Back Button & Header -->
-<section class="mb-8">
+<section class="mb-8 fade-in-down">
     <div class="flex items-start gap-4">
-        <a href="/courses/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-colors flex-shrink-0 mt-1">
+        <a href="/courses/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-all duration-300 hover:scale-110 flex-shrink-0 mt-1">
             <i data-lucide="arrow-left" class="w-4 h-4 text-zinc-400"></i>
         </a>
         <div class="flex-1">
             <div class="flex flex-wrap items-center gap-3 mb-3">
-                <span class="st-badge {% if course.difficulty == 'beginner' %}st-badge-green{% elif course.difficulty == 'intermediate' %}st-badge-yellow{% else %}st-badge-red{% endif %}">
+                <span class="st-badge {% if course.difficulty == 'beginner' %}st-badge-green glow-green{% elif course.difficulty == 'intermediate' %}st-badge-yellow{% else %}st-badge-red{% endif %}">
                     {{ course.difficulty|title }}
                 </span>
                 <span class="text-zinc-500 text-sm flex items-center gap-1.5">
@@ -19,7 +19,7 @@
                     {{ course.duration_hours }} hours
                 </span>
             </div>
-            <h1 class="text-2xl md:text-3xl font-display font-bold text-white">
+            <h1 class="text-2xl md:text-3xl font-display font-bold text-white gradient-text-animated">
                 {{ course.title }}
             </h1>
         </div>
@@ -32,9 +32,9 @@
     <div class="lg:col-span-2 space-y-5">
         
         <!-- Course Description -->
-        <div class="st-card-static p-6">
+        <div class="st-card-static p-6 fade-in-up delay-100 hover-lift">
             <div class="flex items-center gap-3 mb-4">
-                <div class="icon-box icon-box-sm icon-box-blue">
+                <div class="icon-box icon-box-sm icon-box-blue bounce-soft">
                     <i data-lucide="info" class="w-4 h-4 text-blue-500"></i>
                 </div>
                 <h2 class="font-semibold text-white">About This Course</h2>
@@ -44,9 +44,9 @@
         
         <!-- Learning Objectives -->
         {% if course.objectives %}
-        <div class="st-card-static p-6">
+        <div class="st-card-static p-6 fade-in-up delay-200 hover-lift">
             <div class="flex items-center gap-3 mb-4">
-                <div class="icon-box icon-box-sm icon-box-green">
+                <div class="icon-box icon-box-sm icon-box-green bounce-soft">
                     <i data-lucide="target" class="w-4 h-4 text-emerald-500"></i>
                 </div>
                 <h2 class="font-semibold text-white">Learning Objectives</h2>
@@ -54,7 +54,7 @@
             <div class="text-zinc-400 space-y-2.5">
                 {% for line in course.objectives.splitlines %}
                 {% if line.strip %}
-                <div class="flex items-start gap-2.5">
+                <div class="flex items-start gap-2.5 objective-item" style="animation-delay: {{ forloop.counter0 }}50ms;">
                     <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
                     <span>{{ line.strip|cut:"•"|cut:"-" }}</span>
                 </div>
@@ -66,9 +66,9 @@
         
         <!-- Course Content -->
         {% if course.contents.exists %}
-        <div class="st-card-static p-6">
+        <div class="st-card-static p-6 fade-in-up delay-300 hover-lift">
             <div class="flex items-center gap-3 mb-6">
-                <div class="icon-box icon-box-sm icon-box-red">
+                <div class="icon-box icon-box-sm icon-box-red bounce-soft">
                     <i data-lucide="book-open" class="w-4 h-4 text-rose-500"></i>
                 </div>
                 <h2 class="font-semibold text-white">Course Content</h2>
@@ -76,7 +76,7 @@
             
             <div class="space-y-6">
                 {% for content in course.contents.all %}
-                <div class="content-section pl-5 border-l-2 border-zinc-700">
+                <div class="content-section pl-5 border-l-2 border-zinc-700 hover:border-rose-500 transition-colors duration-300">
                     <h3 class="text-lg text-white font-medium mb-3">{{ content.title }}</h3>
                     <div class="prose prose-invert prose-sm max-w-none text-zinc-400 course-content leading-relaxed">
                         {{ content.content|linebreaks }}
@@ -93,9 +93,9 @@
     <div class="space-y-5">
         
         <!-- Enrollment Status -->
-        <div class="st-card-static p-5">
+        <div class="st-card-static p-5 fade-in-right delay-100 hover-lift">
             <div class="flex items-center gap-3 mb-4">
-                <div class="icon-box icon-box-sm {% if enrollment.completed %}icon-box-green{% else %}icon-box-red{% endif %}">
+                <div class="icon-box icon-box-sm {% if enrollment.completed %}icon-box-green glow-green{% else %}icon-box-red{% endif %}">
                     <i data-lucide="{% if enrollment.completed %}check-circle{% else %}user{% endif %}" class="w-4 h-4 {% if enrollment.completed %}text-emerald-500{% else %}text-rose-500{% endif %}"></i>
                 </div>
                 <div>
@@ -111,8 +111,8 @@
             </div>
             
             {% if enrollment.completed %}
-            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center">
-                <i data-lucide="award" class="w-8 h-8 text-emerald-400 mx-auto mb-2"></i>
+            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center scale-in">
+                <i data-lucide="award" class="w-8 h-8 text-emerald-400 mx-auto mb-2 bounce-soft"></i>
                 <p class="text-emerald-400 text-sm font-medium">Course Completed!</p>
             </div>
             {% endif %}
@@ -120,9 +120,9 @@
         
         <!-- Quiz Section -->
         {% if quiz %}
-        <div class="st-card-static p-5">
+        <div class="st-card-static p-5 fade-in-right delay-200 hover-lift">
             <div class="flex items-center gap-3 mb-4">
-                <div class="icon-box icon-box-sm" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
+                <div class="icon-box icon-box-sm pulse-glow" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.2);">
                     <i data-lucide="file-question" class="w-4 h-4 text-purple-400"></i>
                 </div>
                 <h3 class="font-semibold text-purple-400">Course Quiz</h3>
@@ -144,7 +144,7 @@
             </div>
             
             {% if best_attempt %}
-            <div class="p-3 rounded-xl {% if best_attempt.passed %}bg-emerald-500/10 border-emerald-500/20{% else %}bg-amber-500/10 border-amber-500/20{% endif %} border mb-4">
+            <div class="p-3 rounded-xl {% if best_attempt.passed %}bg-emerald-500/10 border-emerald-500/20 glow-green{% else %}bg-amber-500/10 border-amber-500/20{% endif %} border mb-4 scale-in">
                 <p class="text-sm {% if best_attempt.passed %}text-emerald-400{% else %}text-amber-400{% endif %}">
                     Best Score: {{ best_attempt.score }}/{{ best_attempt.total_questions }}
                     {% if best_attempt.passed %}✓ Passed{% endif %}
@@ -152,7 +152,7 @@
             </div>
             {% endif %}
             
-            <a href="{% url 'start_quiz' course.id %}" class="st-btn w-full justify-center">
+            <a href="{% url 'start_quiz' course.id %}" class="st-btn w-full justify-center hover-lift">
                 <i data-lucide="play" class="w-4 h-4"></i>
                 {% if attempts %}Retake Quiz{% else %}Start Quiz{% endif %}
             </a>
@@ -162,7 +162,7 @@
                 <p class="text-zinc-500 text-xs mb-2">Recent Attempts</p>
                 <div class="space-y-2">
                     {% for attempt in attempts %}
-                    <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center justify-between text-sm hover:bg-zinc-800/30 p-1 rounded transition-colors">
                         <span class="text-zinc-500">{{ attempt.started_at|date:"M d, H:i" }}</span>
                         <span class="{% if attempt.passed %}text-emerald-400{% else %}text-rose-400{% endif %}">
                             {{ attempt.score }}/{{ attempt.total_questions }}
@@ -176,18 +176,18 @@
         {% endif %}
         
         <!-- Navigation -->
-        <div class="st-card-static p-5">
+        <div class="st-card-static p-5 fade-in-right delay-300 hover-lift">
             <h3 class="font-semibold text-white mb-4">Navigation</h3>
             <div class="space-y-1">
-                <a href="/courses/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-colors p-2.5 rounded-lg hover:bg-zinc-800/50">
+                <a href="/courses/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-all duration-300 p-2.5 rounded-lg hover:bg-zinc-800/50 hover:translate-x-1">
                     <i data-lucide="layout-grid" class="w-4 h-4"></i>
                     All Courses
                 </a>
-                <a href="/chat/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-colors p-2.5 rounded-lg hover:bg-zinc-800/50">
+                <a href="/chat/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-all duration-300 p-2.5 rounded-lg hover:bg-zinc-800/50 hover:translate-x-1">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
                     AI Practice
                 </a>
-                <a href="/student/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-colors p-2.5 rounded-lg hover:bg-zinc-800/50">
+                <a href="/student/" class="flex items-center gap-2.5 text-zinc-400 hover:text-rose-400 transition-all duration-300 p-2.5 rounded-lg hover:bg-zinc-800/50 hover:translate-x-1">
                     <i data-lucide="home" class="w-4 h-4"></i>
                     Dashboard
                 </a>

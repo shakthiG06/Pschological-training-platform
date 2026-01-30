@@ -4,13 +4,13 @@
 {% block content %}
 
 <!-- Header -->
-<section class="mb-10">
+<section class="mb-10 fade-in-down">
     <div class="text-center">
-        <span class="st-badge st-badge-red mb-4">
+        <span class="st-badge st-badge-red mb-4 pulse-glow">
             <i data-lucide="bot" class="w-3.5 h-3.5"></i>
             Practice Mode
         </span>
-        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+        <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4 gradient-text-animated">
             AI Patient Simulations
         </h1>
         <p class="text-zinc-500 max-w-xl mx-auto leading-relaxed">
@@ -25,26 +25,26 @@
 <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
     
     {% for patient in patients %}
-    <a href="{% url 'chat' patient.id %}" class="st-card p-5 group">
+    <a href="{% url 'chat' patient.id %}" class="st-card p-5 group hover-lift fade-in-up" style="animation-delay: {{ forloop.counter0 }}50ms;">
         <div class="flex items-start gap-4 mb-4">
-            <div class="icon-box icon-box-red group-hover:shadow-lg group-hover:shadow-rose-500/10 transition-all">
+            <div class="icon-box icon-box-red group-hover:shadow-lg group-hover:shadow-rose-500/20 transition-all duration-300 group-hover:scale-110">
                 <i data-lucide="user" class="w-5 h-5 text-rose-500"></i>
             </div>
             <div class="flex-1 min-w-0">
                 <h3 class="font-semibold text-white group-hover:text-rose-400 transition-colors truncate">{{ patient.name }}</h3>
                 <p class="text-zinc-500 text-sm truncate">{{ patient.condition }}</p>
             </div>
-            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-700 group-hover:text-rose-500 transition-colors flex-shrink-0"></i>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-700 group-hover:text-rose-500 group-hover:rotate-45 transition-all duration-300 flex-shrink-0"></i>
         </div>
         
         <p class="text-zinc-500 text-sm mb-4">
             Course: {{ patient.course.title }}
         </p>
         
-        <div class="flex items-center justify-between pt-4 border-t border-zinc-800">
-            <span class="text-rose-500 text-sm font-medium flex items-center gap-2">
+        <div class="flex items-center justify-between pt-4 border-t border-zinc-800 group-hover:border-rose-500/30 transition-colors">
+            <span class="text-rose-500 text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
                 Start Session
-                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <i data-lucide="message-circle" class="w-4 h-4 group-hover:scale-110 transition-transform"></i>
             </span>
         </div>
     </a>
@@ -52,15 +52,15 @@
     
 </section>
 {% else %}
-<section class="st-card-static p-12 text-center max-w-lg mx-auto">
-    <div class="icon-box icon-box-lg icon-box-red mx-auto mb-6">
+<section class="st-card-static p-12 text-center max-w-lg mx-auto fade-in-up">
+    <div class="icon-box icon-box-lg icon-box-red mx-auto mb-6 float">
         <i data-lucide="lock" class="w-8 h-8 text-rose-500"></i>
     </div>
     <h3 class="text-xl font-semibold text-white mb-3">No Access Yet</h3>
     <p class="text-zinc-500 mb-6 leading-relaxed">
         Complete a course to unlock AI patient simulations.
     </p>
-    <a href="/courses/" class="st-btn">
+    <a href="/courses/" class="st-btn hover-lift">
         <i data-lucide="book-open" class="w-4 h-4"></i>
         Browse Courses
     </a>
@@ -68,10 +68,10 @@
 {% endif %}
 
 <!-- Warning Card -->
-<section class="mt-10">
-    <div class="st-card-static p-5 border-amber-500/20">
+<section class="mt-10 fade-in-up delay-300">
+    <div class="st-card-static p-5 border-amber-500/20 hover-lift">
         <div class="flex items-start gap-4">
-            <div class="icon-box icon-box-yellow flex-shrink-0">
+            <div class="icon-box icon-box-yellow flex-shrink-0 bounce-soft">
                 <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500"></i>
             </div>
             <div>

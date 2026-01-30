@@ -3,19 +3,19 @@
 
 {% block content %}
 
-<div class="flex flex-col h-[calc(100vh-200px)] max-h-[800px]">
+<div class="flex flex-col h-[calc(100vh-200px)] max-h-[800px] fade-in-up">
     
     <!-- Chat Header -->
-    <div class="st-card-static p-4 rounded-b-none border-b-0" style="border-bottom: 1px solid rgba(63, 63, 70, 0.5);">
+    <div class="st-card-static p-4 rounded-b-none border-b-0 fade-in-down" style="border-bottom: 1px solid rgba(63, 63, 70, 0.5);">
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <a href="/chat/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-colors">
+                <a href="/chat/" class="icon-box icon-box-sm hover:bg-zinc-700/50 transition-all duration-300 hover:scale-110">
                     <i data-lucide="arrow-left" class="w-4 h-4 text-zinc-400"></i>
                 </a>
                 <div class="flex items-center gap-3">
-                    <div class="icon-box icon-box-red relative">
+                    <div class="icon-box icon-box-red relative pulse-glow">
                         <i data-lucide="user" class="w-5 h-5 text-rose-500"></i>
-                        <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-zinc-900 pulse-dot"></span>
+                        <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-zinc-900 status-dot"></span>
                     </div>
                     <div>
                         <h2 class="font-semibold text-white">{{ patient.name }}</h2>
@@ -25,8 +25,8 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <span class="st-badge st-badge-green">
-                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                <span class="st-badge st-badge-green glow-green">
+                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
                     Session Active
                 </span>
             </div>
@@ -37,8 +37,8 @@
     <div id="chat-container" class="flex-1 overflow-y-auto p-5 space-y-4 bg-zinc-950/50">
         
         <!-- System Message -->
-        <div class="flex justify-center mb-6">
-            <div class="px-4 py-2 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-500 text-xs">
+        <div class="flex justify-center mb-6 fade-in-up">
+            <div class="px-4 py-2 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-500 text-xs shimmer-text">
                 Session started • Recording in progress
             </div>
         </div>
@@ -46,9 +46,9 @@
         {% for msg in messages %}
         {% if msg.sender == 'student' %}
         <!-- User Message -->
-        <div class="flex justify-end">
+        <div class="flex justify-end message-appear" style="animation-delay: {{ forloop.counter0 }}00ms;">
             <div class="max-w-[75%]">
-                <div class="chat-message-user p-4 rounded-2xl rounded-br-sm text-white">
+                <div class="chat-message-user p-4 rounded-2xl rounded-br-sm text-white hover:scale-[1.02] transition-transform duration-300">
                     {{ msg.message }}
                 </div>
                 <p class="text-right text-xs text-zinc-600 mt-1.5">You (Therapist)</p>
@@ -56,13 +56,13 @@
         </div>
         {% else %}
         <!-- AI Message -->
-        <div class="flex justify-start">
+        <div class="flex justify-start message-appear" style="animation-delay: {{ forloop.counter0 }}00ms;">
             <div class="max-w-[75%]">
                 <div class="flex items-end gap-2">
-                    <div class="icon-box icon-box-sm icon-box-red flex-shrink-0">
+                    <div class="icon-box icon-box-sm icon-box-red flex-shrink-0 bounce-soft">
                         <i data-lucide="user" class="w-4 h-4 text-rose-500"></i>
                     </div>
-                    <div class="chat-message-ai p-4 rounded-2xl rounded-bl-sm text-zinc-300">
+                    <div class="chat-message-ai p-4 rounded-2xl rounded-bl-sm text-zinc-300 hover:scale-[1.02] transition-transform duration-300">
                         {{ msg.message }}
                     </div>
                 </div>
@@ -72,8 +72,8 @@
         {% endif %}
         {% empty %}
         <!-- Empty State -->
-        <div class="flex flex-col items-center justify-center h-full text-center py-12">
-            <div class="icon-box icon-box-lg icon-box-red mb-5">
+        <div class="flex flex-col items-center justify-center h-full text-center py-12 fade-in-up">
+            <div class="icon-box icon-box-lg icon-box-red mb-5 float">
                 <i data-lucide="message-circle" class="w-8 h-8 text-rose-500"></i>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Start your conversation</h3>
@@ -154,6 +154,27 @@
     
     .pulse-dot {
         animation: pulse-dot 2s ease-in-out infinite;
+    }
+    
+    .message-appear {
+        animation: messageSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    
+    @keyframes messageSlide {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .shimmer-text {
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+        background-size: 200% 100%;
+        animation: shimmer-text 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer-text {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
     }
     
     @keyframes pulse-dot {

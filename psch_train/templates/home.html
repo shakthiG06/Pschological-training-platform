@@ -7,26 +7,26 @@
     
     <!-- Floating Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-20 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-20 right-20 w-96 h-96 bg-rose-500/3 rounded-full blur-3xl"></div>
+        <div class="absolute top-20 left-20 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl floating-orb"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-rose-500/3 rounded-full blur-3xl floating-orb-slow"></div>
     </div>
     
     <!-- Badge -->
-    <div class="st-badge st-badge-red mb-6">
+    <div class="st-badge st-badge-red mb-6 fade-in-down pulse-glow">
         <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
         AI-Powered Training Platform
     </div>
     
     <!-- Main Title -->
-    <h1 class="text-5xl md:text-7xl font-display font-bold mb-6">
-        <span class="gradient-text">PsySim</span>
+    <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 fade-in-up">
+        <span class="gradient-text-animated">PsySim</span>
     </h1>
     
-    <p class="text-xl md:text-2xl text-zinc-300 mb-3 font-medium">
+    <p class="text-xl md:text-2xl text-zinc-300 mb-3 font-medium fade-in-up delay-100">
         Psychology Training Platform
     </p>
     
-    <p class="text-zinc-500 mb-10 max-w-xl leading-relaxed">
+    <p class="text-zinc-500 mb-10 max-w-xl leading-relaxed fade-in-up delay-200">
         Practice therapeutic skills with AI-simulated patients. 
         Learn clinical psychology in a safe, supportive environment 
         where learning has no limits.
@@ -34,24 +34,24 @@
     
     <!-- Feature Cards -->
     <div class="grid md:grid-cols-3 gap-5 mb-12 w-full max-w-4xl">
-        <div class="st-card p-6 text-left">
-            <div class="icon-box icon-box-red mb-5">
+        <div class="st-card p-6 text-left hover-lift fade-in-up delay-100">
+            <div class="icon-box icon-box-red mb-5 bounce-soft">
                 <i data-lucide="book-open" class="w-5 h-5 text-rose-500"></i>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Learn</h3>
             <p class="text-zinc-500 text-sm leading-relaxed">Master psychology courses from CBT to trauma-informed care.</p>
         </div>
         
-        <div class="st-card p-6 text-left">
-            <div class="icon-box icon-box-red mb-5">
+        <div class="st-card p-6 text-left hover-lift fade-in-up delay-200">
+            <div class="icon-box icon-box-red mb-5 bounce-soft">
                 <i data-lucide="message-circle" class="w-5 h-5 text-rose-500"></i>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Practice</h3>
             <p class="text-zinc-500 text-sm leading-relaxed">Engage with AI patients in realistic therapeutic scenarios.</p>
         </div>
         
-        <div class="st-card p-6 text-left">
-            <div class="icon-box icon-box-red mb-5">
+        <div class="st-card p-6 text-left hover-lift fade-in-up delay-300">
+            <div class="icon-box icon-box-red mb-5 bounce-soft">
                 <i data-lucide="award" class="w-5 h-5 text-rose-500"></i>
             </div>
             <h3 class="text-lg font-semibold text-white mb-2">Evaluate</h3>
@@ -60,14 +60,30 @@
     </div>
     
     <!-- CTA -->
-    <a href="/" class="st-btn st-btn-lg">
+    <a href="/" class="st-btn st-btn-lg hover-lift fade-in-up delay-400">
         <i data-lucide="log-in" class="w-5 h-5"></i>
         Get Started
     </a>
     
-    <p class="text-zinc-600 text-sm mt-8">
+    <p class="text-zinc-600 text-sm mt-8 fade-in-up delay-500">
         Trusted by psychology students worldwide
     </p>
     
 </div>
+
+<style>
+    .floating-orb {
+        animation: floatingOrb 8s ease-in-out infinite;
+    }
+    
+    .floating-orb-slow {
+        animation: floatingOrb 12s ease-in-out infinite reverse;
+    }
+    
+    @keyframes floatingOrb {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+</style>
 {% endblock %}
