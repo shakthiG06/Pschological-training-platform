@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from patients.models import PatientScenario
+from patients.models import PatientScenario, PatientAssignment
 from chat.models import ChatSession, ChatMessage
 from chat.ai_engine import generate_patient_reply
 from courses.models import Enrollment
@@ -12,7 +12,7 @@ def chat_home(request):
     """
     Landing page for /chat/
     Shows all AI patient scenarios unlocked for the student
-    based on completed courses.
+    based on completed courses OR direct staff assignments.
     """
 
     # Get all completed courses for the logged-in student
@@ -22,9 +22,21 @@ def chat_home(request):
     ).values_list("course", flat=True)
 
     # Fetch patient scenarios linked to completed courses
-    patients = PatientScenario.objects.filter(
+    patients_from_courses = PatientScenario.objects.filter(
         course__in=completed_courses
     )
+    
+    # Fetch patient scenarios directly assigned by staff
+    assigned_patient_ids = PatientAssignment.objects.filter(
+        student=request.user
+    ).values_list("patient_id", flat=True)
+    
+    patients_from_assignments = PatientScenario.objects.filter(
+        id__in=assigned_patient_ids
+    )
+    
+    # Combine both querysets (union to avoid duplicates)
+    patients = (patients_from_courses | patients_from_assignments).distinct()
 
     return render(
         request,
@@ -39,21 +51,26 @@ def chat_home(request):
 def chat_view(request, patient_id):
     """
     Handles AI-simulated patient chat for psychology training.
-    Students must complete the related course before accessing the chat.
+    Students must complete the related course OR be assigned by staff.
     """
 
     # 1️⃣ Fetch patient scenario safely
     patient = get_object_or_404(PatientScenario, id=patient_id)
 
-    # 2️⃣ 🔒 Check course completion (MANDATORY)
+    # 2️⃣ 🔒 Check course completion OR staff assignment
     has_completed_course = Enrollment.objects.filter(
         student=request.user,
         course=patient.course,
         completed=True
     ).exists()
+    
+    has_staff_assignment = PatientAssignment.objects.filter(
+        student=request.user,
+        patient=patient
+    ).exists()
 
-    if not has_completed_course:
-        # Block access if course not completed
+    if not has_completed_course and not has_staff_assignment:
+        # Block access if neither course completed nor assigned
         return render(
             request,
             "access_denied.html",

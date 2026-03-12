@@ -3,6 +3,31 @@
 
 {% block content %}
 
+<!-- Include Help Dashboard -->
+{% include "components/help_dashboard.html" %}
+{% csrf_token %}
+
+<!-- Profile Completion Banner (if incomplete) -->
+{% if not request.user.profile.is_profile_complete %}
+<section class="mb-6 fade-in-down">
+    <div class="bg-gradient-to-r from-rose-500/10 to-purple-500/10 border border-rose-500/20 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+            <div class="icon-box icon-box-red pulse-glow">
+                <i data-lucide="user-plus" class="w-5 h-5 text-rose-500"></i>
+            </div>
+            <div>
+                <h3 class="font-semibold text-white">Complete Your Profile</h3>
+                <p class="text-zinc-400 text-sm">Add your institution, class, and other details to get the best experience.</p>
+            </div>
+        </div>
+        <a href="{% url 'student_profile' %}" class="st-btn whitespace-nowrap">
+            <i data-lucide="edit" class="w-4 h-4"></i>
+            Complete Profile
+        </a>
+    </div>
+</section>
+{% endif %}
+
 <!-- Welcome Section -->
 <section class="mb-10 fade-in-up">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -16,14 +41,21 @@
                 </span>
                 {% endif %}
             </div>
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2 glitch-text">
                 {{ request.user.username }}
             </h1>
             <p class="text-zinc-400">Continue your journey in clinical psychology training.</p>
         </div>
         
         <div class="flex items-center gap-3">
-            <a href="/courses/" class="st-btn">
+            <button onclick="openHelpDashboard()" class="st-btn st-btn-ghost" title="Help">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+            </button>
+            <a href="{% url 'student_profile' %}" class="st-btn st-btn-outline">
+                <i data-lucide="user" class="w-4 h-4"></i>
+                Profile
+            </a>
+            <a href="/courses/" class="st-btn magnetic-btn">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
                 Browse Courses
             </a>
@@ -33,18 +65,18 @@
 
 <!-- Stats Grid -->
 <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-    <div class="st-card-static p-5 hover-lift fade-in-up delay-100">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-100 card-shine">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-red">
                 <i data-lucide="book-open" class="w-4 h-4 text-rose-500"></i>
             </div>
             <span class="text-xs text-zinc-500 font-medium">Courses</span>
         </div>
-        <p class="text-3xl font-bold text-white">6</p>
+        <p class="text-3xl font-bold text-white counter-animate">6</p>
         <p class="text-sm text-zinc-500">Available</p>
     </div>
     
-    <div class="st-card-static p-5 hover-lift fade-in-up delay-200">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-200 card-shine">
         <div class="flex items-center justify-between mb-4">
             <div class="icon-box icon-box-sm icon-box-green">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}{{ assessment.title }} - Submissions | PsySim{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<section class="mb-8 fade-in-up">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <a href="{% url 'staff_assessments' %}" class="text-zinc-500 text-sm hover:text-rose-400 transition-colors mb-3 inline-flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Assessments
+            </a>
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+                {{ assessment.title }}
+            </h1>
+            <p class="text-zinc-400">{{ assessment.course.title }} · {{ submissions.count }} submission{{ submissions.count|pluralize }}</p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <span class="st-badge {% if assessment.status == 'published' %}st-badge-green{% else %}st-badge-yellow{% endif %}">
+                {{ assessment.get_status_display }}
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- Assessment Details -->
+<section class="mb-8 fade-in-up delay-100">
+    <div class="st-card-static p-6">
+        <div class="grid md:grid-cols-4 gap-6">
+            <div>
+                <p class="text-zinc-500 text-sm mb-1">Max Score</p>
+                <p class="text-white font-semibold text-lg">{{ assessment.max_score }} pts</p>
+            </div>
+            <div>
+                <p class="text-zinc-500 text-sm mb-1">Passing Score</p>
+                <p class="text-white font-semibold text-lg">{{ assessment.passing_score }} pts</p>
+            </div>
+            <div>
+                <p class="text-zinc-500 text-sm mb-1">Due Date</p>
+                <p class="text-white font-semibold text-lg">{% if assessment.due_date %}{{ assessment.due_date|date:"M d, Y" }}{% else %}No deadline{% endif %}</p>
+            </div>
+            <div>
+                <p class="text-zinc-500 text-sm mb-1">Submissions</p>
+                <p class="text-white font-semibold text-lg">{{ submissions.count }}</p>
+            </div>
+        </div>
+        
+        {% if assessment.description %}
+        <div class="mt-6 pt-6 border-t border-white/10">
+            <p class="text-zinc-500 text-sm mb-2">Description</p>
+            <p class="text-zinc-300">{{ assessment.description }}</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Submissions List -->
+<section class="fade-in-up delay-200">
+    <h2 class="text-lg font-semibold text-white mb-5 flex items-center gap-3">
+        <div class="icon-box icon-box-sm icon-box-blue">
+            <i data-lucide="file-text" class="w-4 h-4 text-blue-500"></i>
+        </div>
+        Student Submissions
+    </h2>
+    
+    {% if submissions %}
+    <div class="space-y-3">
+        {% for submission in submissions %}
+        <div class="st-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 group card-shine">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500/30 to-rose-500/10 border border-rose-500/30 flex items-center justify-center">
+                    <span class="text-lg font-bold text-rose-500">{{ submission.student.username|slice:":1"|upper }}</span>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-white text-lg">{{ submission.student.username }}</h3>
+                    <p class="text-sm text-zinc-500">{{ submission.student.email }}</p>
+                    <div class="flex items-center gap-3 mt-2">
+                        <span class="st-badge {% if submission.status == 'graded' %}st-badge-green{% elif submission.status == 'submitted' %}st-badge-blue{% else %}st-badge-yellow{% endif %} text-xs">
+                            {{ submission.get_status_display }}
+                        </span>
+                        {% if submission.submitted_at %}
+                        <span class="text-xs text-zinc-500">
+                            <i data-lucide="calendar" class="w-3 h-3 inline"></i>
+                            Submitted: {{ submission.submitted_at|date:"M d, Y H:i" }}
+                        </span>
+                        {% endif %}
+                        {% if submission.score is not None %}
+                        <span class="text-xs text-zinc-500">
+                            <i data-lucide="award" class="w-3 h-3 inline"></i>
+                            Score: {{ submission.score }}/{{ assessment.max_score }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                {% if submission.status == 'submitted' %}
+                <button onclick="openGradeModal({{ submission.id }}, '{{ submission.student.username }}')" class="st-btn">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    Grade
+                </button>
+                {% else %}
+                <button class="st-btn st-btn-outline">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                    View
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="st-card-static p-12 text-center">
+        <div class="icon-box icon-box-lg mx-auto mb-5 float" style="background: rgba(113, 113, 122, 0.1); border-color: rgba(113, 113, 122, 0.2);">
+            <i data-lucide="inbox" class="w-8 h-8 text-zinc-500"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-zinc-400 mb-2">No Submissions Yet</h3>
+        <p class="text-zinc-500">Students haven't submitted their work for this assessment yet.</p>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

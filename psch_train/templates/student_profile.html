@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}My Profile | PsySim{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<section class="mb-8 fade-in-up">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <a href="{% url 'student_dashboard' %}" class="text-zinc-500 text-sm hover:text-rose-400 transition-colors mb-3 inline-flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Dashboard
+            </a>
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+                My Profile
+            </h1>
+            <p class="text-zinc-400">Manage your personal information and preferences</p>
+        </div>
+        
+        <!-- Profile Completion -->
+        <div class="st-card-static p-4 min-w-[200px]">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-zinc-400 text-sm">Profile Completion</span>
+                <span class="text-white font-bold">{{ completion_percentage }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: {{ completion_percentage }}%"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if messages %}
+<section class="mb-6 fade-in-down">
+    {% for message in messages %}
+    <div class="{% if message.tags == 'success' %}bg-emerald-500/10 border-emerald-500/30 text-emerald-400{% else %}bg-rose-500/10 border-rose-500/30 text-rose-400{% endif %} border rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm">
+        {% if message.tags == 'success' %}
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        {% else %}
+        <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        {% endif %}
+        <span>{{ message }}</span>
+    </div>
+    {% endfor %}
+</section>
+{% endif %}
+
+<form method="POST" class="space-y-8">
+    {% csrf_token %}
+    
+    <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Left Column - Avatar & Basic Info -->
+        <div class="lg:col-span-1">
+            <div class="st-card-static p-6 fade-in-up delay-100">
+                <!-- Avatar -->
+                <div class="text-center mb-6">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-{{ profile.avatar_color }}-500/30 to-{{ profile.avatar_color }}-500/10 border-2 border-{{ profile.avatar_color }}-500/30 flex items-center justify-center mb-4">
+                        <span class="text-3xl font-bold text-{{ profile.avatar_color }}-500">
+                            {{ request.user.username|slice:":1"|upper }}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white">{{ request.user.username }}</h3>
+                    <p class="text-zinc-400 text-sm">{{ request.user.email }}</p>
+                    <span class="st-badge st-badge-blue mt-3">
+                        <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+                        Student
+                    </span>
+                </div>
+                
+                <!-- Avatar Color Picker -->
+                <div class="border-t border-white/10 pt-6">
+                    <label class="block text-sm font-medium text-zinc-300 mb-3">Avatar Color</label>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        {% for color in avatar_colors %}
+                        <label class="cursor-pointer">
+                            <input type="radio" name="avatar_color" value="{{ color }}" class="hidden peer" {% if profile.avatar_color == color %}checked{% endif %}>
+                            <div class="w-8 h-8 rounded-full bg-{{ color }}-500 peer-checked:ring-2 peer-checked:ring-white peer-checked:ring-offset-2 peer-checked:ring-offset-zinc-900 transition-all hover:scale-110"></div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column - Details Form -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Personal Information -->
+            <div class="st-card-static p-6 fade-in-up delay-200">
+                <h3 class="text-lg font-semibold text-white mb-5 flex items-center gap-3">
+                    <div class="icon-box icon-box-sm icon-box-red">
+                        <i data-lucide="user" class="w-4 h-4 text-rose-500"></i>
+                    </div>
+                    Personal Information
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Full Name</label>
+                        <input type="text" name="full_name" value="{{ request.user.get_full_name }}" 
+                               placeholder="Your full name" class="st-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Phone Number</label>
+                        <input type="tel" name="phone" value="{{ profile.phone|default:'' }}" 
+                               placeholder="+91 98765 43210" class="st-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Date of Birth</label>
+                        <input type="date" name="date_of_birth" value="{{ profile.date_of_birth|date:'Y-m-d' }}" 
+                               class="st-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Email</label>
+                        <input type="email" value="{{ request.user.email }}" disabled
+                               class="st-input opacity-60 cursor-not-allowed">
+                        <p class="text-zinc-500 text-xs mt-1">Contact admin to change email</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Academic Information -->
+            <div class="st-card-static p-6 fade-in-up delay-300">
+                <h3 class="text-lg font-semibold text-white mb-5 flex items-center gap-3">
+                    <div class="icon-box icon-box-sm icon-box-blue">
+                        <i data-lucide="school" class="w-4 h-4 text-blue-500"></i>
+                    </div>
+                    Academic Information
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Institution / College</label>
+                        <input type="text" name="institution" value="{{ profile.institution|default:'' }}" 
+                               placeholder="e.g., Stanford University" class="st-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Class / Section</label>
+                        <input type="text" name="student_class" value="{{ profile.student_class|default:'' }}" 
+                               placeholder="e.g., Psychology 101 - Section A" class="st-input">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-zinc-300 mb-2">Place / Location</label>
+                        <input type="text" name="place" value="{{ profile.place|default:'' }}" 
+                               placeholder="e.g., San Francisco, CA" class="st-input">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bio -->
+            <div class="st-card-static p-6 fade-in-up delay-400">
+                <h3 class="text-lg font-semibold text-white mb-5 flex items-center gap-3">
+                    <div class="icon-box icon-box-sm icon-box-purple">
+                        <i data-lucide="file-text" class="w-4 h-4 text-purple-500"></i>
+                    </div>
+                    About Me
+                </h3>
+                
+                <div>
+                    <label class="block text-sm font-medium text-zinc-300 mb-2">Bio</label>
+                    <textarea name="bio" rows="4" placeholder="Tell us a bit about yourself, your interests in psychology, career goals..." 
+                              class="st-input resize-none">{{ profile.bio|default:'' }}</textarea>
+                    <p class="text-zinc-500 text-xs mt-2">Max 500 characters</p>
+                </div>
+            </div>
+            
+            <!-- Submit -->
+            <div class="flex items-center justify-end gap-4 fade-in-up delay-500">
+                <a href="{% url 'student_dashboard' %}" class="st-btn st-btn-ghost">
+                    Cancel
+                </a>
+                <button type="submit" class="st-btn magnetic-btn">
+                    <i data-lucide="save" class="w-4 h-4"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Students by Class | PsySim{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<section class="mb-8 fade-in-up">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-zinc-500 text-sm">Staff Portal</span>
+                <span class="st-badge st-badge-purple">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                    Students
+                </span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">
+                Students by Class
+            </h1>
+            <p class="text-zinc-400">View and manage students organized by their class sections</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-100">
+        <div class="flex items-center justify-between mb-4">
+            <div class="icon-box icon-box-sm icon-box-blue">
+                <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-white">{{ total_students }}</p>
+        <p class="text-sm text-zinc-500">Total Students</p>
+    </div>
+    
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-200">
+        <div class="flex items-center justify-between mb-4">
+            <div class="icon-box icon-box-sm icon-box-purple">
+                <i data-lucide="school" class="w-4 h-4 text-purple-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-white">{{ total_classes }}</p>
+        <p class="text-sm text-zinc-500">Classes</p>
+    </div>
+    
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-300">
+        <div class="flex items-center justify-between mb-4">
+            <div class="icon-box icon-box-sm icon-box-green">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-white">{{ complete_profiles }}</p>
+        <p class="text-sm text-zinc-500">Complete Profiles</p>
+    </div>
+    
+    <div class="st-card-static p-5 hover-lift fade-in-up delay-400">
+        <div class="flex items-center justify-between mb-4">
+            <div class="icon-box icon-box-sm icon-box-yellow">
+                <i data-lucide="activity" class="w-4 h-4 text-amber-500"></i>
+            </div>
+        </div>
+        <p class="text-3xl font-bold text-white">{{ active_this_week }}</p>
+        <p class="text-sm text-zinc-500">Active This Week</p>
+    </div>
+</section>
+
+<!-- Filter by Class -->
+<section class="mb-8 fade-in-up delay-200">
+    <div class="flex flex-wrap gap-2">
+        <a href="{% url 'staff_students' %}" class="st-btn {% if not selected_class %}{% else %}st-btn-outline{% endif %} text-sm py-2">
+            All Classes
+        </a>
+        {% for class_name in classes %}
+        <a href="?class={{ class_name|urlencode }}" 
+           class="st-btn {% if selected_class == class_name %}{% else %}st-btn-outline{% endif %} text-sm py-2">
+            {{ class_name|default:"Unassigned" }}
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Students by Class -->
+<section class="fade-in-up delay-300">
+    {% for class_name, students in students_by_class.items %}
+    <div class="mb-10">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-xl font-semibold text-white flex items-center gap-3">
+                <div class="icon-box icon-box-sm icon-box-purple">
+                    <i data-lucide="graduation-cap" class="w-4 h-4 text-purple-500"></i>
+                </div>
+                {{ class_name|default:"Unassigned" }}
+            </h2>
+            <span class="st-badge st-badge-blue">
+                {{ students|length }} student{{ students|length|pluralize }}
+            </span>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for student in students %}
+            <div class="st-card p-5 group card-shine hover-lift">
+                <div class="flex items-start gap-4">
+                    <!-- Avatar -->
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-{{ student.profile.avatar_color|default:'rose' }}-500/30 to-{{ student.profile.avatar_color|default:'rose' }}-500/10 border border-{{ student.profile.avatar_color|default:'rose' }}-500/30 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <span class="text-lg font-bold text-{{ student.profile.avatar_color|default:'rose' }}-500">
+                            {{ student.username|slice:":1"|upper }}
+                        </span>
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-semibold text-white truncate">{{ student.username }}</h3>
+                        <p class="text-sm text-zinc-500 truncate">{{ student.email }}</p>
+                        
+                        <div class="flex flex-wrap items-center gap-2 mt-3">
+                            {% if student.profile.institution %}
+                            <span class="text-xs text-zinc-400 flex items-center gap-1">
+                                <i data-lucide="building" class="w-3 h-3"></i>
+                                {{ student.profile.institution|truncatechars:20 }}
+                            </span>
+                            {% endif %}
+                            
+                            {% if student.profile.place %}
+                            <span class="text-xs text-zinc-400 flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                {{ student.profile.place|truncatechars:15 }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Progress Indicators -->
+                        <div class="flex items-center gap-3 mt-3 pt-3 border-t border-white/5">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="book-open" class="w-3 h-3 text-blue-500"></i>
+                                <span class="text-xs text-zinc-500">{{ student.enrollment_set.filter.completed|length|default:0 }} courses</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="message-circle" class="w-3 h-3 text-purple-500"></i>
+                                <span class="text-xs text-zinc-500">{{ student.chatsession_set.count }} sessions</span>
+                            </div>
+                            {% if student.profile.is_profile_complete %}
+                            <span class="st-badge st-badge-green text-xs py-0.5 px-2">
+                                <i data-lucide="check" class="w-2.5 h-2.5"></i>
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
+                    <a href="#" class="st-btn st-btn-outline text-xs py-1.5 flex-1">
+                        <i data-lucide="eye" class="w-3 h-3"></i>
+                        View Progress
+                    </a>
+                    <a href="#" class="st-btn text-xs py-1.5 flex-1">
+                        <i data-lucide="mail" class="w-3 h-3"></i>
+                        Contact
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="st-card-static p-12 text-center">
+        <div class="icon-box icon-box-lg mx-auto mb-5 float" style="background: rgba(113, 113, 122, 0.1); border-color: rgba(113, 113, 122, 0.2);">
+            <i data-lucide="users" class="w-8 h-8 text-zinc-500"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-zinc-400 mb-2">No Students Found</h3>
+        <p class="text-zinc-500">{% if selected_class %}No students in this class yet.{% else %}No students have enrolled yet.{% endif %}</p>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

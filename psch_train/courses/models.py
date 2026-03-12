@@ -99,6 +99,61 @@ class QuizAttempt(models.Model):
         return f"{self.student.username} - {self.quiz.title} ({self.score}/{self.total_questions})"
 
 
+class Assessment(models.Model):
+    """Staff-created assessments for courses"""
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ('archived', 'Archived'),
+    ]
+    
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='assessments')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    instructions = models.TextField(blank=True, help_text="Instructions for students")
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='created_assessments')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    due_date = models.DateTimeField(null=True, blank=True)
+    max_score = models.PositiveIntegerField(default=100)
+    passing_score = models.PositiveIntegerField(default=60)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.course.title} - {self.title}"
+
+
+class AssessmentSubmission(models.Model):
+    """Student submissions for assessments"""
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('submitted', 'Submitted'),
+        ('graded', 'Graded'),
+    ]
+    
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='submissions')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assessment_submissions')
+    submission_text = models.TextField(blank=True)
+    file_upload = models.FileField(upload_to='assessments/', blank=True, null=True)
+    score = models.PositiveIntegerField(null=True, blank=True)
+    feedback = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    graded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='graded_submissions')
+    submitted_at = models.DateTimeField(null=True, blank=True)
+    graded_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        unique_together = ('assessment', 'student')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.student.username} - {self.assessment.title}"
+
+
 class QuizAnswer(models.Model):
     attempt = models.ForeignKey(QuizAttempt, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

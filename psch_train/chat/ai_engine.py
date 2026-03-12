@@ -20,7 +20,7 @@ def get_ai_client():
     # Try Groq first (free tier)
     groq_key = os.getenv("GROQ_API_KEY") or getattr(settings, "GROQ_API_KEY", None)
     if groq_key and GROQ_AVAILABLE:
-        return ("groq", Groq(api_key=groq_key))
+        return ("groq", Groq(api00_key=groq_key))
     
     # Fall back to OpenAI
     openai_key = os.getenv("OPENAI_API_KEY") or getattr(settings, "OPENAI_API_KEY", None)

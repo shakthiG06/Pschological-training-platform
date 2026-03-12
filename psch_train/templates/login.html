@@ -27,6 +27,154 @@
             --text-secondary: #a1a1aa;
         }
 
+        /* Light Mode */
+        [data-theme="light"] {
+            --bg-dark: #ffffff;
+            --bg-card: #ffffff;
+            --bg-elevated: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+        }
+
+        [data-theme="light"] .bg-pattern {
+            background-image: none;
+            background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 100%);
+        }
+
+        [data-theme="light"] .bg-grid {
+            background-image: 
+                linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+        }
+
+        [data-theme="light"] .login-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .icon-box {
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        [data-theme="light"] .st-input {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        [data-theme="light"] .st-input:focus {
+            background: #ffffff;
+            border-color: var(--primary);
+        }
+
+        [data-theme="light"] .st-input::placeholder {
+            color: #94a3b8;
+        }
+
+        [data-theme="light"] .text-white {
+            color: #1e293b !important;
+        }
+
+        [data-theme="light"] .text-zinc-400 {
+            color: #64748b !important;
+        }
+
+        [data-theme="light"] .text-zinc-500 {
+            color: #64748b !important;
+        }
+
+        [data-theme="light"] .text-zinc-600 {
+            color: #475569 !important;
+        }
+
+        [data-theme="light"] .border-zinc-800 {
+            border-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] .border-zinc-800\/50 {
+            border-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] .bg-zinc-900 {
+            background: #f8fafc !important;
+        }
+
+        [data-theme="light"] .neural-bg,
+        [data-theme="light"] .brain-particle,
+        [data-theme="light"] .neuron-dot,
+        [data-theme="light"] .synapse-line,
+        [data-theme="light"] .glow-orb {
+            display: none !important;
+        }
+
+        [data-theme="light"] .brain-pulse-ring {
+            border-color: rgba(225, 29, 72, 0.2);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(225, 29, 72, 0.2);
+            border-color: rgba(225, 29, 72, 0.4);
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        .theme-toggle .sun-icon,
+        .theme-toggle .moon-icon {
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-toggle .sun-icon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0);
+        }
+
+        .theme-toggle .moon-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .theme-toggle:hover {
+            background: #fef2f2;
+            border-color: var(--primary);
+        }
+
+        [data-theme="light"] .theme-toggle .sun-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        [data-theme="light"] .theme-toggle .moon-icon {
+            opacity: 0;
+            transform: rotate(90deg) scale(0);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-dark);
@@ -268,12 +416,106 @@
             background-clip: text;
             animation: shimmer 3s ease-in-out infinite;
         }
+
+        /* Neural Network Background */
+        .neural-bg {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 2px 2px, rgba(225, 29, 72, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        /* Synapse Lines */
+        .synapse-line {
+            position: fixed;
+            background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.3), transparent);
+            height: 1px;
+            animation: synapsePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes synapsePulse {
+            0%, 100% { opacity: 0; transform: scaleX(0); }
+            50% { opacity: 1; transform: scaleX(1); }
+        }
+
+        /* Brain Particles */
+        .brain-particle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(225, 29, 72, 0.5);
+            pointer-events: none;
+            animation: brainFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes brainFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Brain Pulse Ring */
+        .brain-pulse-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            animation: brainRing 2s ease-out infinite;
+        }
+
+        @keyframes brainRing {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Neuron Connection */
+        .neuron-dot {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(225, 29, 72, 0.6);
+            border-radius: 50%;
+            animation: neuronBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes neuronBlink {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
     </style>
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-pattern">
+    <!-- Theme Toggle Button -->
+    <button onclick="toggleTheme()" class="theme-toggle" title="Toggle theme">
+        <i data-lucide="sun" class="w-5 h-5 text-amber-500 sun-icon"></i>
+        <i data-lucide="moon" class="w-5 h-5 text-rose-400 moon-icon"></i>
+    </button>
+
+    <!-- Neural Background -->
+    <div class="neural-bg"></div>
+    
     <!-- Background Grid -->
     <div class="fixed inset-0 bg-grid pointer-events-none"></div>
+    
+    <!-- Brain Particles -->
+    <div class="brain-particle w-2 h-2 top-[10%] left-[15%]" style="animation-delay: 0s;"></div>
+    <div class="brain-particle w-3 h-3 top-[20%] right-[20%]" style="animation-delay: 1s;"></div>
+    <div class="brain-particle w-2 h-2 bottom-[30%] left-[25%]" style="animation-delay: 2s;"></div>
+    <div class="brain-particle w-4 h-4 top-[60%] right-[10%]" style="animation-delay: 3s;"></div>
+    <div class="brain-particle w-2 h-2 bottom-[15%] right-[30%]" style="animation-delay: 0.5s;"></div>
+    
+    <!-- Neuron Dots -->
+    <div class="neuron-dot top-[15%] left-[10%]" style="animation-delay: 0s;"></div>
+    <div class="neuron-dot top-[25%] right-[15%]" style="animation-delay: 0.4s;"></div>
+    <div class="neuron-dot top-[45%] left-[5%]" style="animation-delay: 0.8s;"></div>
+    <div class="neuron-dot bottom-[35%] right-[8%]" style="animation-delay: 1.2s;"></div>
+    <div class="neuron-dot bottom-[20%] left-[20%]" style="animation-delay: 1.6s;"></div>
+    <div class="neuron-dot top-[70%] right-[25%]" style="animation-delay: 2s;"></div>
+    
+    <!-- Synapse Lines -->
+    <div class="synapse-line w-40 top-[20%] left-[5%] rotate-[15deg]" style="animation-delay: 0s;"></div>
+    <div class="synapse-line w-32 top-[40%] right-[10%] rotate-[-10deg]" style="animation-delay: 1s;"></div>
+    <div class="synapse-line w-48 bottom-[30%] left-[15%] rotate-[25deg]" style="animation-delay: 2s;"></div>
     
     <!-- Glow Orbs -->
     <div class="glow-orb w-80 h-80 bg-rose-500/10 -top-40 -right-40"></div>
@@ -283,11 +525,16 @@
         
         <!-- Logo & Title -->
         <div class="text-center mb-10">
-            <div class="icon-box mx-auto mb-6 float pulse-glow">
+            <div class="icon-box mx-auto mb-6 float pulse-glow relative">
+                <!-- Brain Pulse Rings -->
+                <div class="brain-pulse-ring absolute inset-0" style="animation-delay: 0s;"></div>
+                <div class="brain-pulse-ring absolute inset-0" style="animation-delay: 0.5s;"></div>
+                <div class="brain-pulse-ring absolute inset-0" style="animation-delay: 1s;"></div>
+                
                 {% if role == 'student' %}
                 <i data-lucide="graduation-cap" class="w-9 h-9 text-rose-500"></i>
                 {% else %}
-                <i data-lucide="shield-check" class="w-9 h-9 text-rose-500"></i>
+                <i data-lucide="brain" class="w-9 h-9 text-rose-500"></i>
                 {% endif %}
             </div>
             
@@ -359,6 +606,22 @@
     
     <script>
         lucide.createIcons();
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // Load saved theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
     </script>
 </body>
 </html>

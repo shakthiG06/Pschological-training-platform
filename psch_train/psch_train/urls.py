@@ -26,6 +26,14 @@ from frontend.views import (
     student_dashboard,
     staff_dashboard,
     about_us,
+    student_profile,
+    hide_help,
+    staff_assessments,
+    create_assessment,
+    publish_assessment,
+    delete_assessment,
+    view_submissions,
+    staff_students,
 )
 
 urlpatterns = [
@@ -39,8 +47,18 @@ urlpatterns = [
     # Dashboards (with shortcuts)
     path("student/", lambda r: redirect("student_dashboard")),
     path("student/dashboard/", student_dashboard, name="student_dashboard"),
+    path("student/profile/", student_profile, name="student_profile"),
     path("staff/", lambda r: redirect("staff_dashboard")),
     path("staff/dashboard/", staff_dashboard, name="staff_dashboard"),
+    path("staff/assessments/", staff_assessments, name="staff_assessments"),
+    path("staff/assessments/create/", create_assessment, name="create_assessment"),
+    path("staff/assessments/<int:pk>/publish/", publish_assessment, name="publish_assessment"),
+    path("staff/assessments/<int:pk>/delete/", delete_assessment, name="delete_assessment"),
+    path("staff/assessments/<int:pk>/submissions/", view_submissions, name="view_submissions"),
+    path("staff/students/", staff_students, name="staff_students"),
+
+    # API endpoints
+    path("api/hide-help/", hide_help, name="hide_help"),
 
     # About Us
     path("about/", about_us, name="about_us"),
